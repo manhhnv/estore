@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "estore",
+    "name": "Estore",
     "slug": "estore",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -29,6 +29,7 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": ""
   }
 }

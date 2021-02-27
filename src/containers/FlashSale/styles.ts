@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const countDownStyles = StyleSheet.create({
     timeText: {
         textAlign: "center",
-        fontSize: 20,
+        fontSize: 15,
         color: "#fff",
         textTransform: "uppercase",
         fontWeight: "bold",
