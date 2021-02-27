@@ -1,0 +1,21 @@
+{
+    "overwrite": true,
+    "config": {
+        "strict": true
+    },
+    "generates": {
+        "./src/graphql/generated.ts": {
+            "schema": "http://localhost:3000/admin-api",
+            "documents": ["./**/**/*.graphql"],
+            "plugins": [
+                {
+                    "add": {
+                        "content": "/* eslint-disable */"
+                    }
+                },
+                "typescript",
+                "typescript-compatibility"
+            ]
+        }
+    }
+}
