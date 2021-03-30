@@ -1,0 +1,6 @@
+fragment BannerFragment on Banner {
+    id
+    name
+    url
+    description
+}

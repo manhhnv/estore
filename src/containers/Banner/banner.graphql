@@ -1,0 +1,11 @@
+query getBanners {
+  getBanners {
+    items {
+      id
+      name
+      url
+      description
+    }
+    totalItems
+  }
+}

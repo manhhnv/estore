@@ -6,6 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Extension from 'estore/containers/Extension';
 import ProductRecommendation from 'estore/containers/ProductRecommendation';
 import FlashSale from 'estore/containers/FlashSale';
+import Banners from 'estore/containers/Banner';
 
 const { width, height } = Dimensions.get("screen");
 
@@ -51,6 +52,7 @@ const HomeScreen = () => {
                 >
                     <Collections />
                     <Extension />
+                    <Banners />
                     <ProductRecommendation />
                     <FlashSale />
                 </ScrollView>

@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/shop-api',
+    uri: 'https://ebuy-ecommerce.herokuapp.com/graphql',
     cache: new InMemoryCache()
 })
 
