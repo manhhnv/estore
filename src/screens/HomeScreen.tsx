@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { Header, Icon, Badge, withBadge } from 'react-native-elements';
 import { Dimensions, Text, View, RefreshControl } from 'react-native';
-import Collections from 'estore/containers/Collection';
 import { ScrollView } from 'react-native-gesture-handler';
 import Extension from 'estore/containers/Extension';
 import ProductRecommendation from 'estore/containers/ProductRecommendation';
 import FlashSale from 'estore/containers/FlashSale';
 import Banners from 'estore/containers/Banner';
+import { FeatureProducts } from 'estore/containers/Products';
 
 const { width, height } = Dimensions.get("screen");
 
@@ -23,7 +23,7 @@ const HomeScreen = () => {
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
-      }, []);
+    }, []);
     return (
         <React.Fragment>
             <Header
@@ -34,13 +34,13 @@ const HomeScreen = () => {
                     <CartIcon type="font-awesome" name="shopping-cart" color="#fff" />
                 }
                 rightComponent={
-                    <MessageIcon type="antdesign" name="wechat" color="#fff"/>
+                    <MessageIcon type="antdesign" name="wechat" color="#fff" />
                 }
-                rightContainerStyle={{ marginHorizontal: 0.05*width }}
+                rightContainerStyle={{ marginHorizontal: 0.05 * width }}
                 backgroundColor="#07ac4f"
             />
-           <View style={{ flex: 1, alignItems: "center",justifyContent: "center" }}>
-            <ScrollView
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <ScrollView
                     showsVerticalScrollIndicator={false}
                     style={{ backgroundColor: "#fff" }}
                     refreshControl={
@@ -50,13 +50,13 @@ const HomeScreen = () => {
                         />
                     }
                 >
-                    <Collections />
-                    <Extension />
                     <Banners />
-                    <ProductRecommendation />
-                    <FlashSale />
+                    <Extension />
+                    <FeatureProducts />
+                    {/* <ProductRecommendation /> */}
+                    {/* <FlashSale /> */}
                 </ScrollView>
-           </View>
+            </View>
         </React.Fragment>
     )
 }

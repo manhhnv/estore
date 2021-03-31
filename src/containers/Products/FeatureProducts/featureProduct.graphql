@@ -1,0 +1,14 @@
+query featureProducts($limit: Int) {
+  products(filter: {limit: $limit}) {
+    items {
+      name
+      id
+      thumbnail
+      rating
+      rawDiscount
+      priceBeforeDiscount
+      price
+    }
+    total
+  }
+}

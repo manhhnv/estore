@@ -140,8 +140,10 @@ export type Query = {
   getDefaultUserAddress?: Maybe<Address>;
   getBanners?: Maybe<ListBanners>;
   activeOrder?: Maybe<Order>;
+  generateClientPaymentToken?: Maybe<ClientPaymentToken>;
   getShopAddress: PickupAddress;
   products?: Maybe<ProductList>;
+  productDetail?: Maybe<Product>;
   me: User;
   activeWishlist?: Maybe<WishList>;
 };
@@ -151,6 +153,11 @@ export type QueryProductsArgs = {
   name?: Maybe<Scalars['String']>;
   filter?: Maybe<Filter>;
   sort?: Maybe<Sort>;
+};
+
+
+export type QueryProductDetailArgs = {
+  id: Scalars['ID'];
 };
 
 export type Banner = Node & {
@@ -207,6 +214,12 @@ export type Order = Node & {
   updatedAt?: Maybe<Scalars['Date']>;
 };
 
+export type ClientPaymentToken = {
+  __typename?: 'ClientPaymentToken';
+  clientToken?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
 export type PickupAddress = {
   __typename?: 'PickupAddress';
   /** String - mã đơn hàng thuộc hệ thống của đối tác */
@@ -259,11 +272,11 @@ export type Product = Node & {
   rating?: Maybe<Scalars['Int']>;
   rawDiscount?: Maybe<Scalars['Float']>;
   price?: Maybe<Scalars['Float']>;
-  weight: Scalars['Int'];
+  weight?: Maybe<Scalars['Int']>;
   priceBeforeDiscount?: Maybe<Scalars['Float']>;
   shopId?: Maybe<Scalars['String']>;
   shopAdmin?: Maybe<Scalars['String']>;
-  category: Category;
+  category?: Maybe<Category>;
   previews?: Maybe<Array<Maybe<PreviewImage>>>;
   configs?: Maybe<Array<Maybe<Configs>>>;
   createdAt?: Maybe<Scalars['Date']>;
@@ -483,9 +496,31 @@ export type GetBannersQuery = (
   )> }
 );
 
+export type FeatureProductsQueryVariables = Exact<{
+  limit?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type FeatureProductsQuery = (
+  { __typename?: 'Query' }
+  & { products?: Maybe<(
+    { __typename?: 'ProductList' }
+    & Pick<ProductList, 'total'>
+    & { items?: Maybe<Array<Maybe<(
+      { __typename?: 'Product' }
+      & Pick<Product, 'name' | 'id' | 'thumbnail' | 'rating' | 'rawDiscount' | 'priceBeforeDiscount' | 'price'>
+    )>>> }
+  )> }
+);
+
 export type BannerFragmentFragment = (
   { __typename?: 'Banner' }
   & Pick<Banner, 'id' | 'name' | 'url' | 'description'>
+);
+
+export type ProductFragmentFragment = (
+  { __typename?: 'Product' }
+  & Pick<Product, 'name' | 'id' | 'thumbnail' | 'rating' | 'rawDiscount' | 'priceBeforeDiscount' | 'price'>
 );
 
 export const BannerFragmentFragmentDoc = gql`
@@ -494,6 +529,17 @@ export const BannerFragmentFragmentDoc = gql`
   name
   url
   description
+}
+    `;
+export const ProductFragmentFragmentDoc = gql`
+    fragment ProductFragment on Product {
+  name
+  id
+  thumbnail
+  rating
+  rawDiscount
+  priceBeforeDiscount
+  price
 }
     `;
 export const GetBannersDocument = gql`
@@ -536,6 +582,50 @@ export function useGetBannersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetBannersQueryHookResult = ReturnType<typeof useGetBannersQuery>;
 export type GetBannersLazyQueryHookResult = ReturnType<typeof useGetBannersLazyQuery>;
 export type GetBannersQueryResult = Apollo.QueryResult<GetBannersQuery, GetBannersQueryVariables>;
+export const FeatureProductsDocument = gql`
+    query featureProducts($limit: Int) {
+  products(filter: {limit: $limit}) {
+    items {
+      name
+      id
+      thumbnail
+      rating
+      rawDiscount
+      priceBeforeDiscount
+      price
+    }
+    total
+  }
+}
+    `;
+
+/**
+ * __useFeatureProductsQuery__
+ *
+ * To run a query within a React component, call `useFeatureProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFeatureProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFeatureProductsQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useFeatureProductsQuery(baseOptions?: Apollo.QueryHookOptions<FeatureProductsQuery, FeatureProductsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FeatureProductsQuery, FeatureProductsQueryVariables>(FeatureProductsDocument, options);
+      }
+export function useFeatureProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeatureProductsQuery, FeatureProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FeatureProductsQuery, FeatureProductsQueryVariables>(FeatureProductsDocument, options);
+        }
+export type FeatureProductsQueryHookResult = ReturnType<typeof useFeatureProductsQuery>;
+export type FeatureProductsLazyQueryHookResult = ReturnType<typeof useFeatureProductsLazyQuery>;
+export type FeatureProductsQueryResult = Apollo.QueryResult<FeatureProductsQuery, FeatureProductsQueryVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {
