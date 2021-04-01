@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     productName: {
         fontSize: adjust(12),
         padding: 5,
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: "castoro"
     },
     productPrice: {
         color: "#e60004",

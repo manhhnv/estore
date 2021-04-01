@@ -7,7 +7,7 @@ import ProductRecommendation from 'estore/containers/ProductRecommendation';
 import FlashSale from 'estore/containers/FlashSale';
 import Banners from 'estore/containers/Banner';
 import { FeatureProducts } from 'estore/containers/Products';
-
+import  Categories  from 'estore/containers/Categories'
 const { width, height } = Dimensions.get("screen");
 
 const wait = (timeout: number) => {
@@ -51,6 +51,7 @@ const HomeScreen = () => {
                     }
                 >
                     <Banners />
+                    <Categories />
                     <Extension />
                     <FeatureProducts />
                     {/* <ProductRecommendation /> */}

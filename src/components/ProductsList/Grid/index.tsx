@@ -7,7 +7,7 @@ import { Product } from 'estore/graphql/generated';
 
 type GridProps = {
     products: Array<Partial<Product> | null>
-}
+} 
 
 const Grid = ({ products }: GridProps) => {
     if (products.length > 0) {
@@ -31,6 +31,9 @@ const Grid = ({ products }: GridProps) => {
                                         </Text>
                                         <Text style={styles.productPrice}>
                                             {item.price ? item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ₫': null}
+                                        </Text>
+                                        <Text style={styles.productPrice}>
+                                            {item.rating ? item.rating.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : null}
                                         </Text>
                                     </View>
                                 </View>
