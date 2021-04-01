@@ -52,7 +52,7 @@ const HomeScreen = () => {
                 >
                     <Banners />
                     <Categories />
-                    <Extension />
+                    {/* <Extension /> */}
                     <FeatureProducts />
                     {/* <ProductRecommendation /> */}
                     {/* <FlashSale /> */}
