@@ -22,6 +22,7 @@ const FilterProductsScreen = ({ navigation, route }: any) => {
   }, []);
   return (
     <React.Fragment>
+     
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: "#fff" }}

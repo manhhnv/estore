@@ -6,7 +6,7 @@ import GridPlaceholder from "estore/components/templates/GridPlaceholder";
 import styles from "./styles";
 
 const { width } = Dimensions.get("window");
-
+import FilterSelection from "estore/components/FilterSelection";
 const FeatureProducts = ({ navigation, route }: any) => {
   const { data, loading, error } = useProductByCategoriesQuery({
     variables: { categoryId: route.params.categoryId },
@@ -21,14 +21,12 @@ const FeatureProducts = ({ navigation, route }: any) => {
         {data.products.total === 0 ? (
           <>
             <Text style={styles.listProductName}>
-              {data.products.total} products by {route.params.categoryId}
+              No Product found in this category
             </Text>
           </>
         ) : (
           <>
-            <Text style={styles.listProductName}>
-              {data.products.total} products by {route.params.categoryId}
-            </Text>
+             <FilterSelection />
             <Grid products={data.products.items} />
           </>
         )}
