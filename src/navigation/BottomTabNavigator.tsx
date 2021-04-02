@@ -5,7 +5,7 @@ import * as React from 'react';
 import TabOneScreen from 'estore/screens/TabOneScreen';
 import TabTwoScreen from 'estore/screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from 'estore/types';
-import HomeScreen from 'estore/screens/HomeScreen';
+import HomeStack from "estore/navigation/HomeStack"
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -17,7 +17,7 @@ export default function BottomTabNavigator() {
       tabBarOptions={{ activeTintColor: "#07ac4f" }}>
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}

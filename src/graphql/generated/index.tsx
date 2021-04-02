@@ -525,6 +525,23 @@ export type FeatureProductsQuery = (
   )> }
 );
 
+export type ProductByCategoriesQueryVariables = Exact<{
+  categoryId?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type ProductByCategoriesQuery = (
+  { __typename?: 'Query' }
+  & { products?: Maybe<(
+    { __typename?: 'ProductList' }
+    & Pick<ProductList, 'total'>
+    & { items?: Maybe<Array<Maybe<(
+      { __typename?: 'Product' }
+      & Pick<Product, 'name' | 'id' | 'thumbnail' | 'rating' | 'rawDiscount' | 'priceBeforeDiscount' | 'price'>
+    )>>> }
+  )> }
+);
+
 export type BannerFragmentFragment = (
   { __typename?: 'Banner' }
   & Pick<Banner, 'id' | 'name' | 'url' | 'description'>
@@ -673,6 +690,50 @@ export function useFeatureProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type FeatureProductsQueryHookResult = ReturnType<typeof useFeatureProductsQuery>;
 export type FeatureProductsLazyQueryHookResult = ReturnType<typeof useFeatureProductsLazyQuery>;
 export type FeatureProductsQueryResult = Apollo.QueryResult<FeatureProductsQuery, FeatureProductsQueryVariables>;
+export const ProductByCategoriesDocument = gql`
+    query productByCategories($categoryId: Int) {
+  products(filter: {categoryId: $categoryId}) {
+    total
+    items {
+      name
+      id
+      thumbnail
+      rating
+      rawDiscount
+      priceBeforeDiscount
+      price
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductByCategoriesQuery__
+ *
+ * To run a query within a React component, call `useProductByCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductByCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductByCategoriesQuery({
+ *   variables: {
+ *      categoryId: // value for 'categoryId'
+ *   },
+ * });
+ */
+export function useProductByCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<ProductByCategoriesQuery, ProductByCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductByCategoriesQuery, ProductByCategoriesQueryVariables>(ProductByCategoriesDocument, options);
+      }
+export function useProductByCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductByCategoriesQuery, ProductByCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductByCategoriesQuery, ProductByCategoriesQueryVariables>(ProductByCategoriesDocument, options);
+        }
+export type ProductByCategoriesQueryHookResult = ReturnType<typeof useProductByCategoriesQuery>;
+export type ProductByCategoriesLazyQueryHookResult = ReturnType<typeof useProductByCategoriesLazyQuery>;
+export type ProductByCategoriesQueryResult = Apollo.QueryResult<ProductByCategoriesQuery, ProductByCategoriesQueryVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {

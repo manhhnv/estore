@@ -14,7 +14,7 @@ const wait = (timeout: number) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
 
     const CartIcon = withBadge(2, { status: "error" })(Icon);
     const MessageIcon = withBadge(4, { status: "error" })(Icon);
@@ -51,7 +51,7 @@ const HomeScreen = () => {
                     }
                 >
                     <Banners />
-                    <Categories />
+                    <Categories navigation={navigation}/>
                     {/* <Extension /> */}
                     <FeatureProducts />
                     {/* <ProductRecommendation /> */}
