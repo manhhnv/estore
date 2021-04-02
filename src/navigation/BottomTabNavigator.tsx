@@ -6,6 +6,8 @@ import TabOneScreen from 'estore/screens/TabOneScreen';
 import TabTwoScreen from 'estore/screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from 'estore/types';
 import HomeScreen from 'estore/screens/HomeScreen';
+import SettingScreen from 'estore/screens/SettingScreen';
+import SettingStackNavigator from 'estore/navigation/SettingStackNavigation';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -40,7 +42,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Setting"
-        component={TabTwoNavigator}
+        component={SettingStackNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="settings" color={color} />,
         }}

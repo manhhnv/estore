@@ -112,9 +112,7 @@ export type MutationCalculateShippingFeeArgs = {
 
 
 export type MutationLoginArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-  rememberMe?: Maybe<Scalars['Boolean']>;
+  accessToken: Scalars['String'];
 };
 
 
@@ -144,6 +142,7 @@ export type Query = {
   getShopAddress: PickupAddress;
   products?: Maybe<ProductList>;
   productDetail?: Maybe<Product>;
+  categories?: Maybe<Array<Maybe<Category>>>;
   me: User;
   activeWishlist?: Maybe<WishList>;
 };
@@ -471,7 +470,8 @@ export type User = Node & {
 
 export type LoginSuccess = {
   __typename?: 'LoginSuccess';
-  token: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
 };
 
 export type WishList = Node & {
@@ -494,6 +494,23 @@ export type GetBannersQuery = (
       & Pick<Banner, 'id' | 'name' | 'url' | 'description'>
     )>>> }
   )> }
+);
+
+export type LoginMutationVariables = Exact<{
+  accessToken: Scalars['String'];
+}>;
+
+
+export type LoginMutation = (
+  { __typename?: 'Mutation' }
+  & { login: (
+    { __typename?: 'LoginSuccess' }
+    & Pick<LoginSuccess, 'token'>
+    & { user?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'avatar'>
+    )> }
+  ) }
 );
 
 export type FeatureProductsQueryVariables = Exact<{
@@ -582,6 +599,46 @@ export function useGetBannersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetBannersQueryHookResult = ReturnType<typeof useGetBannersQuery>;
 export type GetBannersLazyQueryHookResult = ReturnType<typeof useGetBannersLazyQuery>;
 export type GetBannersQueryResult = Apollo.QueryResult<GetBannersQuery, GetBannersQueryVariables>;
+export const LoginDocument = gql`
+    mutation login($accessToken: String!) {
+  login(accessToken: $accessToken) {
+    token
+    user {
+      id
+      firstName
+      lastName
+      email
+      avatar
+    }
+  }
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      accessToken: // value for 'accessToken'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const FeatureProductsDocument = gql`
     query featureProducts($limit: Int) {
   products(filter: {limit: $limit}) {
