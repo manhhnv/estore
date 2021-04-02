@@ -14,7 +14,7 @@ const FeatureProducts = () => {
             <GridPlaceholder />
         )
     }
-    if (data && data.products && data.products.total && data.products.items) {
+    if (data && data.products && data.products.items) {
         return (
             <React.Fragment>
                 <View style={{ flexDirection: "column", flex: 1 }}>

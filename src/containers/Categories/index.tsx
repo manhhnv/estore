@@ -72,6 +72,7 @@ const Categories = ({ navigation }: any) => {
                 <TouchableOpacity
                   key={index}
                   onPress={() => {
+                    // console.log(cate?.id)
                     navigation.navigate("filter-product", {
                       categoryId: cate?.id,
                     });
