@@ -15,4 +15,4 @@ web-build/
 .vscode
 yarn.lock
 package-lock.json
-./src/graphql/generated/index.tsx
+src/graphql/generated/
