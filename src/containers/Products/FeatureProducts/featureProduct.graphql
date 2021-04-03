@@ -8,6 +8,7 @@ query featureProducts($limit: Int) {
       rawDiscount
       priceBeforeDiscount
       price
+      description
     }
     total
   }

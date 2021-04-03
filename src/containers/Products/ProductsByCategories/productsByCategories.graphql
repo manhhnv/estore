@@ -1,0 +1,15 @@
+query productByCategories($categoryId: Int) {
+  products(filter: {categoryId: $categoryId}) {
+    total
+    items {
+      name
+      id
+      thumbnail
+      rating
+      rawDiscount
+      priceBeforeDiscount
+      price
+      description
+    }
+  }
+}

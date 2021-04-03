@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import * as Font from "expo-font"
+import React, { useEffect } from "react"
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from 'estore/hooks/useCachedResources';
 import useColorScheme from 'estore/hooks/useColorScheme';
@@ -14,6 +15,16 @@ import client from 'estore/graphql/config';
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    (async () =>
+      await Font.loadAsync({
+        "nunito-regular": require("estore/assets/fonts/Nunito-Regular.ttf"),
+        "nunito-bold": require("estore/assets/fonts/Nunito-Bold.ttf"),
+        "oswald": require("estore/assets/fonts/Oswald-VariableFont_wght.ttf"),
+        "castoro": require("estore/assets/fonts/Castoro-Regular.ttf")
+      }))()
+  }, [])
 
   if (!isLoadingComplete) {
     return null;

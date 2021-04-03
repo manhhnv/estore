@@ -7,14 +7,14 @@ import ProductRecommendation from 'estore/containers/ProductRecommendation';
 import FlashSale from 'estore/containers/FlashSale';
 import Banners from 'estore/containers/Banner';
 import { FeatureProducts } from 'estore/containers/Products';
-
+import  Categories  from 'estore/containers/Categories'
 const { width, height } = Dimensions.get("screen");
 
 const wait = (timeout: number) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
 
     const CartIcon = withBadge(2, { status: "error" })(Icon);
     const MessageIcon = withBadge(4, { status: "error" })(Icon);
@@ -51,7 +51,8 @@ const HomeScreen = () => {
                     }
                 >
                     <Banners />
-                    <Extension />
+                    <Categories navigation={navigation}/>
+                    {/* <Extension /> */}
                     <FeatureProducts />
                     {/* <ProductRecommendation /> */}
                     {/* <FlashSale /> */}
