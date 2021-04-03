@@ -26,7 +26,7 @@ const Banners = () => {
                             if (banner) {
                                 return (
                                     <View style={styles.slideItem} key={index}>
-                                        <Image style={styles.image} source={{ uri: banner.url, cache: "only-if-cached" }} />
+                                        <Image style={styles.image} source={{ uri: banner.url, cache: "force-cache" }} />
                                     </View>
                                 )
                             }

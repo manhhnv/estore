@@ -1,34 +1,28 @@
-import React, { useRef, MutableRefObject, useState, useEffect } from 'react';
-import { Alert, Dimensions, ScrollView, Text, View, Animated } from 'react-native';
-import { Input, CheckBox, Button, Image, Icon, SocialIcon } from 'react-native-elements';
-import { useLoginMutation } from 'estore/graphql/generated';
+import React, { useRef, useEffect } from 'react';
+import { Alert, Text, View, Animated } from 'react-native';
+import { Image, SocialIcon } from 'react-native-elements';
+import { useLoginGoogleMutation, useLoginFaceBookMutation } from 'estore/graphql/generated';
 import styles from './styles';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { SettingStackParamList } from 'estore/types';
 import { firebaseConfig } from './config';
 import firebase from 'firebase';
-import Expo from 'expo';
 import * as Google from 'expo-google-app-auth';
-import * as GoogleSignIn from 'expo-google-sign-in';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice';
 import { UserSliceType, login } from 'estore/redux/slice/userSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import * as Facebook from 'expo-facebook';
+import { useNavigation } from '@react-navigation/core';
 
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig)
 }
 
-const { height } = Dimensions.get('window');
-
 type LoginProps = {
-    navigation: StackNavigationProp<SettingStackParamList, "login">;
     user?: UserSliceType;
     login?: ActionCreatorWithPayload<UserSliceType, string>
 }
 
-const Login = ({ navigation, user, login }: LoginProps) => {
+const Login = ({ user, login }: LoginProps) => {
 
     const signInWithGoogleAsync = async () => {
         try {
@@ -41,7 +35,7 @@ const Login = ({ navigation, user, login }: LoginProps) => {
             })
             if (result.type == 'success') {
                 if (result.accessToken) {
-                    executeLogin({ variables: { accessToken: result.accessToken } })
+                    executeGoogleLogin({ variables: { accessToken: result.accessToken } })
                 }
             }
         }
@@ -53,48 +47,44 @@ const Login = ({ navigation, user, login }: LoginProps) => {
     const signInWithFacebookAsync = async () => {
         try {
             await Facebook.initializeAsync({
-                appId: '447591346548238',
+                appId: '554013235570481',
             });
             const result = await Facebook.logInWithReadPermissionsAsync({
-                permissions: ['public_profile'],
+                permissions: ['public_profile', 'email'],
             });
             if (result.type === 'success') {
-                // console.log(result)
-                const response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}&fields=id,name,first_name,last_name,picture.type(large)`);
-                const data = await response.json()
-                console.log(data)
-                Alert.alert('Logged in!', `Hi ${data.name}!`);
-            }
-            else {
-                // type === 'cancel'
+                executeFacebookLogin({ variables: { accessToken: result.token } })
             }
         } catch ({ message }) {
             alert(`Facebook Login Error: ${message}`);
         }
     }
 
-    const emailRef = useRef() as MutableRefObject<Input>;
-    const passwordRef = useRef() as MutableRefObject<Input>;
-    const [email, setEmail] = useState({ value: '', error: true });
-    const [password, setPassword] = useState({ value: '', error: true });
-    const [remember, setRemember] = useState(true);
-    const [showPassword, setShowPassword] = useState(false);
-    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const fadeAnim = useRef(new Animated.Value(0)).current
-    const [executeLogin, { data, loading, error }] = useLoginMutation()
+    const [executeGoogleLogin, { data, loading, error }] = useLoginGoogleMutation()
+    const [executeFacebookLogin, { data: fbData, loading: fbLoading, error: fbError }] = useLoginFaceBookMutation()
+    const navigation = useNavigation();
     useEffect(() => {
         if (error?.message) {
             Alert.alert("", "Email hoặc mật khẩu không chính xác !", [{ style: 'cancel' }], { cancelable: true })
         }
     }, [error])
     useEffect(() => {
-        if (data?.login?.token && data?.login?.user) {
+        if (data?.loginGoogle?.token && data?.loginGoogle?.user) {
             if (login) {
-                login({ token: data.login.token, me: data.login.user })
+                login({ token: data.loginGoogle.token, me: data.loginGoogle.user })
                 navigation.navigate("Home")
             }
         }
     }, [data])
+    useEffect(() => {
+        if (fbData?.loginFaceBook.user && fbData.loginFaceBook.token) {
+            if (login) {
+                login({ token: fbData.loginFaceBook.token, me: fbData.loginFaceBook.user })
+                navigation.navigate("Home")
+            }
+        }
+    }, [fbData])
     useEffect(() => {
         console.log("usera", user)
     }, [user])
@@ -119,87 +109,7 @@ const Login = ({ navigation, user, login }: LoginProps) => {
                     />
                 </View>
                 <View>
-                    {/* <Input
-                        label="Email"
-                        textContentType="emailAddress"
-                        ref={emailRef}
-                        onEndEditing={() => {
-                            email.error ? emailRef.current.shake() : null;
-                            passwordRef.current.focus()
-                        }}
-                        value={email.value}
-                        errorMessage={email.value == '' ? "Bạn phải nhập email" : email.value && email.error ? "Sai định dạng email" : undefined}
-                        containerStyle={{ marginTop: 10 }}
-                        onChangeText={(text: string) => {
-                            if (emailRegex.test(text)) {
-                                setEmail({ value: text, error: false })
-                            }
-                            else {
-                                setEmail({ error: true, value: text })
-                            }
-                        }}
-                        leftIcon={
-                            <Icon
-                                name='email'
-                            />
-                        }
-                    />
-                    <Input
-                        label="Mật khẩu"
-                        textContentType="password"
-                        ref={passwordRef}
-                        onEndEditing={() => {
-                            password.error ? passwordRef.current.shake() : null;
-                        }}
-                        value={password.value}
-                        secureTextEntry={!showPassword}
-                        containerStyle={{ marginTop: 30 }}
-                        errorMessage={password.error ? "Bạn phải nhập mật khẩu" : undefined}
-                        onChangeText={(text: string) => {
-                            if (text) {
-                                setPassword({ value: text, error: false })
-                            }
-                            else {
-                                setPassword({ error: true, value: text })
-                            }
-                        }}
-                        leftIcon={
-                            <Icon
-                                name='lock'
-                            />
-                        }
-                        rightIcon={
-                            showPassword ?
-                                <Icon
-                                    name='eye'
-                                    type='ionicon'
-                                    onPress={() => setShowPassword(!showPassword)}
-                                />
-                                :
-                                <Icon
-                                    name='eye-off'
-                                    type='ionicon'
-                                    onPress={() => setShowPassword(!showPassword)}
-                                />
-                        }
-                    />
-                    <CheckBox
-                        checked={remember}
-                        checkedColor="#07ac4f"
-                        title="Ghi nhớ"
-                        containerStyle={{ borderWidth: 0, backgroundColor: "white" }}
-                        onPress={() => setRemember(!remember)}
-                    /> */}
-                    {/* <Button
-                        title="Đăng nhập"
-                        titleStyle={{ textTransform: "uppercase", letterSpacing: 2 }}
-                        containerStyle={{ width: 210, justifyContent: 'center', alignSelf: 'center' }}
-                        buttonStyle={{ backgroundColor: "#209f60", paddingVertical: 15 }}
-                        loading={loading}
-                        // onPress={() => executeLogin({ variables: { email: email.value, password: password.value } })}
-                        // disabled={password.error || email.error}
-                        onPress={() => signInWithGoogleAsync()}
-                    /> */}
+
                     <SocialIcon
                         title='Continue With Google'
                         button
@@ -214,15 +124,11 @@ const Login = ({ navigation, user, login }: LoginProps) => {
                         type='facebook'
                         onPress={() => signInWithFacebookAsync()}
                         style={{ marginTop: 20 }}
-                    // loading={loading}
+                        loading={fbLoading}
                     />
-                    {/* <Text
-                        style={styles.registerAccountText}
-                        onPress={() => navigation.navigate('register')}
-                    >Tạo tài khoản</Text> */}
                 </View>
             </Animated.ScrollView>
-            {loading ? <View style={styles.overlayLoadingContainer}></View> : null}
+            {(loading || fbLoading) ? <View style={styles.overlayLoadingContainer}></View> : null}
         </React.Fragment>
     )
 }
@@ -233,59 +139,3 @@ const mapStateToProps = (state: RootState) => {
 }
 const mapDispatchToProps = { login }
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Login))
-// import React from 'react';
-// import { Text, View } from 'react-native';
-// import * as GoogleSignIn from 'expo-google-sign-in';
-// import * as AppAuth from 'expo-app-auth';
-// const { URLSchemes } = AppAuth;
-
-// export default class AuthScreen extends React.Component {
-//   state = { user: null };
-
-//   componentDidMount() {
-//     this.initAsync();
-//   }
-
-//   initAsync = async () => {
-//     await GoogleSignIn.initAsync();
-//     this._syncUserWithStateAsync();
-//   };
-
-//   _syncUserWithStateAsync = async () => {
-//     const user = await GoogleSignIn.signInSilentlyAsync();
-//     this.setState({ user });
-//   };
-
-//   signOutAsync = async () => {
-//     await GoogleSignIn.signOutAsync();
-//     this.setState({ user: null });
-//   };
-
-//   signInAsync = async () => {
-//     try {
-//       await GoogleSignIn.askForPlayServicesAsync();
-//       const { type, user } = await GoogleSignIn.signInAsync();
-//       if (type === 'success') {
-//         this._syncUserWithStateAsync();
-//       }
-//     } catch ({ message }) {
-//       alert('login: Error:' + message);
-//     }
-//   };
-
-//   onPress = () => {
-//     if (this.state.user) {
-//       this.signOutAsync();
-//     } else {
-//       this.signInAsync();
-//     }
-//   };
-
-//   render() {
-//     return (
-//         <View style={{ flex: 1 }}>
-//             <Text style={{marginTop: 200}} onPress={this.onPress}>Toggle Auth</Text>
-//         </View>
-//     )
-//   }
-// }

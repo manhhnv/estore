@@ -4,7 +4,7 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  Home: undefined;
+  HomeStack: undefined;
   TabTwo: undefined;
   Notification: undefined;
   Setting: undefined;
@@ -22,4 +22,11 @@ export type TabTwoParamList = {
 export type SettingStackParamList = {
   register: undefined;
   login: undefined;
+}
+
+export type HomeStackParamList = {
+  Home: undefined;
+  FilterProduct: {
+    categoryId: number
+  }
 }

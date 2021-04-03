@@ -8,15 +8,14 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         width,
-        justifyContent: "center",
-        alignItems: "center",
-        alignContent: "center"
+        paddingBottom: 20
     },
     productItem: {
         width: 0.5 * width,
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center",
+        marginVertical: 5
     },
     productImage: {
         marginTop: 5,
