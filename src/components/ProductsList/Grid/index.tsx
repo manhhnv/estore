@@ -5,14 +5,11 @@ import {
   TouchableOpacity,
   Text,
   Image,
-  Dimensions,
 } from "react-native";
 import styles from "./styles";
 import { Product } from "estore/graphql/generated";
-const { width } = Dimensions.get("window");
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
 type GridProps = {
   products: Array<Partial<Product> | null>;
 };
@@ -42,7 +39,7 @@ const Grid = ({ products }: GridProps) => {
                   <Image
                     resizeMode="cover"
                     style={styles.productImage}
-                    source={{ uri: item.thumbnail, cache: "only-if-cached" }}
+                    source={{ uri: item.thumbnail, cache: "force-cache" }}
                   />
                   <View style={styles.nameContainer}>
                     <Text style={styles.productName}>

@@ -15,6 +15,7 @@ import { RootState } from 'estore/redux/slice';
 import { UserSliceType, login } from 'estore/redux/slice/userSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import * as Facebook from 'expo-facebook';
+import { useNavigation } from '@react-navigation/core';
 
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig)
@@ -23,12 +24,11 @@ if (firebase.apps.length === 0) {
 const { height } = Dimensions.get('window');
 
 type LoginProps = {
-    navigation: StackNavigationProp<SettingStackParamList, "login">;
     user?: UserSliceType;
     login?: ActionCreatorWithPayload<UserSliceType, string>
 }
 
-const Login = ({ navigation, user, login }: LoginProps) => {
+const Login = ({ user, login }: LoginProps) => {
 
     const signInWithGoogleAsync = async () => {
         try {
@@ -82,6 +82,7 @@ const Login = ({ navigation, user, login }: LoginProps) => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const fadeAnim = useRef(new Animated.Value(0)).current
     const [executeLogin, { data, loading, error }] = useLoginMutation()
+    const navigation = useNavigation();
     useEffect(() => {
         if (error?.message) {
             Alert.alert("", "Email hoặc mật khẩu không chính xác !", [{ style: 'cancel' }], { cancelable: true })

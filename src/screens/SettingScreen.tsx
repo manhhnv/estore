@@ -9,17 +9,16 @@ import { SettingStackParamList } from 'estore/types';
 
 type SettingScreenProps = {
     user: UserSliceType;
-    navigation: StackNavigationProp<SettingStackParamList, "login">
 }
 
-const SettingScreen = ({ user, navigation }: SettingScreenProps) => {
+const SettingScreen = ({ user }: SettingScreenProps) => {
     if (!user || !user.token || !user.me) {
         return (
-            <Login navigation={navigation}/>
+            <Login/>
             // <Login />
         )
     }
-    return <Login navigation={navigation}/>
+    return <Login/>
 }
 const mapStateToProps = (state: RootState) => {
     return {

@@ -39,7 +39,7 @@ const List = ({ products }: GridProps) => {
                   <Image
                     resizeMode="cover"
                     style={styles.productImage}
-                    source={{ uri: item.thumbnail, cache: "only-if-cached" }}
+                    source={{ uri: item.thumbnail, cache: "force-cache" }}
                   />
 
                   <View style={styles.priceContainer}>
