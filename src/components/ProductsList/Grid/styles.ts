@@ -7,42 +7,110 @@ const styles = StyleSheet.create({
     productsLayoutContainer: {
         flexDirection: "row",
         flexWrap: "wrap",
+        width,
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center"
     },
     productItem: {
-        width: 0.5 * width - 15,
-        margin: 7.5,
-        marginVertical: 20
+        width: 0.5 * width,
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
     },
     productImage: {
-        height: 240
+        marginTop: 5,
+        marginBottom: 5,
+        width: 0.5 * width * 0.95,
+        height: 230,
+    },
+    nameContainer: {
+        width: "95%",
+        height: "auto",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        alignContent: "center"
     },
     productName: {
-        fontSize: adjust(12),
-        padding: 5,
-        textAlign: "center"
+        fontSize: adjust(13),
+        // padding: 5,
+        fontFamily: "castoro",
+        minHeight: 40
+    },
+    priceContainer: {
+        marginBottom: 5,
+        width: "95%",
+        height: "auto",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        alignContent: "center"
+    },
+    priceChildContainer: {
+        width: "auto",
+        height: "auto",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        alignContent: "center"
     },
     productPrice: {
-        color: "#e60004",
-        fontWeight: "bold",
+        color: "black",
         textAlign: "center",
-        fontSize: adjust(12)
+        fontSize: adjust(11),
+        fontFamily: "castoro",
+        letterSpacing: 1,
     },
     productPriceBeforeDiscount: {
-        color: "#888989",
+        fontSize: adjust(10),
+        color: "grey",
         fontWeight: "bold",
-        textAlign: "center",
         textDecorationLine: "line-through",
+    },
+    cartIconContainer: {
+        backgroundColor: "coral",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        marginRight: 5
+    },
+    iconCart: {
+        padding: 5,
+        paddingLeft: 15,
+        paddingRight: 15,
     },
     productSale: {
         position: "absolute",
-        backgroundColor: "red",
         zIndex: 1,
-        width: 40
+        width: "auto",
+        height: "auto",
+        borderRadius: 5,
+        top: 0,
+        left: 10
     },
     saleText: {
+        position: "absolute",
+        top: 5,
+        // left: 5,
+        fontSize: 16,
+        padding: 5,
+        // paddingLeft: 10,
+        // paddingRight: 10,
         color: "white",
         textAlign: "center",
         fontWeight: "bold"
+    },
+    heartIconContainer: {
+        position: "absolute",
+        zIndex: 1,
+        width: "auto",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        top: 10,
+        right: 10
     }
 })
 export default styles;
