@@ -5,7 +5,7 @@ import { SettingStackParamList } from 'estore/types';
 
 const SettingStack = createStackNavigator<SettingStackParamList>();
 
-export default function SettingStackNavigator () {
+export default function SettingStackNavigator() {
     return (
         <SettingStack.Navigator>
             <SettingStack.Screen
@@ -16,5 +16,5 @@ export default function SettingStackNavigator () {
                 name="login"
             />
         </SettingStack.Navigator>
-    )
+    );
 }
