@@ -128,7 +128,8 @@ export type ListBanners = {
 
 export type LoginSuccess = {
   __typename?: 'LoginSuccess';
-  token: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
+  user?: Maybe<User>;
 };
 
 export type Mutation = {
@@ -188,9 +189,7 @@ export type MutationCalculateShippingFeeArgs = {
 
 
 export type MutationLoginArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-  rememberMe?: Maybe<Scalars['Boolean']>;
+  accessToken: Scalars['String'];
 };
 
 
@@ -520,7 +519,7 @@ export type FeatureProductsQuery = (
     & Pick<ProductList, 'total'>
     & { items?: Maybe<Array<Maybe<(
       { __typename?: 'Product' }
-      & Pick<Product, 'name' | 'id' | 'thumbnail' | 'rating' | 'rawDiscount' | 'priceBeforeDiscount' | 'price'>
+      & Pick<Product, 'name' | 'id' | 'thumbnail' | 'rating' | 'rawDiscount' | 'priceBeforeDiscount' | 'price' | 'description'>
     )>>> }
   )> }
 );
@@ -537,7 +536,7 @@ export type ProductByCategoriesQuery = (
     & Pick<ProductList, 'total'>
     & { items?: Maybe<Array<Maybe<(
       { __typename?: 'Product' }
-      & Pick<Product, 'name' | 'id' | 'thumbnail' | 'rating' | 'rawDiscount' | 'priceBeforeDiscount' | 'price'>
+      & Pick<Product, 'name' | 'id' | 'thumbnail' | 'rating' | 'rawDiscount' | 'priceBeforeDiscount' | 'price' | 'description'>
     )>>> }
   )> }
 );
@@ -657,6 +656,7 @@ export const FeatureProductsDocument = gql`
       rawDiscount
       priceBeforeDiscount
       price
+      description
     }
     total
   }
@@ -702,6 +702,7 @@ export const ProductByCategoriesDocument = gql`
       rawDiscount
       priceBeforeDiscount
       price
+      description
     }
   }
 }

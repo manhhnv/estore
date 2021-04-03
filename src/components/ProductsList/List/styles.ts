@@ -5,27 +5,27 @@ const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     productsLayoutContainer: {
-        flexDirection: "row",
-        flexWrap: "wrap",
         width,
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center"
     },
     productItem: {
-        width: 0.5 * width,
-        justifyContent: "center",
+        marginTop: 5,
+        marginBottom: 5,
+        width: width,
+        flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center",
         alignContent: "center",
     },
-    productImage: {
-        marginTop: 5,
-        marginBottom: 5,
-        width: 0.5 * width * 0.95,
-        height: 230,
+    productImage: { 
+        width: 0.5 * width * 0.8,
+        height: 200,
     },
     nameContainer: {
-        width: "95%",
+        marginLeft: 5,
+        width: "100%",
         height: "auto",
         flexDirection: "row",
         flexWrap: "wrap",
@@ -33,56 +33,63 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignContent: "center"
     },
-    productName: {
-        fontSize: adjust(13),
-        // padding: 5,
-        fontFamily: "castoro",
-        minHeight: 40
-    },
-    priceContainer: {
+    priceBottomContainer: {
         marginBottom: 5,
-        width: "95%",
-        height: "auto",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        alignContent: "center"
-    },
-    priceChildContainer: {
+        marginLeft: 5,
         width: "auto",
         height: "auto",
         justifyContent: "center",
         alignItems: "flex-start",
         alignContent: "center"
     },
+    productName: {
+        marginTop: 5,
+        fontSize: adjust(13),
+        // padding: 5,
+        letterSpacing: 1,
+        fontFamily: "castoro",
+        minHeight: 40
+    },
+    productDescription: {
+        fontSize: adjust(10),
+        fontFamily: "castoro",
+        minHeight: 40,
+        color: "black",
+    },
+    priceContainer: {    
+        width: 0.5 * width + 0.5 * width * 0.2,  
+        height: 200,
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        alignContent: "center"
+    },
     productPrice: {
         color: "black",
         textAlign: "center",
-        fontSize: adjust(11),
+        fontSize: adjust(12),
         fontFamily: "castoro",
         letterSpacing: 1,
     },
     productPriceBeforeDiscount: {
-        fontSize: adjust(10),
+        fontSize: adjust(11),
         color: "grey",
         fontWeight: "bold",
         textDecorationLine: "line-through",
     },
     cartIconContainer: {
+        position: "absolute",
         backgroundColor: "coral",
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center",
-        marginRight: 5
-    },
-    heartIcon: {
-        padding: 10,
+        bottom: 10,
+        right: 10
     },
     iconCart: {
         padding: 5,
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     productSale: {
         position: "absolute",
@@ -91,22 +98,18 @@ const styles = StyleSheet.create({
         height: "auto",
         borderRadius: 5,
         top: 0,
-        left: 10
+        left: 0
     },
     saleText: {
         position: "absolute",
         top: 5,
-        // left: 5,
         fontSize: 16,
         padding: 5,
-        // paddingLeft: 10,
-        // paddingRight: 10,
         color: "white",
         textAlign: "center",
         fontWeight: "bold"
     },
     heartIconContainer: {
-        borderRadius: 50,
         backgroundColor: "coral",
         position: "absolute",
         zIndex: 1,
@@ -114,8 +117,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         alignContent: "center",
-        top: 5,
-        right: 5
+        bottom: 10,
+        right: 60
     }
 })
 export default styles;

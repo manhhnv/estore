@@ -17,7 +17,7 @@ type GridProps = {
   products: Array<Partial<Product> | null>;
 };
 
-const Grid = ({ products }: GridProps) => {
+const List = ({ products }: GridProps) => {
   if (products.length > 0) {
     return (
       <SafeAreaView style={styles.productsLayoutContainer}>
@@ -35,23 +35,24 @@ const Grid = ({ products }: GridProps) => {
                     </View>
                   ) : null}
 
-                  <TouchableOpacity style={styles.heartIconContainer}>
-                    <AntDesign name="hearto" size={20} color="white" style={styles.heartIcon}/>
-                  </TouchableOpacity>
-                  {/* <View> */}
+                  
                   <Image
                     resizeMode="cover"
                     style={styles.productImage}
                     source={{ uri: item.thumbnail, cache: "only-if-cached" }}
                   />
-                  <View style={styles.nameContainer}>
-                    <Text style={styles.productName}>
-                      {item.name?.slice(0, 30) + "..."}
-                    </Text>
-                  </View>
 
                   <View style={styles.priceContainer}>
-                    <View style={styles.priceChildContainer}>
+                    <View style={styles.nameContainer}>
+                      <Text style={styles.productName}>
+                        {item.name?.slice(0, 40) + "..."}
+                      </Text>
+                      <Text style={styles.productDescription}>
+                        {item.description?.slice(0, 60) + "..."}
+                      </Text>
+                    </View>
+
+                    <View style={styles.priceBottomContainer}>
                       <Text style={styles.productPrice}>
                         {item.price
                           ? item.price
@@ -67,7 +68,12 @@ const Grid = ({ products }: GridProps) => {
                           : null}
                       </Text>
                     </View>
-                    <TouchableOpacity style={styles.cartIconContainer}>
+                  </View>
+
+                  <TouchableOpacity style={styles.heartIconContainer}>
+                    <AntDesign name="hearto" size={18} color="white" style={styles.iconCart}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.cartIconContainer}>
                       <FontAwesome5
                         name="cart-plus"
                         size={18}
@@ -75,9 +81,6 @@ const Grid = ({ products }: GridProps) => {
                         style={styles.iconCart}
                       />
                     </TouchableOpacity>
-                  </View>
-
-                  {/* </View> */}
                 </View>
               </TouchableOpacity>
             );
@@ -88,4 +91,4 @@ const Grid = ({ products }: GridProps) => {
   }
   return <View></View>;
 };
-export default React.memo(Grid);
+export default React.memo(List);

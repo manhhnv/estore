@@ -9,6 +9,7 @@ query productByCategories($categoryId: Int) {
       rawDiscount
       priceBeforeDiscount
       price
+      description
     }
   }
 }
