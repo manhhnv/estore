@@ -2,22 +2,22 @@ import * as React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 import HomeScreen from 'estore/screens/HomeScreen';
 import FilterProductsScreen from 'estore/screens/FilterProductsScreen';
+import { HomeStackParamList } from 'estore/types';
 
-
-const Stack = createStackNavigator()
+const Stack = createStackNavigator<HomeStackParamList>()
 
 export default function HomeStack() {
   return (
-    <Stack.Navigator initialRouteName="home">
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
-        name="home"
+        name="Home"
         component={HomeScreen}
         options={{
           headerShown: false
         }}
       />
       <Stack.Screen
-        name="filter-product"
+        name="FilterProduct"
         component={FilterProductsScreen}
         options={{
           headerShown: false

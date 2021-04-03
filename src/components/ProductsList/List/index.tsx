@@ -5,14 +5,11 @@ import {
   TouchableOpacity,
   Text,
   Image,
-  Dimensions,
 } from "react-native";
 import styles from "./styles";
 import { Product } from "estore/graphql/generated";
-const { width } = Dimensions.get("window");
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
 type GridProps = {
   products: Array<Partial<Product> | null>;
 };

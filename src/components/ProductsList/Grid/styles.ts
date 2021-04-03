@@ -8,9 +8,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         width,
-        justifyContent: "center",
-        alignItems: "center",
-        alignContent: "center",
         paddingBottom: 20
     },
     productItem: {

@@ -1,20 +1,17 @@
 import React, { useState, useCallback } from 'react';
-import { Header, Icon, Badge, withBadge } from 'react-native-elements';
-import { Dimensions, Text, View, RefreshControl } from 'react-native';
+import { Header, Icon, withBadge } from 'react-native-elements';
+import { Dimensions, View, RefreshControl } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import Extension from 'estore/containers/Extension';
-import ProductRecommendation from 'estore/containers/ProductRecommendation';
-import FlashSale from 'estore/containers/FlashSale';
 import Banners from 'estore/containers/Banner';
 import { FeatureProducts } from 'estore/containers/Products';
-import  Categories  from 'estore/containers/Categories'
-const { width, height } = Dimensions.get("screen");
+import Categories from 'estore/containers/Categories';
 
+const { width } = Dimensions.get("screen");
 const wait = (timeout: number) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-const HomeScreen = ({ navigation }: any) => {
+const HomeScreen = () => {
 
     const CartIcon = withBadge(2, { status: "error" })(Icon);
     const MessageIcon = withBadge(4, { status: "error" })(Icon);
@@ -41,21 +38,18 @@ const HomeScreen = ({ navigation }: any) => {
             />
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 <ScrollView
-                    showsVerticalScrollIndicator={false}
+                    // showsVerticalScrollIndicator={false}
                     style={{ backgroundColor: "#fff" }}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }
+                    // refreshControl={
+                    //     <RefreshControl
+                    //         refreshing={refreshing}
+                    //         onRefresh={onRefresh}
+                    //     />
+                    // }
                 >
                     <Banners />
-                    <Categories navigation={navigation}/>
-                    {/* <Extension /> */}
+                    <Categories />
                     <FeatureProducts />
-                    {/* <ProductRecommendation /> */}
-                    {/* <FlashSale /> */}
                 </ScrollView>
             </View>
         </React.Fragment>

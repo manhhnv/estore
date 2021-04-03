@@ -1,32 +1,14 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  Button,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Image,
-  ScrollView,
-  Dimensions,
-  Modal,
-  Keyboard,
-  View,
-} from "react-native";
-
-import {
-  MaterialIcons,
-  Feather,
-  Entypo,
-  Octicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-
-const width = Dimensions.get("window").width; //full width
-const height = Dimensions.get("window").height; //full height
-
+import React, { Dispatch, SetStateAction } from "react";
+import { TouchableOpacity, View, Text } from 'react-native';
+import { Entypo, Octicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./style";
 
-const FilterSelection = ({grid, setGrid}: any) => {
+type FilterSelectionProps = {
+  grid: boolean;
+  setGrid: Dispatch<SetStateAction<boolean>>
+}
+
+const FilterSelection = ({grid, setGrid}: FilterSelectionProps) => {
   
   return (
     <View style={styles.buttonContainer}>
