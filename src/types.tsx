@@ -18,3 +18,8 @@ export type TabOneParamList = {
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
 };
+
+export type SettingStackParamList = {
+  register: undefined;
+  login: undefined;
+}

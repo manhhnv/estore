@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
 import * as Font from "expo-font"
 import React, { useEffect } from "react"

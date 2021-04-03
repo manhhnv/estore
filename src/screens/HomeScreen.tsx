@@ -28,16 +28,16 @@ const HomeScreen = ({ navigation }: any) => {
         <React.Fragment>
             <Header
                 placement="right"
-                leftComponent={<Icon name="search" type="font-awesome" color="#fff" />}
+                leftComponent={<Icon name="search" type="font-awesome" color="black" />}
                 leftContainerStyle={{ marginLeft: 0.05 * width }}
                 centerComponent={
-                    <CartIcon type="font-awesome" name="shopping-cart" color="#fff" />
+                    <CartIcon type="font-awesome" name="shopping-cart" color="black" />
                 }
                 rightComponent={
-                    <MessageIcon type="antdesign" name="wechat" color="#fff" />
+                    <MessageIcon type="antdesign" name="wechat" color="black" />
                 }
                 rightContainerStyle={{ marginHorizontal: 0.05 * width }}
-                backgroundColor="#07ac4f"
+                backgroundColor="white"
             />
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 <ScrollView
