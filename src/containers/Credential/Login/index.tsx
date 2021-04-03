@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice';
 import { UserSliceType, login } from 'estore/redux/slice/userSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import * as Facebook from 'expo-facebook';
 
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig)
@@ -46,6 +47,29 @@ const Login = ({ navigation, user, login }: LoginProps) => {
         }
         catch (e) {
             return e;
+        }
+    }
+
+    const signInWithFacebookAsync = async () => {
+        try {
+            await Facebook.initializeAsync({
+                appId: '447591346548238',
+            });
+            const result = await Facebook.logInWithReadPermissionsAsync({
+                permissions: ['public_profile'],
+            });
+            if (result.type === 'success') {
+                // console.log(result)
+                const response = await fetch(`https://graph.facebook.com/me?access_token=${result.token}&fields=id,name,first_name,last_name,picture.type(large)`);
+                const data = await response.json()
+                console.log(data)
+                Alert.alert('Logged in!', `Hi ${data.name}!`);
+            }
+            else {
+                // type === 'cancel'
+            }
+        } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
         }
     }
 
@@ -188,7 +212,7 @@ const Login = ({ navigation, user, login }: LoginProps) => {
                         title='Continue With Facebook'
                         button
                         type='facebook'
-                        // onPress={() => signInWithGoogleAsync()}
+                        onPress={() => signInWithFacebookAsync()}
                         style={{ marginTop: 20 }}
                     // loading={loading}
                     />

@@ -24,7 +24,7 @@ const Grid = ({ products }: GridProps) => {
                                         </View>
                                     ) : null}
                                     <View>
-                                        <Image resizeMode="cover" style={styles.productImage} source={{ uri: item.thumbnail, cache: "only-if-cached" }} />
+                                        <Image resizeMode="cover" style={styles.productImage} source={{ uri: item.thumbnail, cache: "default" }} />
                                         <Text style={styles.productName}>{item.name?.slice(0, 27) + '...'}</Text>
                                         <Text style={styles.productPriceBeforeDiscount}>
                                             {item.priceBeforeDiscount ? item.priceBeforeDiscount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ₫': null}
