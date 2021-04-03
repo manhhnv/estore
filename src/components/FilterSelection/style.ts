@@ -50,9 +50,22 @@ export default StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
+  iconContainerNot: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "coral",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
   icon: {
     padding: 5,
     color: "white"
+  },
+  iconNot: {
+    padding: 5,
+    color: "coral"
   }
   
 })
