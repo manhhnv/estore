@@ -153,4 +153,4 @@ const Login = ({ login }: LoginProps) => {
         </React.Fragment>
     );
 };
-export default (React.memo(Login));
+export default React.memo(Login);

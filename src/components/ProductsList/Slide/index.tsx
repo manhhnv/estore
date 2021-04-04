@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     Text,
     Image,
-    FlatList,
+    FlatList
 } from 'react-native';
 import styles from './styles';
 import { Product } from 'estore/graphql/generated';
@@ -80,14 +80,16 @@ const ProductItem = React.memo(({ item }: { item: Partial<Product> }) => {
                         <Text style={styles.productPrice}>
                             {item.price
                                 ? item.price
-                                    .toString()
-                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
-                                ' VND'
+                                      .toString()
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
+                                  ' VND'
                                 : null}
                         </Text>
                     </View>
                     <TouchableOpacity style={styles.cartIconContainer}>
-                        <Text style={{ color:'coral' }}>Đã bán {item.soldQuantity}</Text>
+                        <Text style={{ color: 'coral' }}>
+                            Đã bán {item.soldQuantity}
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -17,20 +17,24 @@ const FilterProductsScreen = ({ route }: FilterProductsScreenProps) => {
     return (
         <React.Fragment>
             <Header
-                centerComponent={<Text style={{ fontFamily: 'castoro', fontSize: adjust(15), letterSpacing: 1 }}>{name}</Text>}
+                centerComponent={
+                    <Text
+                        style={{
+                            fontFamily: 'castoro',
+                            fontSize: adjust(15),
+                            letterSpacing: 1
+                        }}
+                    >
+                        {name}
+                    </Text>
+                }
                 backgroundColor="white"
                 leftComponent={
                     <Button
-                        onPress={() => navigation.goBack()} buttonStyle={{ backgroundColor: 'white' }}
-
-                        icon={
-                            <Icon
-                                type="font-awesome"
-                                name="angle-left"
-                            />
-                        }
-                    >
-                    </Button>
+                        onPress={() => navigation.goBack()}
+                        buttonStyle={{ backgroundColor: 'white' }}
+                        icon={<Icon type="font-awesome" name="angle-left" />}
+                    ></Button>
                 }
                 rightComponent={
                     <CartIcon
