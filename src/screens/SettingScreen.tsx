@@ -8,6 +8,7 @@ import { SettingStackParamList } from 'estore/types';
 import Settings from 'estore/containers/Settings';
 import { login, logout, UserSliceType } from 'estore/redux/slice/userSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { Button } from 'react-native-elements';
 
 type SettingScreenProps = {
     user: UserSliceType;
@@ -22,7 +23,9 @@ const SettingScreen = ({ user, login, logout }: SettingScreenProps) => {
         );
     }
     return (
-        <Settings logout={logout} />
+        <React.Fragment>
+            <Settings logout={logout} user={user} />
+        </React.Fragment>
     );
 };
 const mapStateToProps = (state: RootState) => {

@@ -38,6 +38,7 @@ const Grid = ({ products }: GridProps) => {
                     showsHorizontalScrollIndicator={false}
                     initialNumToRender={8}
                     numColumns={2}
+                    removeClippedSubviews={true}
                 />
             </SafeAreaView>
         );
