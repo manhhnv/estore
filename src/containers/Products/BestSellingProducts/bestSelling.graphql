@@ -1,0 +1,16 @@
+query bestSelling {
+    products(sort: { field: soldQuantity, type: DESC }, filter: { limit: 10 }) {
+        total
+        items {
+            name
+            id
+            thumbnail
+            rating
+            rawDiscount
+            priceBeforeDiscount
+            price
+            description
+            soldQuantity
+        }
+    }
+}

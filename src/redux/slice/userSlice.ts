@@ -4,17 +4,17 @@ import { User } from 'estore/graphql/generated';
 export type UserSliceType = {
     me: User | undefined;
     token: string | undefined;
-}
+};
 
-const initialState: UserSliceType = {me: undefined, token: undefined};
+const initialState: UserSliceType = { me: undefined, token: undefined };
 
 const userSlice = createSlice({
-    name: "user",
+    name: 'user',
     initialState: initialState,
     reducers: {
         queryMe: (state, action: PayloadAction<User>) => {
             if (action.payload) {
-                state.me = action.payload
+                state.me = action.payload;
             }
         },
         logout: (state, action) => {
@@ -26,7 +26,7 @@ const userSlice = createSlice({
             state.me = action.payload.me;
         }
     }
-})
+});
 
 export const { queryMe, logout, login } = userSlice.actions;
 export default userSlice.reducer;

@@ -9,6 +9,6 @@ const FlashSale = () => {
             <CountDown />
             <ProductFlashSale />
         </View>
-    )
-}
+    );
+};
 export default FlashSale;

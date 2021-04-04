@@ -8,9 +8,13 @@ import styles from './styles';
 const Banners = () => {
     const { loading, data, error } = useGetBannersQuery();
     if (loading) {
-        return <ActivityIndicator size="large" color="#07ac4f" />
+        return <ActivityIndicator size="large" color="#07ac4f" />;
     }
-    if (data?.getBanners?.items && data.getBanners.totalItems && data.getBanners.totalItems > 0) {
+    if (
+        data?.getBanners?.items &&
+        data.getBanners.totalItems &&
+        data.getBanners.totalItems > 0
+    ) {
         return (
             <View style={styles.container}>
                 <Swiper
@@ -18,24 +22,28 @@ const Banners = () => {
                     autoplay
                     showsPagination={true}
                     containerStyle={{ maxHeight: 200 }}
-                    activeDotStyle={{ backgroundColor: "white" }}
+                    activeDotStyle={{ backgroundColor: 'white' }}
                     autoplayTimeout={6}
                 >
-                    {
-                        data.getBanners.items.map((banner, index) => {
-                            if (banner) {
-                                return (
-                                    <View style={styles.slideItem} key={index}>
-                                        <Image style={styles.image} source={{ uri: banner.url, cache: "force-cache" }} />
-                                    </View>
-                                )
-                            }
-                        })
-                    }
+                    {data.getBanners.items.map((banner, index) => {
+                        if (banner) {
+                            return (
+                                <View style={styles.slideItem} key={index}>
+                                    <Image
+                                        style={styles.image}
+                                        source={{
+                                            uri: banner.url,
+                                            cache: 'force-cache'
+                                        }}
+                                    />
+                                </View>
+                            );
+                        }
+                    })}
                 </Swiper>
             </View>
-        )
+        );
     }
-    return <View></View>
-}
+    return <View></View>;
+};
 export default React.memo(Banners);

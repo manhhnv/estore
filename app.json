@@ -1,44 +1,42 @@
 {
-  "expo": {
-    "name": "Estore",
-    "slug": "estore",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/logo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "host.exp.exponent",
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.313865217221-ia7143435tl7otlhbvhd4snsfl1df8ec"
-        }
-      },
-      "googleServicesFile": "./GoogleService-Info.plist"
-    },
-    "android": {
-      "package": "host.exp.exponent",
-      "googleServicesFile":"./google-services.json",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    },
-    "description": ""
-  }
+    "expo": {
+        "name": "Estore",
+        "slug": "estore",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/icon.png",
+        "scheme": "myapp",
+        "userInterfaceStyle": "automatic",
+        "splash": {
+            "image": "./assets/images/logo.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "host.exp.exponent",
+            "config": {
+                "googleSignIn": {
+                    "reservedClientId": "com.googleusercontent.apps.313865217221-ia7143435tl7otlhbvhd4snsfl1df8ec"
+                }
+            },
+            "googleServicesFile": "./GoogleService-Info.plist"
+        },
+        "android": {
+            "package": "host.exp.exponent",
+            "googleServicesFile": "./google-services.json",
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/logo.png",
+                "backgroundColor": "#FFFFFF"
+            }
+        },
+        "web": {
+            "favicon": "./assets/images/favicon.png"
+        },
+        "description": ""
+    }
 }
