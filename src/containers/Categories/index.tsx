@@ -26,7 +26,10 @@ const Categories = () => {
                                         onPress={() =>
                                             navigation.navigate(
                                                 'FilterProduct',
-                                                { categoryId: cate.id, name: cate.name }
+                                                {
+                                                    categoryId: cate.id,
+                                                    name: cate.name
+                                                }
                                             )
                                         }
                                     >

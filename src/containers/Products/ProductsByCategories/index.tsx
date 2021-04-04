@@ -37,7 +37,9 @@ const ProductByCategories = ({ route }: ProductByCategoriesProps) => {
     }
     if (data && data.products && data.products.items) {
         return (
-            <View style={{ flex: 1, flexDirection: 'column', paddingBottom: 80 }}>
+            <View
+                style={{ flex: 1, flexDirection: 'column', paddingBottom: 80 }}
+            >
                 {data.products.total === 0 ? (
                     <>
                         <Text style={styles.listProductName}>

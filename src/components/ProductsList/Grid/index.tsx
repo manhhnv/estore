@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     Text,
     Image,
-    FlatList,
+    FlatList
 } from 'react-native';
 import styles from './styles';
 import { Product } from 'estore/graphql/generated';
@@ -32,7 +32,7 @@ const Grid = ({ products }: GridProps) => {
                     renderItem={renderItem}
                     maxToRenderPerBatch={8}
                     contentContainerStyle={{
-                        flexDirection: 'column',
+                        flexDirection: 'column'
                     }}
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}

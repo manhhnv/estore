@@ -12,6 +12,8 @@ export default StyleSheet.create({
     personalContainer: {
         backgroundColor: 'coral',
         flexDirection: 'row',
-        flex: 1
+        flex: 1,
+        paddingVertical: 20,
+        paddingLeft: 20
     }
-})
+});
