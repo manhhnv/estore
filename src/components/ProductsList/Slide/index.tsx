@@ -88,7 +88,7 @@ const ProductItem = React.memo(({ item }: { item: Partial<Product> }) => {
                     </View>
                     <TouchableOpacity style={styles.cartIconContainer}>
                         <Text style={{ color: 'coral' }}>
-                            Đã bán {item.soldQuantity}
+                            Đã bán {item.soldQuantity && item.soldQuantity >= 1000 ? Math.round(item.soldQuantity/10) / 100 + 'K' : 0}
                         </Text>
                     </TouchableOpacity>
                 </View>

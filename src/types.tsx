@@ -31,3 +31,8 @@ export type HomeStackParamList = {
         name: string;
     };
 };
+
+export type SearchItem = {
+    keyWord: string;
+    time: Date
+}
