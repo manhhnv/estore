@@ -30,6 +30,9 @@ export type HomeStackParamList = {
         categoryId: number;
         name: string;
     };
+    ProductDetail: {
+        productId: string;
+    } | undefined;
 };
 
 export type SearchItem = {

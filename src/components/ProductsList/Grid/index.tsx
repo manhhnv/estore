@@ -11,14 +11,18 @@ import styles from './styles';
 import { Product } from 'estore/graphql/generated';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { HomeStackParamList } from 'estore/types';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+
 type GridProps = {
     products: Array<Partial<Product> | null>;
 };
 
 const Grid = ({ products }: GridProps) => {
+    const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
-            return <ProductItem item={item} />;
+            return <ProductItem item={item} navigation={navigation} />;
         }
         return <Text></Text>;
     };
@@ -47,9 +51,17 @@ const Grid = ({ products }: GridProps) => {
 };
 export default Grid;
 
-const ProductItem = React.memo(({ item }: { item: Partial<Product> }) => {
+type ProductItemProps = {
+    item: Partial<Product>;
+    navigation: NavigationProp<HomeStackParamList>;
+}
+
+const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
+    const productDetail = (productId: string) => {
+        navigation.navigate("ProductDetail", { productId: productId })
+    }
     return (
-        <TouchableOpacity key={item.id}>
+        <TouchableOpacity key={item.id} onPress={() => productDetail(item.id ? item.id : '')}>
             <View style={styles.productItem}>
                 {item.rawDiscount ? (
                     <View style={styles.productSale}>

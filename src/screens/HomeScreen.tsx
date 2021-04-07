@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Header, Icon, withBadge } from 'react-native-elements';
 import { Dimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import Banners from 'estore/containers/Banner';
+import HomeBanner from 'estore/containers/HomeBanner';
 import { FeatureProducts } from 'estore/containers/Products';
 import Categories from 'estore/containers/Categories';
 import BestSellingProducts from 'estore/containers/Products/BestSellingProducts';
@@ -13,8 +13,8 @@ const wait = (timeout: number) => {
 };
 
 const HomeScreen = () => {
-    const CartIcon = withBadge(2, { status: 'error' })(Icon);
-    const MessageIcon = withBadge(4, { status: 'error' })(Icon);
+    const CartIcon = withBadge(2, { status: 'error' })(Icon) as typeof Icon;
+    const MessageIcon = withBadge(4, { status: 'error' })(Icon) as typeof Icon;
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = useCallback(() => {
@@ -59,7 +59,7 @@ const HomeScreen = () => {
                     //     />
                     // }
                 >
-                    <Banners />
+                    <HomeBanner />
                     <Categories />
                     <FeatureProducts />
                     <BestSellingProducts />
