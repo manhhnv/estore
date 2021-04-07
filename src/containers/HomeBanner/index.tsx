@@ -5,7 +5,7 @@ import { View, ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
 import styles from './styles';
 
-const Banners = () => {
+const HomeBanner = () => {
     const { loading, data, error } = useGetBannersQuery();
     if (loading) {
         return <ActivityIndicator size="large" color="#07ac4f" />;
@@ -46,4 +46,4 @@ const Banners = () => {
     }
     return <View></View>;
 };
-export default React.memo(Banners);
+export default React.memo(HomeBanner);

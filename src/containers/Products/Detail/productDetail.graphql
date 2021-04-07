@@ -1,0 +1,5 @@
+query productDetail($productId: ID!) {
+    productDetail(id: $productId) {
+        ...DetailFragment
+    }
+}

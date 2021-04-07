@@ -1,0 +1,21 @@
+fragment DetailFragment on Product {
+    id
+    name
+    description
+    inStock
+    thumbnail
+    rating
+    rawDiscount
+    price
+    priceBeforeDiscount
+    weight
+    soldQuantity
+    previews {
+        id
+        url
+    }
+    configs {
+        name
+        values
+    }
+}

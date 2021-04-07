@@ -22,8 +22,8 @@ const SettingScreen = ({ user, login, logout }: SettingScreenProps) => {
     if (!user || !user.token || !user.me) {
         return <Login login={login} />;
     }
-    const CartIcon = withBadge(2, { status: 'error' })(Icon);
-    const MessageIcon = withBadge(4, { status: 'error' })(Icon);
+    const CartIcon = withBadge(2, { status: 'error' })(Icon) as typeof Icon;
+    const MessageIcon = withBadge(4, { status: 'error' })(Icon) as typeof Icon;
     return (
         <React.Fragment>
             <Header
