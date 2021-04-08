@@ -1,7 +1,8 @@
 import React from 'react';
 import { useProductDetailQuery } from 'estore/graphql/generated';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, View, Text, ScrollView } from 'react-native';
 import Banner from 'estore/components/Banner';
+import { adjust } from 'estore/helpers/adjust';
 
 type ProductDetailProps = {
     productId: string
@@ -10,7 +11,7 @@ type ProductDetailProps = {
 const ProductDetail = ({productId}: ProductDetailProps) => {
     const { called, data, loading, error } = useProductDetailQuery({ variables: { productId: productId } })
     if (loading) {
-        return <ActivityIndicator color="black" size="large" />
+        return <ActivityIndicator color="coral" size="large" />
     }
     else if (called && data && data.productDetail) {
         let previews: Array<string | undefined> = [];
@@ -22,9 +23,19 @@ const ProductDetail = ({productId}: ProductDetailProps) => {
             })
         }
         return (
-            <View style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }}>
                 <Banner sources={previews}/>
-            </View>
+               <View style={{ paddingHorizontal: 10 }}>
+               <Text style={{
+                    fontFamily: 'serif', fontSize: adjust(13), letterSpacing: 0.5, lineHeight: 25
+                    }}>
+                    {data.productDetail.name}
+                </Text>
+                <Text>
+                    {data.productDetail.price}
+                </Text>
+               </View>
+            </ScrollView>
         )
     }
     return <View></View>

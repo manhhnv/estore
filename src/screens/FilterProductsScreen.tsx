@@ -2,9 +2,10 @@ import React from 'react';
 import { ProductByCategories } from 'estore/containers/Products';
 import { RouteProp, useNavigation } from '@react-navigation/core';
 import { HomeStackParamList } from 'estore/types';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { Header, Icon, Button, withBadge } from 'react-native-elements';
 import { adjust } from 'estore/helpers/adjust';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type FilterProductsScreenProps = {
     route: RouteProp<HomeStackParamList, 'FilterProduct'>;
@@ -13,9 +14,9 @@ type FilterProductsScreenProps = {
 const FilterProductsScreen = ({ route }: FilterProductsScreenProps) => {
     const navigation = useNavigation();
     const { name } = route.params;
-    const CartIcon = withBadge(2, { status: 'error' })(Icon);
+    const CartIcon = withBadge(2, { status: 'error' })(Icon) as typeof Icon;
     return (
-        <React.Fragment>
+        <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
             <Header
                 centerComponent={
                     <Text
@@ -33,7 +34,7 @@ const FilterProductsScreen = ({ route }: FilterProductsScreenProps) => {
                     <Button
                         onPress={() => navigation.goBack()}
                         buttonStyle={{ backgroundColor: 'white' }}
-                        icon={<Icon type="font-awesome" name="angle-left" />}
+                        icon={<Icon name="back" type="antdesign" color="black" />}
                     ></Button>
                 }
                 rightComponent={
@@ -48,7 +49,7 @@ const FilterProductsScreen = ({ route }: FilterProductsScreenProps) => {
             <View style={{ backgroundColor: '#fff', flex: 1 }}>
                 <ProductByCategories route={route} />
             </View>
-        </React.Fragment>
+        </SafeAreaView>
     );
 };
 export default FilterProductsScreen;

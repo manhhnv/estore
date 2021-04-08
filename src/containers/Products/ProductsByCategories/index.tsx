@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
-import { useProductByCategoriesQuery } from 'estore/graphql/generated';
+import { Product, useProductByCategoriesQuery } from 'estore/graphql/generated';
 import Grid from 'estore/components/ProductsList/Grid';
 import List from 'estore/components/ProductsList/List';
 import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
@@ -15,50 +15,45 @@ type ProductByCategoriesProps = {
 
 const ProductByCategories = ({ route }: ProductByCategoriesProps) => {
     const [grid, setGrid] = useState(true);
+    const [products, setProducts]:
+        [
+            Array<Partial<Product> | null> | undefined,
+            React.Dispatch<SetStateAction<Array<Partial<Product> | null> | undefined>>
+        ] = useState();
     const { data, loading, error, called } = useProductByCategoriesQuery({
         variables: { categoryId: route.params.categoryId }
     });
-    const DATA = [
-        {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            title: 'First Item'
-        },
-        {
-            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            title: 'Second Item'
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            title: 'Third Item'
+    useEffect(() => {
+        if (data?.products?.items) {
+            setProducts(data.products.items)
         }
-    ];
+    }, [data?.products?.items])
     if (called && loading) {
         return <GridPlaceholder />;
     }
-    if (data && data.products && data.products.items) {
-        return (
-            <View
-                style={{ flex: 1, flexDirection: 'column', paddingBottom: 80 }}
-            >
-                {data.products.total === 0 ? (
-                    <>
-                        <Text style={styles.listProductName}>
-                            No Product found in this category
-                        </Text>
-                    </>
-                ) : (
-                    <>
-                        <FilterSelection grid={grid} setGrid={setGrid} />
-                        {grid ? (
-                            <Grid products={data.products.items} />
-                        ) : (
-                            <List products={data.products.items} />
-                        )}
-                    </>
-                )}
-            </View>
-        );
-    }
+    return (
+        <View
+            style={{ flex: 1, flexDirection: 'column', paddingBottom: 80 }}
+        >
+            {data?.products?.total === 0 ? (
+                <>
+                    <Text style={styles.listProductName}>
+                        No Product found in this category
+                    </Text>
+                </>
+            ) : (
+                <>
+                    <FilterSelection grid={grid} setGrid={setGrid} />
+                    {grid && products ? (
+                        <Grid products={products} />
+                    ) : null}
+                    {!grid && products ? (
+                        <List products={products} />
+                    ) : null}
+                </>
+            )}
+        </View>
+    );
     return <View></View>;
 };
 export default ProductByCategories;

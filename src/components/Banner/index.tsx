@@ -16,7 +16,7 @@ const Banners = ({ sources }: BannerProps) => {
                     style={styles.wrapper}
                     autoplay
                     showsPagination={true}
-                    containerStyle={{ maxHeight: 270 }}
+                    containerStyle={{ maxHeight: 400 }}
                     activeDotStyle={{ backgroundColor: 'white' }}
                     autoplayTimeout={6}
                 >
@@ -29,7 +29,7 @@ const Banners = ({ sources }: BannerProps) => {
                                         uri: uri,
                                         cache: 'force-cache'
                                     }}
-                                    resizeMode="contain"
+                                    resizeMode='contain'
                                     containerStyle={{ backgroundColor: 'black' }}
                                 />
                             </View>
