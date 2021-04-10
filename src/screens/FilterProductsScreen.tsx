@@ -33,7 +33,7 @@ const FilterProductsScreen = ({ route }: FilterProductsScreenProps) => {
                 leftComponent={
                     <Button
                         onPress={() => navigation.goBack()}
-                        buttonStyle={{ backgroundColor: 'white' }}
+                        buttonStyle={{ backgroundColor: 'white', padding: 0 }}
                         icon={<Icon name="back" type="antdesign" color="black" />}
                     ></Button>
                 }

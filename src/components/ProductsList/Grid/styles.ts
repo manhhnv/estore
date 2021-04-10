@@ -89,17 +89,14 @@ const styles = StyleSheet.create({
         width: 'auto',
         height: 'auto',
         borderRadius: 5,
-        top: 0,
-        left: 10
+        top: 3,
+        left: 6
     },
     saleText: {
         position: 'absolute',
         top: 5,
-        // left: 5,
-        fontSize: 16,
+        fontSize: adjust(12),
         padding: 5,
-        // paddingLeft: 10,
-        // paddingRight: 10,
         color: 'white',
         textAlign: 'center',
         fontWeight: 'bold'
