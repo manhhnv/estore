@@ -5,6 +5,7 @@ import Banner from 'estore/components/Banner';
 import { adjust } from 'estore/helpers/adjust';
 import { Button, Icon } from 'react-native-elements';
 import Rating from 'estore/components/Rating';
+import ShopInfo from 'estore/components/ShopInfo';
 import styles from './styles';
 
 type ProductDetailProps = {
@@ -31,7 +32,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
             <React.Fragment>
                 <ScrollView style={{ flex: 1 }}>
                     <Banner sources={previews} />
-                    <View style={{ paddingHorizontal: 10 }}>
+                    <View style={{ paddingHorizontal: 10, backgroundColor: "white", paddingBottom: 30 }}>
                         <Text style={{
                             fontFamily: 'serif', fontSize: adjust(13), letterSpacing: 0.5, lineHeight: 25, marginTop: 12
                         }}>
@@ -58,6 +59,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                             />
                         ) : null}
                     </View>
+                    <ShopInfo />
                 </ScrollView>
                 <View style={styles.addingButtonGroupContainer}>
                     <Button key={1}

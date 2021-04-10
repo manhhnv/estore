@@ -12,6 +12,7 @@ import { RootStackParamList } from 'estore/types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import ProductDetailScreen from 'estore/screens/ProductDetailScreen';
+import ViewCartScreen from 'estore/screens/ViewCartScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -39,6 +40,7 @@ function RootNavigator() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
             <Stack.Screen name="ProductDetail" component={ProductDetailScreen}></Stack.Screen>
+            <Stack.Screen name="ViewCart" component={ViewCartScreen}></Stack.Screen>
             <Stack.Screen
                 name="NotFound"
                 component={NotFoundScreen}

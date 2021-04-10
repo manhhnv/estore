@@ -7,7 +7,7 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
     },
     addingButtonCommon: {
-        height: 50,
+        height: 54,
         borderRadius: 0,
     },
     addingButtonContainer: {

@@ -4,6 +4,7 @@ export type RootStackParamList = {
     ProductDetail: {
         productId: string;
     } | undefined;
+    ViewCart: undefined;
 };
 
 export type BottomTabParamList = {
