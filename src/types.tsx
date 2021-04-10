@@ -1,6 +1,9 @@
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
+    ProductDetail: {
+        productId: string;
+    } | undefined;
 };
 
 export type BottomTabParamList = {
@@ -30,9 +33,6 @@ export type HomeStackParamList = {
         categoryId: number;
         name: string;
     };
-    ProductDetail: {
-        productId: string;
-    } | undefined;
 };
 
 export type SearchItem = {

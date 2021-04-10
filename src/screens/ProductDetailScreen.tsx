@@ -35,7 +35,7 @@ const ProductDetailScreen = ({ navigation, route }: ProductDetailScreenProps) =>
                 }
                 rightContainerStyle={{ paddingRight: 20 }}
             />
-                <View style={{ flex: 1, justifyContent: 'center', backgroundColor: "white", alignItems: 'center' }}>
+                <View style={{ flex: 1, backgroundColor: "white", }}>
                     <ProductDetail productId={route.params.productId} />
                 </View>
             </React.Fragment>

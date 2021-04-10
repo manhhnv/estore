@@ -11,7 +11,7 @@ import styles from './styles';
 import { Product } from 'estore/graphql/generated';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { HomeStackParamList } from 'estore/types';
+import { RootStackParamList } from 'estore/types';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 type GridProps = {
@@ -19,10 +19,10 @@ type GridProps = {
 };
 
 const Grid = ({ products }: GridProps) => {
-    const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
-            return <ProductItem item={item} navigation={navigation} />;
+            return <ProductItem item={item} navigation={navigation}/>;
         }
         return <Text></Text>;
     };
@@ -53,7 +53,7 @@ export default Grid;
 
 type ProductItemProps = {
     item: Partial<Product>;
-    navigation: NavigationProp<HomeStackParamList>;
+    navigation: NavigationProp<RootStackParamList>
 }
 
 const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
@@ -110,14 +110,6 @@ const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
                                 : null}
                         </Text>
                     </View>
-                    <TouchableOpacity style={styles.cartIconContainer}>
-                        <FontAwesome5
-                            name="cart-plus"
-                            size={18}
-                            color="white"
-                            style={styles.iconCart}
-                        />
-                    </TouchableOpacity>
                 </View>
             </View>
         </TouchableOpacity>
