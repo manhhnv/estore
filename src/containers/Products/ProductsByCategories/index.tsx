@@ -38,7 +38,7 @@ const ProductByCategories = ({ route }: ProductByCategoriesProps) => {
             {data?.products?.total === 0 ? (
                 <>
                     <Text style={styles.listProductName}>
-                        No Product found in this category
+                        Không có sản phẩm phù hợp
                     </Text>
                 </>
             ) : (

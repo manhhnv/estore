@@ -13,13 +13,13 @@ type ProductDetailScreenProps = {
 
 const ProductDetailScreen = ({ navigation, route }: ProductDetailScreenProps) => {
 
-    const CartIcon = withBadge(2, { status: 'error' })(Icon) as typeof Icon;
+    const CartIcon = withBadge(2, { status: 'error', containerStyle: { marginRight: 25 } })(Icon) as typeof Icon;
     const MessageIcon = withBadge(4, { status: 'error' })(Icon) as typeof Icon;
     if (route.params?.productId) {
         return (
             <React.Fragment>
                 <Header
-                    placement="right"
+                    placement="center"
                     leftComponent={
                         <Button
                             onPress={() => navigation.goBack()}
@@ -27,15 +27,15 @@ const ProductDetailScreen = ({ navigation, route }: ProductDetailScreenProps) =>
                             icon={<Icon name="back" type="antdesign" color="black" />}
                         ></Button>
                     }
-                    centerComponent={
+                    rightComponent={
+                        <View style={{ flexDirection: 'row' }}>
                         <CartIcon
                             type="font-awesome"
                             name="shopping-cart"
                             color="black"
                         />
-                    }
-                    rightComponent={
                         <MessageIcon type="antdesign" name="wechat" color="black" />
+                    </View>
                     }
                     rightContainerStyle={{ marginHorizontal: 0.05 * width }}
                     backgroundColor="white"
