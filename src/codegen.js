@@ -1,6 +1,6 @@
 module.exports = {
     schema: `https://ebuy-ecommerce.herokuapp.com/graphql`,
-    documents: ["./**/**/*.graphql", "./**/**/**/*.graphql"],
+    documents: ['./**/**/*.graphql', './**/**/**/*.graphql'],
     overwrite: true,
     generates: {
         './src/graphql/generated/index.tsx': {
@@ -8,14 +8,14 @@ module.exports = {
                 'typescript',
                 'typescript-operations',
                 'typescript-react-apollo',
-                'fragment-matcher',
+                'fragment-matcher'
             ],
             config: {
                 reactApolloVersion: 3,
                 withHooks: true,
                 withComponent: false,
-                withHOC: false,
-            },
-        },
-    },
+                withHOC: false
+            }
+        }
+    }
 };

@@ -1,23 +1,20 @@
 import React, { useState, useCallback } from 'react';
-import { Header, Icon, Badge, withBadge } from 'react-native-elements';
-import { Dimensions, Text, View, RefreshControl } from 'react-native';
+import { Header, Icon, withBadge } from 'react-native-elements';
+import { Dimensions, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import Extension from 'estore/containers/Extension';
-import ProductRecommendation from 'estore/containers/ProductRecommendation';
-import FlashSale from 'estore/containers/FlashSale';
-import Banners from 'estore/containers/Banner';
+import HomeBanner from 'estore/containers/HomeBanner';
 import { FeatureProducts } from 'estore/containers/Products';
-import  Categories  from 'estore/containers/Categories'
-const { width, height } = Dimensions.get("screen");
+import Categories from 'estore/containers/Categories';
+import BestSellingProducts from 'estore/containers/Products/BestSellingProducts';
 
+const { width } = Dimensions.get('screen');
 const wait = (timeout: number) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-}
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
-const HomeScreen = ({ navigation }: any) => {
-
-    const CartIcon = withBadge(2, { status: "error" })(Icon);
-    const MessageIcon = withBadge(4, { status: "error" })(Icon);
+const HomeScreen = () => {
+    const CartIcon = withBadge(2, { status: 'error' })(Icon) as typeof Icon;
+    const MessageIcon = withBadge(4, { status: 'error' })(Icon) as typeof Icon;
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = useCallback(() => {
@@ -28,37 +25,47 @@ const HomeScreen = ({ navigation }: any) => {
         <React.Fragment>
             <Header
                 placement="right"
-                leftComponent={<Icon name="search" type="font-awesome" color="#fff" />}
+                leftComponent={
+                    <Icon name="search" type="font-awesome" color="black" />
+                }
                 leftContainerStyle={{ marginLeft: 0.05 * width }}
                 centerComponent={
-                    <CartIcon type="font-awesome" name="shopping-cart" color="#fff" />
+                    <CartIcon
+                        type="font-awesome"
+                        name="shopping-cart"
+                        color="black"
+                    />
                 }
                 rightComponent={
-                    <MessageIcon type="antdesign" name="wechat" color="#fff" />
+                    <MessageIcon type="antdesign" name="wechat" color="black" />
                 }
                 rightContainerStyle={{ marginHorizontal: 0.05 * width }}
-                backgroundColor="#07ac4f"
+                backgroundColor="white"
             />
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
                 <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    style={{ backgroundColor: "#fff" }}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={refreshing}
-                            onRefresh={onRefresh}
-                        />
-                    }
+                    // showsVerticalScrollIndicator={false}
+                    style={{ backgroundColor: '#fff' }}
+                    // refreshControl={
+                    //     <RefreshControl
+                    //         refreshing={refreshing}
+                    //         onRefresh={onRefresh}
+                    //     />
+                    // }
                 >
-                    <Banners />
-                    <Categories navigation={navigation}/>
-                    {/* <Extension /> */}
+                    <HomeBanner />
+                    <Categories />
                     <FeatureProducts />
-                    {/* <ProductRecommendation /> */}
-                    {/* <FlashSale /> */}
+                    <BestSellingProducts />
                 </ScrollView>
             </View>
         </React.Fragment>
-    )
-}
+    );
+};
 export default HomeScreen;

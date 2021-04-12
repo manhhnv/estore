@@ -1,13 +1,13 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
     slideItem: {
-        flex: 1,
+        flex: 1
     },
     wrapper: {},
     text: {
@@ -20,6 +20,6 @@ const styles = StyleSheet.create({
         width: width,
         height: 200
     }
-})
+});
 
 export default styles;
