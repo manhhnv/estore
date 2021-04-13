@@ -122,7 +122,7 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem style={{ marginTop: 5 }}>
+                    <ListItem style={{ marginTop: 5 }} onPress={() => navigation.navigate("listUserAddress")}>
                         <Icon name="local-shipping" color="#107383" />
                         <ListItem.Content>
                             <ListItem.Title>

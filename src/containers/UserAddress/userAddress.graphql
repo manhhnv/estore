@@ -1,0 +1,8 @@
+query getUserAddresses {
+    getUserAddresses {
+        items {
+            ...UserAddress
+        }
+        totalItems
+    }
+}

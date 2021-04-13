@@ -26,6 +26,7 @@ export type TabTwoParamList = {
 export type SettingStackParamList = {
     register: undefined;
     login: undefined;
+    listUserAddress: undefined;
 };
 
 export type HomeStackParamList = {
