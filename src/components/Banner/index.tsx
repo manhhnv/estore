@@ -26,8 +26,7 @@ const Banners = ({ sources }: BannerProps) => {
                                         uri: uri,
                                         cache: 'force-cache'
                                     }}
-                                    resizeMode='contain'
-                                    containerStyle={{ backgroundColor: 'black' }}
+                                    resizeMode="cover"
                                 />
                             </View>
                         );

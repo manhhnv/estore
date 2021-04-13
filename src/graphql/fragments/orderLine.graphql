@@ -1,0 +1,12 @@
+fragment LineFragment on OrderLine {
+    id
+    subTotal
+    subQuantity
+    priceEach
+    priceEachBeforeDiscount
+    configProduct {
+        name
+        value
+    }
+    thumbnail
+}

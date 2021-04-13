@@ -21,7 +21,7 @@ const FeatureHeader = ({ name }: FeatureHeaderProps) => {
                     onPress={() => navigation.goBack()}
                     buttonStyle={{ backgroundColor: 'white', padding: 0 }}
                     icon={<Icon name="back" type="antdesign" color="black" />}
-                ></Button>
+                />
             }
             centerComponent={
                 name ? (
@@ -38,10 +38,14 @@ const FeatureHeader = ({ name }: FeatureHeaderProps) => {
             }
             rightComponent={
                 <View style={{ flexDirection: 'row' }}>
-                    <CartIcon
-                        type="font-awesome"
-                        name="shopping-cart"
-                        color="black"
+                    <Button
+                        onPress={() => navigation.navigate("ViewCart")}
+                        buttonStyle={{ backgroundColor: 'white', padding: 0 }}
+                        icon={<CartIcon
+                            type="font-awesome"
+                            name="shopping-cart"
+                            color="black"
+                        />}
                     />
                     <MessageIcon type="antdesign" name="wechat" color="black" />
                 </View>

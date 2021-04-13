@@ -1,0 +1,10 @@
+fragment OrderFragment on Order {
+    id
+    totalPrice
+    totalQuantity
+    state
+    active
+    lines {
+        ...LineFragment
+    }
+}

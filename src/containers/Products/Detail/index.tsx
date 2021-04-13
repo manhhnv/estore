@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useProductDetailQuery } from 'estore/graphql/generated';
 import { ActivityIndicator, View, Text, ScrollView, Dimensions } from 'react-native';
 import Banner from 'estore/components/Banner';
-import { adjust } from 'estore/helpers/adjust';
 import { Button, Icon } from 'react-native-elements';
 import Rating from 'estore/components/Rating';
 import ShopInfo from 'estore/components/ShopInfo';
 import styles from './styles';
+import ProductConfig from 'estore/containers/ProductConfig';
 
 type ProductDetailProps = {
     productId: string
@@ -16,8 +16,9 @@ const { width } = Dimensions.get('window');
 
 const ProductDetail = ({ productId }: ProductDetailProps) => {
     const { called, data, loading, error } = useProductDetailQuery({ variables: { productId: productId } })
+    const [isVisible, setVisible] = useState(false);
     if (loading) {
-        return <ActivityIndicator color="coral" size="large" />
+        return <ActivityIndicator color="#ee4d2d" size="large" />
     }
     else if (called && data && data.productDetail) {
         let previews: Array<string | undefined> = [];
@@ -32,10 +33,8 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
             <React.Fragment>
                 <ScrollView style={{ flex: 1 }}>
                     <Banner sources={previews} />
-                    <View style={{ paddingHorizontal: 10, backgroundColor: "white", paddingBottom: 30 }}>
-                        <Text style={{
-                            fontFamily: 'serif', fontSize: adjust(13), letterSpacing: 0.5, lineHeight: 25, marginTop: 12
-                        }}>
+                    <View style={styles.productDetailContainer}>
+                        <Text style={styles.productName}>
                             {data.productDetail.name.length > 90 ? data.productDetail.name.slice(0, 90).concat('...') : data.productDetail.name}
                         </Text>
                         <Text style={styles.realPrice}>
@@ -70,16 +69,28 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                     <Button
                         title="Thêm vào giỏ hàng"
                         key={2}
-                        buttonStyle={[styles.addingButtonCommon, { backgroundColor: 'coral', width: 0.4 * width }]}
+                        buttonStyle={[styles.addingButtonCommon, { backgroundColor: '#ee4d2d', width: 0.4 * width }]}
                         containerStyle={[styles.addingButtonContainer, { borderRightWidth: 0.5, borderRightColor: 'black' }]}
+                        onPress={() => setVisible(!isVisible)}
                     />
                     <Button
                         title="Mua ngay"
                         key={3}
-                        buttonStyle={[styles.addingButtonCommon, { backgroundColor: 'coral', width: 0.3 * width }]}
+                        buttonStyle={[styles.addingButtonCommon, { backgroundColor: '#ee4d2d', width: 0.3 * width }]}
                         containerStyle={styles.addingButtonContainer}
                     />
                 </View>
+                {data.productDetail.id ? (
+                    <ProductConfig
+                        configs={data.productDetail.configs}
+                        isVisible={isVisible}
+                        setVisible={setVisible}
+                        thumbnail={data.productDetail.thumbnail}
+                        price={data?.productDetail?.price}
+                        inStock={data?.productDetail?.inStock}
+                        productId={data.productDetail.id}
+                    />
+                ) : null}
             </React.Fragment>
         )
     }

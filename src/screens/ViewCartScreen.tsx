@@ -1,11 +1,16 @@
 import React from 'react'
-import { Text, View } from 'react-native';
+import FeatureHeader from 'estore/components/FeatureHeader';
+import Cart from 'estore/containers/Cart';
+import { View } from 'react-native';
 
 const ViewCartScreen = () => {
     return (
-        <View>
-            <Text style={{ marginTop: 100 }}>View Cart Screen</Text>
-        </View>
+        <React.Fragment>
+            <FeatureHeader name="Giỏ hàng"/>
+            <View style={{ flex: 1 }}>
+                <Cart/>
+            </View>
+        </React.Fragment>
     )
 }
 export default ViewCartScreen
