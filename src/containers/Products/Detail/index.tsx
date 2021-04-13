@@ -7,6 +7,7 @@ import Rating from 'estore/components/Rating';
 import ShopInfo from 'estore/components/ShopInfo';
 import styles from './styles';
 import ProductConfig from 'estore/containers/ProductConfig';
+import { adjust } from 'estore/helpers/adjust';
 
 type ProductDetailProps = {
     productId: string
@@ -72,12 +73,14 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                         buttonStyle={[styles.addingButtonCommon, { backgroundColor: '#ee4d2d', width: 0.4 * width }]}
                         containerStyle={[styles.addingButtonContainer, { borderRightWidth: 0.5, borderRightColor: 'black' }]}
                         onPress={() => setVisible(!isVisible)}
+                        titleStyle={{ fontSize: adjust(12) }}
                     />
                     <Button
                         title="Mua ngay"
                         key={3}
                         buttonStyle={[styles.addingButtonCommon, { backgroundColor: '#ee4d2d', width: 0.3 * width }]}
                         containerStyle={styles.addingButtonContainer}
+                        titleStyle={{ fontSize: adjust(12) }}
                     />
                 </View>
                 {data.productDetail.id ? (

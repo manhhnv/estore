@@ -10,7 +10,7 @@ export default StyleSheet.create({
         letterSpacing: 1
     },
     personalContainer: {
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         flexDirection: 'row',
         flex: 1,
         paddingVertical: 20,

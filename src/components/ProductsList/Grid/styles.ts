@@ -55,11 +55,12 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     productPrice: {
-        color: 'black',
+        color: '#ee4d2d',
         textAlign: 'center',
         fontSize: adjust(11),
         fontFamily: 'castoro',
-        letterSpacing: 1
+        letterSpacing: 1,
+        fontWeight: "bold"
     },
     productPriceBeforeDiscount: {
         fontSize: adjust(10),

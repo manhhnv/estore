@@ -3,7 +3,7 @@ import { Alert, Text, View, Animated } from 'react-native';
 import { Image, SocialIcon } from 'react-native-elements';
 import {
     useLoginGoogleMutation,
-    useLoginFaceBookMutation
+    useLoginFaceBookMutation,
 } from 'estore/graphql/generated';
 import styles from './styles';
 import { firebaseConfig } from './config';
@@ -11,7 +11,6 @@ import firebase from 'firebase';
 import * as Google from 'expo-google-app-auth';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import * as Facebook from 'expo-facebook';
-import { useNavigation } from '@react-navigation/core';
 import { UserSliceType } from 'estore/redux/slice/userSlice';
 
 if (firebase.apps.length === 0) {
@@ -74,7 +73,6 @@ const Login = ({ login }: LoginProps) => {
         executeFacebookLogin,
         { data: fbData, loading: fbLoading, error: fbError }
     ] = useLoginFaceBookMutation();
-    const navigation = useNavigation();
 
     useEffect(() => {
         if (error?.message) {
@@ -93,7 +91,6 @@ const Login = ({ login }: LoginProps) => {
                     token: data.loginGoogle.token,
                     me: data.loginGoogle.user
                 });
-                navigation.navigate('Home');
             }
         }
     }, [data]);
@@ -104,7 +101,6 @@ const Login = ({ login }: LoginProps) => {
                     token: fbData.loginFaceBook.token,
                     me: fbData.loginFaceBook.user
                 });
-                navigation.navigate('Home');
             }
         }
     }, [fbData]);

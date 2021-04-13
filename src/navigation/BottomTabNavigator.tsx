@@ -11,6 +11,7 @@ import {
 } from 'estore/types';
 import SettingStackNavigator from 'estore/navigation/SettingStackNavigation';
 import HomeStack from 'estore/navigation/HomeStack';
+import SettingScreen from 'estore/screens/SettingScreen';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 

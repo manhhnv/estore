@@ -8,5 +8,7 @@ fragment LineFragment on OrderLine {
         name
         value
     }
+    name
+    productId
     thumbnail
 }

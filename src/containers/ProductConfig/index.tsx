@@ -1,8 +1,12 @@
-import React, { SetStateAction, useCallback, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { SetStateAction, useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, ToastAndroid } from 'react-native';
 import { Button, Icon, BottomSheet, Image, Input } from 'react-native-elements';
 import styles from './styles';
-import { Configs, useAddToCartMutation, ProductOption } from 'estore/graphql/generated';
+import { Configs, useAddToCartMutation, ProductOption, Order } from 'estore/graphql/generated';
+import { RootState } from 'estore/redux/slice';
+import { addToCart } from 'estore/redux/slice/cartSlice';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { connect } from 'react-redux';
 
 type ProductConfigProps = {
     configs: Array<Configs | null | undefined> | undefined | null;
@@ -11,7 +15,9 @@ type ProductConfigProps = {
     thumbnail?: string;
     price?: number | null;
     inStock?: number;
-    productId: string
+    productId: string;
+    cart?: Partial<Order>,
+    addToCart?: ActionCreatorWithPayload<Partial<Order>, string>;
 }
 
 const ProductConfig = ({
@@ -21,20 +27,22 @@ const ProductConfig = ({
     thumbnail,
     price,
     inStock,
-    productId
+    productId,
+    cart,
+    addToCart
 }: ProductConfigProps) => {
-    const [addToCart, { loading, data, error }] = useAddToCartMutation();
+    const [executeAddToCart, { loading, data, error, called }] = useAddToCartMutation();
 
     const [config, setConfig] = useState(undefined) as [Array<ProductOption> | undefined, React.Dispatch<SetStateAction<Array<ProductOption> | undefined>>];
     const [quantity, setQuantity] = useState(1) as [number, React.Dispatch<SetStateAction<number>>];
 
     const addToCartHandle = () => {
-        // addToCart({ variables: { productId: productId, quantity: quantity, config: config } })
-        console.log({
-            productId,
-            config,
-            quantity
-        })
+        if (config && config.length > 0) {
+            executeAddToCart({ variables: { productId: productId, quantity: quantity, config: config } })
+        }
+        else {
+            executeAddToCart({ variables: { productId: productId, quantity: quantity } })
+        }
     };
 
     const quantityIncrement = () => {
@@ -86,6 +94,12 @@ const ProductConfig = ({
             return false;
         }
     }
+    const addToCartSuccessToast = () => {
+        ToastAndroid.show("Thêm vào giỏ hàng thành công", ToastAndroid.SHORT)
+    }
+    const addToCartFailedToast = () => {
+        ToastAndroid.show("Có lỗi xảy ra", ToastAndroid.SHORT)
+    }
     const fetchConfigOptions = (config: Configs) => {
         if (config.name && config.values && config.values.length > 0) {
             return (
@@ -130,6 +144,21 @@ const ProductConfig = ({
         }
     };
     const productConfigs = fetchAllConfigs(configs)
+    useEffect(() => {
+        if (called && error && error.message) {
+            addToCartFailedToast()
+        }
+    }, [error])
+    useEffect(() => {
+        if (data && data.addToCart) {
+            if (addToCart) {
+                const order = data.addToCart as Partial<Order>;
+                addToCart(order)
+                addToCartSuccessToast()
+                setVisible(false)
+            }
+        }
+    }, [data])
     return (
         <BottomSheet
             modalProps={{ animationType: "slide", animated: true, statusBarTranslucent: true }}
@@ -188,6 +217,8 @@ const ProductConfig = ({
                         onPress={() => {
                             addToCartHandle()
                         }}
+                        loading={called && loading ? true : false}
+                        loadingProps={{ size: "large" }}
                     ></Button>
                     <Button
                         title={`${"Mua ngay".toUpperCase()}`}
@@ -199,4 +230,10 @@ const ProductConfig = ({
         </BottomSheet>
     )
 };
-export default React.memo(ProductConfig);
+const mapStateToProps = (state: RootState) => {
+    return {
+        cart: state.cart
+    }
+}
+const mapDispatchToProps = { addToCart }
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(ProductConfig));
