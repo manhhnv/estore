@@ -72,7 +72,7 @@ const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
                     </View>
                 ) : null}
 
-                <TouchableOpacity style={styles.heartIconContainer}>
+                <TouchableOpacity style={styles.heartIconContainer} onPress={() => console.log(item.id)}>
                     <AntDesign
                         name="hearto"
                         size={20}

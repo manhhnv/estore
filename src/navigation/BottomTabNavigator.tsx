@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import TabOneScreen from 'estore/screens/TabOneScreen';
-import TabTwoScreen from 'estore/screens/TabTwoScreen';
+import WishlistScreen from 'estore/screens/WishlistScreen';
 import {
     BottomTabParamList,
     TabOneParamList,
@@ -18,7 +18,7 @@ export default function BottomTabNavigator() {
     return (
         <BottomTab.Navigator
             initialRouteName="HomeStack"
-            tabBarOptions={{ activeTintColor: '#07ac4f' }}
+            tabBarOptions={{ activeTintColor: 'coral' }}
         >
             <BottomTab.Screen
                 name="HomeStack"
@@ -31,7 +31,7 @@ export default function BottomTabNavigator() {
             />
             <BottomTab.Screen
                 name="Notification"
-                component={TabTwoNavigator}
+                component={TabOneNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="notifications" color={color} />
@@ -94,8 +94,8 @@ function TabTwoNavigator() {
         <TabTwoStack.Navigator>
             <TabTwoStack.Screen
                 name="TabTwoScreen"
-                component={TabTwoScreen}
-                options={{ headerTitle: 'Tab Two Title' }}
+                component={WishlistScreen}
+                options={{ headerTitle: 'Wishlists' }}
             />
         </TabTwoStack.Navigator>
     );

@@ -1,0 +1,9 @@
+query activeWishlist {
+  activeWishlist {
+    id
+    thumbnail
+    product{
+      ...DetailFragment
+    }
+  }
+}
