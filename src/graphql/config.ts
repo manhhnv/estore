@@ -1,11 +1,3 @@
-// import { ApolloClient, InMemoryCache } from '@apollo/client';
-
-// const client = new ApolloClient({
-//     uri: 'https://ebuy-ecommerce.herokuapp.com/graphql',
-//     cache: new InMemoryCache()
-// });
-
-// export default client;
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import store from 'estore/redux/store';

@@ -2,8 +2,13 @@ query activeWishlist {
   activeWishlist {
     id
     thumbnail
-    product{
+    product {
       ...DetailFragment
     }
+  }
+}
+query me {
+  me {
+    id
   }
 }

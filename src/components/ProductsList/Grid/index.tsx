@@ -13,16 +13,28 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { HomeStackParamList } from 'estore/types';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { connect } from 'react-redux';
+import { RootState } from 'estore/redux/slice/index';
+import {addToWishlist, WishlistSliceType } from 'estore/redux/slice/wishlistSlice';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+
 
 type GridProps = {
     products: Array<Partial<Product> | null>;
 };
 
-const Grid = ({ products }: GridProps) => {
+type WishlistAction = {
+    wishlist: WishlistSliceType,
+    addToWishlist: ActionCreatorWithPayload<any, string>;
+};
+
+const Grid = ({ products }: GridProps, {addToWishlist, wishlist}: WishlistAction) => {
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
-            return <ProductItem item={item} navigation={navigation} />;
+            return <ProductItem item={item} navigation={navigation} addToWishlist={addToWishlist}
+            wishlist={wishlist}
+            />;
         }
         return <Text></Text>;
     };
@@ -49,14 +61,15 @@ const Grid = ({ products }: GridProps) => {
     }
     return <View></View>;
 };
-export default Grid;
+
+
 
 type ProductItemProps = {
     item: Partial<Product>;
     navigation: NavigationProp<HomeStackParamList>;
 }
 
-const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
+const ProductItem = React.memo(({ item, navigation }: ProductItemProps, {addToWishlist, wishlist}: WishlistAction) => {
     const productDetail = (productId: string) => {
         navigation.navigate("ProductDetail", { productId: productId })
     }
@@ -123,3 +136,14 @@ const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
         </TouchableOpacity>
     );
 });
+const mapStateToProps = (state: RootState) => {
+    return {
+        user: state.user,
+        wishlist: state.wishlist
+    };
+};
+const mapDispatchToProps = {addToWishlist};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(React.memo(Grid));

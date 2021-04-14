@@ -14,5 +14,6 @@ web-build/
 
 .vscode
 yarn.lock
+yarn-error.log
 package-lock.json
 src/graphql/generated/
