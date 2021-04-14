@@ -28,12 +28,11 @@ type WishlistAction = {
     addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 
-const Grid = ({ products }: GridProps, {addToWishlist, wishlist}: WishlistAction) => {
+const Grid = ({ products }: GridProps) => {
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
-            return <ProductItem item={item} navigation={navigation} addToWishlist={addToWishlist}
-            wishlist={wishlist}
+            return <ProductItem item={item} navigation={navigation}
             />;
         }
         return <Text></Text>;
@@ -69,7 +68,7 @@ type ProductItemProps = {
     navigation: NavigationProp<HomeStackParamList>;
 }
 
-const ProductItem = React.memo(({ item, navigation }: ProductItemProps, {addToWishlist, wishlist}: WishlistAction) => {
+export const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
     const productDetail = (productId: string) => {
         navigation.navigate("ProductDetail", { productId: productId })
     }

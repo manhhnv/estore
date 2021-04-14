@@ -16,17 +16,6 @@ const WishlistScreen = ({ user }: WishlistScreenProps) => {
 
     return (
         <View style={{ flex: 1 }}>
-            {/* <Button
-                title="Pick an image from camera roll"
-                onPress={pickImage}
-            />
-            {image ? (
-                <Image
-                    source={{ uri: image }}
-                    style={{ width: 200, height: 200 }}
-                />
-            ) : null} */}
-            {/* <Wishlist user /> */}
             <Wishlist/>
         </View>
     );
