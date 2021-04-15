@@ -12,3 +12,10 @@ query me {
     id
   }
 }
+
+mutation removeFromWistlist ($productId: String!){
+  removeFromWistlist (productId: $productId){
+    id
+    thumbnail
+  }
+}

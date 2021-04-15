@@ -1,22 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, Image } from 'react-native';
+import {
+    View,
+    TouchableOpacity,
+    Text,
+    Image,
+    ActivityIndicator
+} from 'react-native';
 import Wishlist from 'estore/containers/Wishlist';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice/index';
 import { UserSliceType } from 'estore/redux/slice/userSlice';
 import { useActiveWishlistQuery } from 'estore/graphql/generated';
 import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
-import { addToWishlist, removeFromWishlist } from 'estore/redux/slice/wishlistSlice';
+import {
+    addToWishlist,
+    removeFromWishlist
+} from 'estore/redux/slice/wishlistSlice';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 type WishlistScreenProps = {
     user: UserSliceType;
+    addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 
-const WishlistScreen = ({ user }: WishlistScreenProps) => {
-   
+const WishlistScreen = ({ user, addToWishlist }: WishlistScreenProps) => {
+    const { called, data, loading, error } = useActiveWishlistQuery();
 
+    useEffect(() => {
+        if (data?.activeWishlist) {
+            const wishlist = data.activeWishlist;
+            addToWishlist(wishlist);
+        }
+    }, [data]);
+
+    if (loading) {
+        return (
+            <React.Fragment>
+                <View style={{flex: 1, justifyContent: "center", alignContent: "center"}}>
+                    <ActivityIndicator color="coral" size="large" />
+                </View>
+            </React.Fragment>
+        );
+    }
     return (
         <View style={{ flex: 1 }}>
-            <Wishlist/>
+            <Wishlist />
         </View>
     );
 };
@@ -25,7 +52,7 @@ const mapStateToProps = (state: RootState) => {
         user: state.user
     };
 };
-const mapDispatchToProps = {addToWishlist, removeFromWishlist};
+const mapDispatchToProps = { addToWishlist };
 export default connect(
     mapStateToProps,
     mapDispatchToProps

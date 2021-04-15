@@ -3,72 +3,85 @@ import {
     Text,
     View,
     FlatList,
-    ToastAndroid,
     ActivityIndicator,
     Dimensions,
     TouchableOpacity,
     SafeAreaView,
-    Image
+    Image,
+    ToastAndroid
 } from 'react-native';
 import {
     Product,
     useActiveWishlistQuery,
-    useMeQuery
+    useRemoveFromWistlistMutation
 } from 'estore/graphql/generated';
 import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
 import styles from './styles';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 import { HomeStackParamList } from 'estore/types';
-import List from 'estore/components/ProductsList/List';
 import { UserSliceType } from 'estore/redux/slice/userSlice';
-import { WishlistSliceType } from 'estore/redux/slice/wishlistSlice';
 import { RootState } from 'estore/redux/slice/index';
 import { connect } from 'react-redux';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { logout } from 'estore/redux/slice/userSlice';
 import { FontAwesome5, AntDesign } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { adjust } from 'estore/helpers/adjust';
+import {
+    addToWishlist,
+    removeFromWishlist
+} from 'estore/redux/slice/wishlistSlice';
 type WishlistProps = {
     user: UserSliceType;
-    logout: ActionCreatorWithPayload<any, string>;
+    wishlist: any;
 };
 const { width, height } = Dimensions.get('window');
 
-const Wishlist = ({ user, logout }: WishlistProps) => {
-    const { called, data, loading, error } = useActiveWishlistQuery();
+const Wishlist = ({ user, wishlist }: WishlistProps) => {
+    const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+    const [
+        removeProduct,
+        { called, data, loading, error }
+    ] = useRemoveFromWistlistMutation();
+
+    const removeProductHandle = (productId: string) => {
+        removeProduct({ variables: { productId: productId } });
+    };
+    const removeProductSuccess = () => {
+        ToastAndroid.show('Đã xóa khỏi mục ưa thích', ToastAndroid.SHORT);
+    };
+    const removeProductFailed = () => {
+        ToastAndroid.show('Có lỗi xảy ra', ToastAndroid.SHORT);
+    };
 
     useEffect(() => {
-        if (data?.activeWishlist) {
-            const wishlist = data.activeWishlist;
+        if (error && error.message) {
+            removeProductFailed();
+        }
+    }, [error]);
+    useEffect(() => {
+        if (data && data.removeFromWistlist) {
+            const wishlist = data.removeFromWistlist;
+            addToWishlist(wishlist);
+            removeProductSuccess();
         }
     }, [data]);
-
-    const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
-    // const renderItem = ({ item }: { item: any }) => {
-    //     console.log(item.product)
-    //     return <ProductItem item={item.product} navigation={navigation} />;
-    // };
-    const renderItem = ({ item }: { item: Partial<Product> | null }) => {
+    const renderItem = ({ item }: { item: any }) => {
         if (item) {
-            return <ProductItem item={item} navigation={navigation} />;
+            return (
+                <ProductItem
+                    item={item}
+                    navigation={navigation}
+                    removeProductHandle={removeProductHandle}
+                />
+            );
         }
         return <Text></Text>;
     };
-    if (loading) {
-        return (
-            <React.Fragment>
-                <View style={styles.overlayLoadingContainer}>
-                    <ActivityIndicator color="coral" size="large" />
-                </View>
-            </React.Fragment>
-        );
-    }
-    if (data && data?.activeWishlist) {
+
+    if (wishlist && wishlist.length) {
         return (
             <SafeAreaView>
                 <FlatList
-                    data={data.activeWishlist}
+                    data={wishlist}
                     renderItem={renderItem}
                     maxToRenderPerBatch={10}
                     removeClippedSubviews={true}
@@ -76,7 +89,6 @@ const Wishlist = ({ user, logout }: WishlistProps) => {
                     showsHorizontalScrollIndicator={false}
                 />
             </SafeAreaView>
-            // <List products={data.activeWishlist} />
         );
     }
     return (
@@ -84,43 +96,52 @@ const Wishlist = ({ user, logout }: WishlistProps) => {
             style={{
                 flex: 1,
                 backgroundColor: 'white',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                alignItems: "center",
+                alignContent: "center"
             }}
         >
-            <Text
-                style={{
-                    textAlign: 'center',
-                    // fontSize: adjust(15),
-                    fontFamily: 'serif',
-                    letterSpacing: 1,
-                    opacity: 0.5
+
+            <Image
+                resizeMode="contain"
+                style={{width: "80%", height: "80%"}}
+                source={{
+                    uri: "https://bollyglow.com/wp-content/themes/bollyglow/assets/images/empty_wishlist.png",
+                    cache: 'force-cache'
                 }}
-            >
-                Wishlist trống
-            </Text>
+            />
         </View>
     );
 };
 
 type ProductItemProps = {
-    item: Partial<Product>;
+    item: any;
+    removeProductHandle: (productId: string) => void;
     navigation: NavigationProp<HomeStackParamList>;
 };
 
-const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
-    const productDetail = (productId: string) => {
-        navigation.navigate('ProductDetail', { productId: productId });
-    };
-    return (
-        <Swipeable renderRightActions={() => <LeftComponent />}>
-            <TouchableOpacity
-                key={item.product.id}
-                onPress={() =>
-                    productDetail(item.product.id ? item.product.id : '')
-                }
+const ProductItem = React.memo(
+    ({ item, navigation, removeProductHandle }: ProductItemProps) => {
+        const productDetail = (productId: string) => {
+            navigation.navigate('ProductDetail', { productId: productId });
+        };
+        return (
+            <Swipeable
+                renderRightActions={() => (
+                    <LeftComponent
+                        productId={item.product.id}
+                        removeProductHandle={removeProductHandle}
+                    />
+                )}
             >
-                <View style={styles.productItem}>
-                    {/* {item.product.rawDiscount ? (
+                <TouchableOpacity
+                    key={item.product.id}
+                    onPress={() =>
+                        productDetail(item.product.id ? item.product.id : '')
+                    }
+                >
+                    <View style={styles.productItem}>
+                        {/* {item.product.rawDiscount ? (
                     <View style={styles.productSale}>
                         <FontAwesome5 name="tags" size={40} color="coral" />
                         <Text style={styles.saleText}>
@@ -129,65 +150,78 @@ const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
                     </View>
                 ) : null} */}
 
-                    <View style={styles.imageContainer}>
-                        <Image
-                            resizeMode="cover"
-                            style={styles.productImage}
-                            source={{
-                                uri: item.product.thumbnail,
-                                cache: 'force-cache'
-                            }}
-                        />
-                    </View>
-
-                    <View style={styles.priceContainer}>
-                        <View style={styles.nameContainer}>
-                            <Text style={styles.productName}>
-                                {item.product.name?.slice(0, 40) + '...'}
-                            </Text>
-                            <Text style={styles.productDescription}>
-                                {item.product.description?.slice(0, 60) + '...'}
-                            </Text>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                resizeMode="cover"
+                                style={styles.productImage}
+                                source={{
+                                    uri: item.product.thumbnail,
+                                    cache: 'force-cache'
+                                }}
+                            />
                         </View>
 
-                        <View style={styles.priceBottomContainer}>
-                            <Text style={styles.productPrice}>
-                                {item.product.price
-                                    ? item.product.price
-                                          .toString()
-                                          .replace(
-                                              /\B(?=(\d{3})+(?!\d))/g,
-                                              ','
-                                          ) + ' VND'
-                                    : null}
-                            </Text>
-                            <Text style={styles.productPriceBeforeDiscount}>
-                                {item.product.priceBeforeDiscount
-                                    ? item.product.priceBeforeDiscount
-                                          .toString()
-                                          .replace(
-                                              /\B(?=(\d{3})+(?!\d))/g,
-                                              ','
-                                          ) + ' ₫'
-                                    : null}
-                            </Text>
+                        <View style={styles.priceContainer}>
+                            <View style={styles.nameContainer}>
+                                <Text style={styles.productName}>
+                                    {item.product.name?.slice(0, 40) + '...'}
+                                </Text>
+                                <Text style={styles.productDescription}>
+                                    {item.product.description?.slice(0, 60) +
+                                        '...'}
+                                </Text>
+                            </View>
+
+                            <View style={styles.priceBottomContainer}>
+                                <Text style={styles.productPrice}>
+                                    {item.product.price
+                                        ? item.product.price
+                                              .toString()
+                                              .replace(
+                                                  /\B(?=(\d{3})+(?!\d))/g,
+                                                  ','
+                                              ) + ' VND'
+                                        : null}
+                                </Text>
+                                <Text style={styles.productPriceBeforeDiscount}>
+                                    {item.product.priceBeforeDiscount
+                                        ? item.product.priceBeforeDiscount
+                                              .toString()
+                                              .replace(
+                                                  /\B(?=(\d{3})+(?!\d))/g,
+                                                  ','
+                                              ) + ' ₫'
+                                        : null}
+                                </Text>
+                            </View>
                         </View>
                     </View>
-                </View>
-            </TouchableOpacity>
-        </Swipeable>
-    );
-});
+                </TouchableOpacity>
+            </Swipeable>
+        );
+    }
+);
 
-const LeftComponent = () => {
+type LeftComponentProps = {
+    productId: string;
+    removeProductHandle: (productId: string) => void;
+};
+
+const LeftComponent = ({
+    productId,
+    removeProductHandle
+}: LeftComponentProps) => {
     return (
         <TouchableOpacity
             style={{
-                width: "15%",
+                width: '15%',
                 backgroundColor: 'coral',
-                height: "100%",
+                height: '100%',
                 justifyContent: 'center',
-                alignItems: "center"
+                alignItems: 'center'
+            }}
+            onPress={() => {
+                removeProductHandle(productId);
             }}
         >
             <FontAwesome5 name="heart-broken" size={25} color="white" />
@@ -202,7 +236,7 @@ const mapStateToProps = (state: RootState) => {
     };
 };
 
-const mapDispatchToProps = { logout };
+const mapDispatchToProps = { removeFromWishlist };
 export default connect(
     mapStateToProps,
     mapDispatchToProps

@@ -1,25 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Product } from 'estore/graphql/generated';
 
-export type WishlistSliceType = {
-    total: number,
-    list: Product[]
-};
 
-const initialState: WishlistSliceType = {total: 0, list: []};
+const initialState: any[] = [];
 const wishlistSlice = createSlice({
     name: 'wishlist',
     initialState: initialState,
     reducers: {
         addToWishlist: (state, action) => {
-            state.total = state.total + 1;
-            state.list.push(action.payload.data)
-            return state;
+            if (action.payload) {
+                state = action.payload
+                return state;
+            }
         },
         removeFromWishlist: (state, action) => {
-            state.total = state.total - 1;
-            // state.list.pop(action.payload.data)
-            return state;
+                return state;
         }
     }
 })

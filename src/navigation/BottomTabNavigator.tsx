@@ -11,10 +11,15 @@ import {
 } from 'estore/types';
 import SettingStackNavigator from 'estore/navigation/SettingStackNavigation';
 import HomeStack from 'estore/navigation/HomeStack';
-
+import { RootState } from 'estore/redux/slice/index';
+import { connect } from 'react-redux';
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+type WishlistProps = {
+    wishlist: any
+};
+
+const BottomTabNavigator = ({wishlist}: WishlistProps) => {
     return (
         <BottomTab.Navigator
             initialRouteName="HomeStack"
@@ -46,7 +51,7 @@ export default function BottomTabNavigator() {
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="heart" color={color} />
                     ),
-                    tabBarBadge: '5'
+                    tabBarBadge: wishlist.length > 0 ? wishlist.length : null
                 }}
             />
             <BottomTab.Screen
@@ -61,6 +66,19 @@ export default function BottomTabNavigator() {
         </BottomTab.Navigator>
     );
 }
+
+const mapStateToProps = (state: RootState) => {
+    return {
+        wishlist: state.wishlist
+    };
+};
+
+const mapDispatchToProps = { };
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(React.memo(BottomTabNavigator));
+
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
