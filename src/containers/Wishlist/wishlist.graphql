@@ -17,5 +17,8 @@ mutation removeFromWistlist ($productId: String!){
   removeFromWistlist (productId: $productId){
     id
     thumbnail
+    product {
+      ...DetailFragment
+    }
   }
 }

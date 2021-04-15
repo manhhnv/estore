@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Product } from 'estore/graphql/generated';
 
 
@@ -7,7 +7,7 @@ const wishlistSlice = createSlice({
     name: 'wishlist',
     initialState: initialState,
     reducers: {
-        addToWishlist: (state, action) => {
+        addToWishlist: (state, action: PayloadAction<any>) => {
             if (action.payload) {
                 state = action.payload
                 return state;

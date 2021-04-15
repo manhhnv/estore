@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { useProductByCategoriesQuery } from 'estore/graphql/generated';
-import Grid from 'estore/components/ProductsList/Grid';
-import List from 'estore/components/ProductsList/List';
+import Grids from 'estore/containers/ProductsList/Grids';
+import Lists from 'estore/containers/ProductsList/Lists';
 import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
 import styles from './styles';
 import FilterSelection from 'estore/components/FilterSelection';
@@ -50,9 +50,9 @@ const ProductByCategories = ({ route }: ProductByCategoriesProps) => {
                     <>
                         <FilterSelection grid={grid} setGrid={setGrid} />
                         {grid ? (
-                            <Grid products={data.products.items} />
+                            <Grids products={data.products.items} />
                         ) : (
-                            <List products={data.products.items} />
+                            <Lists products={data.products.items} />
                         )}
                     </>
                 )}

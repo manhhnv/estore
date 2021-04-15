@@ -11,8 +11,6 @@ import {
     ToastAndroid
 } from 'react-native';
 import {
-    Product,
-    useActiveWishlistQuery,
     useRemoveFromWistlistMutation
 } from 'estore/graphql/generated';
 import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
@@ -32,10 +30,11 @@ import {
 type WishlistProps = {
     user: UserSliceType;
     wishlist: any;
+    addToWishlist: ActionCreatorWithPayload<any, string>
 };
 const { width, height } = Dimensions.get('window');
 
-const Wishlist = ({ user, wishlist }: WishlistProps) => {
+const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
     const [
         removeProduct,
@@ -236,7 +235,7 @@ const mapStateToProps = (state: RootState) => {
     };
 };
 
-const mapDispatchToProps = { removeFromWishlist };
+const mapDispatchToProps = { removeFromWishlist, addToWishlist };
 export default connect(
     mapStateToProps,
     mapDispatchToProps

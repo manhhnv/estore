@@ -15,25 +15,25 @@ import { HomeStackParamList } from 'estore/types';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice/index';
-import {addToWishlist, WishlistSliceType } from 'estore/redux/slice/wishlistSlice';
+import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-
 
 type GridProps = {
     products: Array<Partial<Product> | null>;
+    addProductHandle: any;
 };
 
-type WishlistAction = {
-    wishlist: WishlistSliceType,
-    addToWishlist: ActionCreatorWithPayload<any, string>;
-};
-
-const Grid = ({ products }: GridProps) => {
+const Grid = ({ products, addProductHandle }: GridProps) => {
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
-            return <ProductItem item={item} navigation={navigation}
-            />;
+            return (
+                <ProductItem
+                    item={item}
+                    navigation={navigation}
+                    addProductHandle={addProductHandle}
+                />
+            );
         }
         return <Text></Text>;
     };
@@ -61,88 +61,98 @@ const Grid = ({ products }: GridProps) => {
     return <View></View>;
 };
 
-
-
 type ProductItemProps = {
     item: Partial<Product>;
     navigation: NavigationProp<HomeStackParamList>;
-}
+    addProductHandle: any;
+};
 
-export const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
-    const productDetail = (productId: string) => {
-        navigation.navigate("ProductDetail", { productId: productId })
-    }
-    return (
-        <TouchableOpacity key={item.id} onPress={() => productDetail(item.id ? item.id : '')}>
-            <View style={styles.productItem}>
-                {item.rawDiscount ? (
-                    <View style={styles.productSale}>
-                        <FontAwesome5 name="tags" size={40} color="coral" />
-                        <Text style={styles.saleText}>
-                            {'-' + item.rawDiscount + '%'}
-                        </Text>
-                    </View>
-                ) : null}
+export const ProductItem = React.memo(
+    ({ item, navigation, addProductHandle }: ProductItemProps) => {
+        const productDetail = (productId: string) => {
+            navigation.navigate('ProductDetail', { productId: productId });
+        };
+        return (
+            <TouchableOpacity
+                key={item.id}
+                onPress={() => productDetail(item.id ? item.id : '')}
+            >
+                <View style={styles.productItem}>
+                    {item.rawDiscount ? (
+                        <View style={styles.productSale}>
+                            <FontAwesome5 name="tags" size={40} color="coral" />
+                            <Text style={styles.saleText}>
+                                {'-' + item.rawDiscount + '%'}
+                            </Text>
+                        </View>
+                    ) : null}
 
-                <TouchableOpacity style={styles.heartIconContainer} onPress={() => console.log(item.id)}>
-                    <AntDesign
-                        name="hearto"
-                        size={20}
-                        color="white"
-                        style={styles.heartIcon}
-                    />
-                </TouchableOpacity>
-                <Image
-                    resizeMode="cover"
-                    style={styles.productImage}
-                    source={{ uri: item.thumbnail, cache: 'force-cache' }}
-                />
-                <View style={styles.nameContainer}>
-                    <Text style={styles.productName}>
-                        {item.name?.slice(0, 30) + '...'}
-                    </Text>
-                </View>
-
-                <View style={styles.priceContainer}>
-                    <View style={styles.priceChildContainer}>
-                        <Text style={styles.productPrice}>
-                            {item.price
-                                ? item.price
-                                      .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
-                                  ' VND'
-                                : null}
-                        </Text>
-                        <Text style={styles.productPriceBeforeDiscount}>
-                            {item.priceBeforeDiscount
-                                ? item.priceBeforeDiscount
-                                      .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
-                                  ' ₫'
-                                : null}
-                        </Text>
-                    </View>
-                    <TouchableOpacity style={styles.cartIconContainer}>
-                        <FontAwesome5
-                            name="cart-plus"
-                            size={18}
+                    <TouchableOpacity
+                        style={styles.heartIconContainer}
+                        onPress={() => {
+                            addProductHandle(item.id);
+                        }}
+                    >
+                        <AntDesign
+                            name="hearto"
+                            size={20}
                             color="white"
-                            style={styles.iconCart}
+                            style={styles.heartIcon}
                         />
                     </TouchableOpacity>
+                    <Image
+                        resizeMode="cover"
+                        style={styles.productImage}
+                        source={{ uri: item.thumbnail, cache: 'force-cache' }}
+                    />
+                    <View style={styles.nameContainer}>
+                        <Text style={styles.productName}>
+                            {item.name?.slice(0, 30) + '...'}
+                        </Text>
+                    </View>
+
+                    <View style={styles.priceContainer}>
+                        <View style={styles.priceChildContainer}>
+                            <Text style={styles.productPrice}>
+                                {item.price
+                                    ? item.price
+                                          .toString()
+                                          .replace(
+                                              /\B(?=(\d{3})+(?!\d))/g,
+                                              ','
+                                          ) + ' VND'
+                                    : null}
+                            </Text>
+                            <Text style={styles.productPriceBeforeDiscount}>
+                                {item.priceBeforeDiscount
+                                    ? item.priceBeforeDiscount
+                                          .toString()
+                                          .replace(
+                                              /\B(?=(\d{3})+(?!\d))/g,
+                                              ','
+                                          ) + ' ₫'
+                                    : null}
+                            </Text>
+                        </View>
+                        <TouchableOpacity style={styles.cartIconContainer}>
+                            <FontAwesome5
+                                name="cart-plus"
+                                size={18}
+                                color="white"
+                                style={styles.iconCart}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-        </TouchableOpacity>
-    );
-});
+            </TouchableOpacity>
+        );
+    }
+);
 const mapStateToProps = (state: RootState) => {
     return {
         user: state.user,
         wishlist: state.wishlist
     };
 };
-const mapDispatchToProps = {addToWishlist};
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(React.memo(Grid));
+const mapDispatchToProps = { addToWishlist };
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Grid));
