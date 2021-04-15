@@ -11,9 +11,10 @@ import {
     ToastAndroid
 } from 'react-native';
 import {
-    useRemoveFromWistlistMutation
+    Product,
+    useRemoveFromWistlistMutation,
+    WishList as WL
 } from 'estore/graphql/generated';
-import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
 import styles from './styles';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 import { HomeStackParamList } from 'estore/types';
@@ -29,7 +30,7 @@ import {
 } from 'estore/redux/slice/wishlistSlice';
 type WishlistProps = {
     user: UserSliceType;
-    wishlist: any;
+    wishlist: WL[];
     addToWishlist: ActionCreatorWithPayload<any, string>
 };
 const { width, height } = Dimensions.get('window');
@@ -63,7 +64,7 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
             removeProductSuccess();
         }
     }, [data]);
-    const renderItem = ({ item }: { item: any }) => {
+    const renderItem = ({ item }: { item: WL }) => {
         if (item) {
             return (
                 <ProductItem
@@ -76,9 +77,9 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
         return <Text></Text>;
     };
 
-    if (wishlist && wishlist.length) {
+    if (wishlist) {
         return (
-            <SafeAreaView>
+            <SafeAreaView style={{backgroundColor: "white"}}>
                 <FlatList
                     data={wishlist}
                     renderItem={renderItem}
@@ -114,7 +115,7 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
 };
 
 type ProductItemProps = {
-    item: any;
+    item: WL;
     removeProductHandle: (productId: string) => void;
     navigation: NavigationProp<HomeStackParamList>;
 };

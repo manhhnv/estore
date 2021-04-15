@@ -115,6 +115,18 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         top: 5,
         right: 5
+    },
+    heartIconContainerInWL: {
+        borderRadius: 50,
+        backgroundColor: 'white',
+        position: 'absolute',
+        zIndex: 1,
+        width: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        top: 5,
+        right: 5
     }
 });
 export default styles;

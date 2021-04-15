@@ -16,14 +16,15 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice/index';
 import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { WishList as WL } from 'estore/graphql/generated';
 
 type GridProps = {
     products: Array<Partial<Product> | null>;
-    addProductHandle: any;
+    addProductHandle: (productId: string ) => void;
+    wishlist: WL[];
 };
 
-const Grid = ({ products, addProductHandle }: GridProps) => {
+const Grid = ({ products, addProductHandle, wishlist }: GridProps) => {
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
@@ -32,6 +33,7 @@ const Grid = ({ products, addProductHandle }: GridProps) => {
                     item={item}
                     navigation={navigation}
                     addProductHandle={addProductHandle}
+                    wishlist={wishlist}
                 />
             );
         }
@@ -64,14 +66,16 @@ const Grid = ({ products, addProductHandle }: GridProps) => {
 type ProductItemProps = {
     item: Partial<Product>;
     navigation: NavigationProp<HomeStackParamList>;
-    addProductHandle: any;
+    addProductHandle: (productId: string ) => void;
+    wishlist: WL[];
 };
 
 export const ProductItem = React.memo(
-    ({ item, navigation, addProductHandle }: ProductItemProps) => {
+    ({ item, navigation, addProductHandle, wishlist }: ProductItemProps) => {
         const productDetail = (productId: string) => {
             navigation.navigate('ProductDetail', { productId: productId });
         };
+
         return (
             <TouchableOpacity
                 key={item.id}
@@ -87,19 +91,32 @@ export const ProductItem = React.memo(
                         </View>
                     ) : null}
 
-                    <TouchableOpacity
-                        style={styles.heartIconContainer}
-                        onPress={() => {
-                            addProductHandle(item.id);
-                        }}
-                    >
-                        <AntDesign
-                            name="hearto"
-                            size={20}
-                            color="white"
-                            style={styles.heartIcon}
-                        />
-                    </TouchableOpacity>
+                    {wishlist.filter((it: WL) => it.product.id === item.id)
+                        .length === 0 ? (
+                        <TouchableOpacity
+                            style={styles.heartIconContainer}
+                            onPress={() => {
+                                addProductHandle(item.id);
+                            }}
+                        >
+                            <AntDesign
+                                name="heart"
+                                size={20}
+                                color="white"
+                                style={styles.heartIcon}
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity style={styles.heartIconContainerInWL}>
+                            <AntDesign
+                                name="heart"
+                                size={20}
+                                color="red"
+                                style={styles.heartIcon}
+                            />
+                        </TouchableOpacity>
+                    )}
+
                     <Image
                         resizeMode="cover"
                         style={styles.productImage}

@@ -119,6 +119,17 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         bottom: 10,
         right: 60
+    },
+    heartIconContainerInWL: {
+        backgroundColor: 'white',
+        position: 'absolute',
+        zIndex: 1,
+        width: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        bottom: 10,
+        right: 60
     }
 });
 export default styles;

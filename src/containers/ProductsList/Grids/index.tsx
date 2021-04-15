@@ -18,13 +18,13 @@ type GridProps = {
 };
 
 
-const Grids = ({ products, addToWishlist }: GridProps) => { 
+const Grids = ({ products, addToWishlist}: GridProps) => { 
     const [
         addProducttoWishlist,
         { called, data, loading, error }
     ] = useAddToWishlistMutation();
 
-    const addProductHandle = (productId: string) => {
+    const addProductHandle = (productId: string ) => {
         addProducttoWishlist({ variables: { productId: productId } });
     };
     const addProductSuccess = () => {

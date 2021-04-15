@@ -13,12 +13,17 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { HomeStackParamList } from 'estore/types';
+import { connect } from 'react-redux';
+import { RootState } from 'estore/redux/slice/index';
+import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
+import { WishList as WL } from 'estore/graphql/generated';
 type GridProps = {
     products: Array<Partial<Product> | null>;
-    addProductHandle: any;
+    addProductHandle: (productId: string) => void;
+    wishlist: WL[];
 };
 
-const List = ({ products, addProductHandle }: GridProps) => {
+const List = ({ products, addProductHandle,wishlist }: GridProps) => {
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
@@ -27,6 +32,7 @@ const List = ({ products, addProductHandle }: GridProps) => {
                     item={item}
                     navigation={navigation}
                     addProductHandle={addProductHandle}
+                    wishlist={wishlist}
                 />
             );
         }
@@ -55,16 +61,16 @@ const List = ({ products, addProductHandle }: GridProps) => {
     }
     return <View></View>;
 };
-export default List;
 
 type ProductItemProps = {
     item: Partial<Product>;
     navigation: NavigationProp<HomeStackParamList>;
-    addProductHandle: any;
+    addProductHandle: (productId: string) => void;
+    wishlist: WL[];
 };
 
 const ProductItem = React.memo(
-    ({ item, navigation, addProductHandle }: ProductItemProps) => {
+    ({ item, navigation, addProductHandle, wishlist }: ProductItemProps) => {
         const productDetail = (productId: string) => {
             navigation.navigate('ProductDetail', { productId: productId });
         };
@@ -127,19 +133,31 @@ const ProductItem = React.memo(
                         </View>
                     </View>
 
-                    <TouchableOpacity
-                        style={styles.heartIconContainer}
-                        onPress={() => {
-                            addProductHandle(item.id);
-                        }}
-                    >
-                        <AntDesign
-                            name="hearto"
-                            size={18}
-                            color="white"
-                            style={styles.iconCart}
-                        />
-                    </TouchableOpacity>
+                    {wishlist.filter((it: WL) => it.product.id === item.id)
+                        .length === 0 ? (
+                        <TouchableOpacity
+                            style={styles.heartIconContainer}
+                            onPress={() => {
+                                addProductHandle(item.id);
+                            }}
+                        >
+                            <AntDesign
+                                name="heart"
+                                size={20}
+                                color="white"
+                                style={styles.iconCart}
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity style={styles.heartIconContainerInWL}>
+                            <AntDesign
+                                name="heart"
+                                size={20}
+                                color="red"
+                                style={styles.iconCart}
+                            />
+                        </TouchableOpacity>
+                    )}
                     <TouchableOpacity style={styles.cartIconContainer}>
                         <FontAwesome5
                             name="cart-plus"
@@ -153,3 +171,11 @@ const ProductItem = React.memo(
         );
     }
 );
+const mapStateToProps = (state: RootState) => {
+    return {
+        user: state.user,
+        wishlist: state.wishlist
+    };
+};
+const mapDispatchToProps = { addToWishlist };
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(List));
