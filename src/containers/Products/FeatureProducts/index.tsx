@@ -4,6 +4,8 @@ import { useFeatureProductsQuery } from 'estore/graphql/generated';
 import Grids from 'estore/containers/ProductsList/Grids';
 import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
 import styles from './styles';
+import { Product } from 'estore/graphql/generated';
+
 
 const FeatureProducts = () => {
  

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
     View,
-    TouchableOpacity,
-    Text,
-    Image,
     ActivityIndicator
 } from 'react-native';
 import Wishlist from 'estore/containers/Wishlist';
@@ -11,10 +8,8 @@ import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice/index';
 import { UserSliceType } from 'estore/redux/slice/userSlice';
 import { useActiveWishlistQuery } from 'estore/graphql/generated';
-import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
 import {
     addToWishlist,
-    removeFromWishlist
 } from 'estore/redux/slice/wishlistSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 type WishlistScreenProps = {

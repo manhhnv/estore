@@ -3,7 +3,6 @@ import {
     Text,
     View,
     FlatList,
-    ActivityIndicator,
     Dimensions,
     TouchableOpacity,
     SafeAreaView,
@@ -11,7 +10,6 @@ import {
     ToastAndroid
 } from 'react-native';
 import {
-    Product,
     useRemoveFromWistlistMutation,
     WishList as WL
 } from 'estore/graphql/generated';
@@ -22,7 +20,7 @@ import { UserSliceType } from 'estore/redux/slice/userSlice';
 import { RootState } from 'estore/redux/slice/index';
 import { connect } from 'react-redux';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import { FontAwesome5, AntDesign } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {
     addToWishlist,
@@ -77,7 +75,7 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
         return <Text></Text>;
     };
 
-    if (wishlist) {
+    if (wishlist && wishlist.length) {
         return (
             <SafeAreaView style={{backgroundColor: "white"}}>
                 <FlatList
@@ -101,7 +99,6 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
                 alignContent: "center"
             }}
         >
-
             <Image
                 resizeMode="contain"
                 style={{width: "80%", height: "80%"}}

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     SafeAreaView,
     View,
     TouchableOpacity,
     Text,
     Image,
-    FlatList
+    FlatList,
+    ToastAndroid
 } from 'react-native';
 import styles from './styles';
 import { Product } from 'estore/graphql/generated';
@@ -16,16 +17,26 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice/index';
 import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
-import { WishList as WL } from 'estore/graphql/generated';
-
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import {
+    WishList as WL,
+    useRemoveFromWistlistMutation
+} from 'estore/graphql/generated';
 type GridProps = {
     products: Array<Partial<Product> | null>;
-    addProductHandle: (productId: string ) => void;
+    addProductHandle: (productId: string) => void;
     wishlist: WL[];
+    addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 
-const Grid = ({ products, addProductHandle, wishlist }: GridProps) => {
+const Grid = ({
+    products,
+    addProductHandle,
+    wishlist,
+    addToWishlist
+}: GridProps) => {
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
             return (
@@ -34,6 +45,7 @@ const Grid = ({ products, addProductHandle, wishlist }: GridProps) => {
                     navigation={navigation}
                     addProductHandle={addProductHandle}
                     wishlist={wishlist}
+                    addToWishlist={addToWishlist}
                 />
             );
         }
@@ -66,12 +78,28 @@ const Grid = ({ products, addProductHandle, wishlist }: GridProps) => {
 type ProductItemProps = {
     item: Partial<Product>;
     navigation: NavigationProp<HomeStackParamList>;
-    addProductHandle: (productId: string ) => void;
+    addProductHandle: (productId: string) => void;
     wishlist: WL[];
+    addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 
 export const ProductItem = React.memo(
-    ({ item, navigation, addProductHandle, wishlist }: ProductItemProps) => {
+    ({
+        item,
+        navigation,
+        addProductHandle,
+        wishlist,
+        addToWishlist
+    }: ProductItemProps) => {
+        const [
+            removeProduct,
+            { called, data, loading, error }
+        ] = useRemoveFromWistlistMutation();
+
+        const removeProductHandle = (productId: string) => {
+            removeProduct({ variables: { productId: productId } });
+        };
+
         const productDetail = (productId: string) => {
             navigation.navigate('ProductDetail', { productId: productId });
         };
@@ -107,7 +135,17 @@ export const ProductItem = React.memo(
                             />
                         </TouchableOpacity>
                     ) : (
-                        <TouchableOpacity style={styles.heartIconContainerInWL}>
+                        <TouchableOpacity
+                            style={styles.heartIconContainerInWL}
+                            onPress={() => {
+                                let revert = wishlist.filter(
+                                    (it: WL) => it.product.id !== item.id
+                                );
+                                addToWishlist(revert);
+                                removeProductHandle(item.id);
+                                ToastAndroid.show('Đã xóa khỏi mục ưa thích', ToastAndroid.SHORT);
+                            }}
+                        >
                             <AntDesign
                                 name="heart"
                                 size={20}
