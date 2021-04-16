@@ -1,0 +1,10 @@
+mutation addToWishlist ($productId: String!){
+  addToWishlist (productId: $productId){
+    id
+    thumbnail
+    product {
+      ...DetailFragment
+    }
+  }
+}
+

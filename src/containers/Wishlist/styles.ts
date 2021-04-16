@@ -1,9 +1,15 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { adjust } from 'estore/helpers/adjust';
 
 const { width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
+import { adjust } from 'estore/helpers/adjust';
+export default StyleSheet.create({
+    overlayLoadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        backgroundColor: "white"
+    },
     productsLayoutContainer: {
         width,
         justifyContent: 'center',
@@ -19,9 +25,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center'
     },
-    productImage: {
+    imageContainer: {
         width: 0.5 * width * 0.8,
-        height: 200
+        height: 150,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center'
+    },
+    productImage: {
+        width: "90%",
+        height: "90%",
+        borderRadius: 10
     },
     nameContainer: {
         marginLeft: 5,
@@ -34,10 +48,11 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     priceBottomContainer: {
-        marginBottom: 5,
+        // marginBottom: 5,
         marginLeft: 5,
         width: 'auto',
         height: 'auto',
+        flexDirection: "row",
         justifyContent: 'center',
         alignItems: 'flex-start',
         alignContent: 'center'
@@ -58,17 +73,18 @@ const styles = StyleSheet.create({
     },
     priceContainer: {
         width: 0.5 * width + 0.5 * width * 0.2,
-        height: 200,
+        height: 150 * 0.9,
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         alignContent: 'center'
     },
     productPrice: {
-        color: 'black',
+        color: 'coral',
         textAlign: 'center',
         fontSize: adjust(12),
         fontFamily: 'castoro',
-        letterSpacing: 1
+        letterSpacing: 1,
+        marginRight: 5,
     },
     productPriceBeforeDiscount: {
         fontSize: adjust(11),
@@ -119,17 +135,5 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         bottom: 10,
         right: 60
-    },
-    heartIconContainerInWL: {
-        backgroundColor: 'white',
-        position: 'absolute',
-        zIndex: 1,
-        width: 'auto',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignContent: 'center',
-        bottom: 10,
-        right: 60
     }
 });
-export default styles;

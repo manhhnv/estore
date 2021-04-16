@@ -1,8 +1,8 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
-import { Product, useProductByCategoriesQuery } from 'estore/graphql/generated';
-import Grid from 'estore/components/ProductsList/Grid';
-import List from 'estore/components/ProductsList/List';
+import { useProductByCategoriesQuery, Product } from 'estore/graphql/generated';
+import Grids from 'estore/containers/ProductsList/Grids';
+import Lists from 'estore/containers/ProductsList/Lists';
 import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
 import styles from './styles';
 import FilterSelection from 'estore/components/FilterSelection';
@@ -31,29 +31,30 @@ const ProductByCategories = ({ route }: ProductByCategoriesProps) => {
     if (called && loading) {
         return <GridPlaceholder />;
     }
-    return (
-        <View
-            style={{ flex: 1, flexDirection: 'column', paddingBottom: 80 }}
-        >
-            {data?.products?.total === 0 ? (
-                <>
-                    <Text style={styles.listProductName}>
-                        Không có sản phẩm phù hợp
-                    </Text>
-                </>
-            ) : (
-                <>
-                    <FilterSelection grid={grid} setGrid={setGrid} />
-                    {grid && products ? (
-                        <Grid products={products} />
-                    ) : null}
-                    {!grid && products ? (
-                        <List products={products} />
-                    ) : null}
-                </>
-            )}
-        </View>
-    );
+    if (data && data.products && data.products.items) {
+        return (
+            <View
+                style={{ flex: 1, flexDirection: 'column', paddingBottom: 80 }}
+            >
+                {data.products.total === 0 ? (
+                    <>
+                        <Text style={styles.listProductName}>
+                            No Product found in this category
+                        </Text>
+                    </>
+                ) : (
+                    <>
+                        <FilterSelection grid={grid} setGrid={setGrid} />
+                        {grid ? (
+                            <Grids products={data.products.items} />
+                        ) : (
+                            <Lists products={data.products.items} />
+                        )}
+                    </>
+                )}
+            </View>
+        );
+    }
     return <View></View>;
 };
 export default ProductByCategories;

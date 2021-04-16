@@ -5,24 +5,49 @@ import {
     TouchableOpacity,
     Text,
     Image,
-    FlatList
+    FlatList,
+    ToastAndroid
 } from 'react-native';
 import styles from './styles';
 import { Product } from 'estore/graphql/generated';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { RootStackParamList } from 'estore/types';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-
+import { connect } from 'react-redux';
+import { RootState } from 'estore/redux/slice/index';
+import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import {
+    WishList as WL,
+    useRemoveFromWistlistMutation
+} from 'estore/graphql/generated';
+import { RootStackParamList } from 'estore/types';
 type GridProps = {
     products: Array<Partial<Product> | null>;
+    addProductHandle: (productId: string) => void;
+    wishlist: WL[];
+    addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 
-const Grid = ({ products }: GridProps) => {
+const Grid = ({
+    products,
+    addProductHandle,
+    wishlist,
+    addToWishlist
+}: GridProps) => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
-            return <ProductItem item={item} navigation={navigation}/>;
+            return (
+                <ProductItem
+                    item={item}
+                    navigation={navigation}
+                    addProductHandle={addProductHandle}
+                    wishlist={wishlist}
+                    addToWishlist={addToWishlist}
+                />
+            );
         }
         return <Text></Text>;
     };
@@ -49,69 +74,142 @@ const Grid = ({ products }: GridProps) => {
     }
     return <View></View>;
 };
-export default Grid;
 
 type ProductItemProps = {
     item: Partial<Product>;
-    navigation: NavigationProp<RootStackParamList>
-}
+    navigation: NavigationProp<RootStackParamList>;
+    addProductHandle: (productId: string) => void;
+    wishlist: WL[];
+    addToWishlist: ActionCreatorWithPayload<any, string>;
+};
 
-const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
-    const productDetail = (productId: string) => {
-        navigation.navigate("ProductDetail", { productId: productId })
-    }
-    return (
-        <TouchableOpacity key={item.id} onPress={() => productDetail(item.id ? item.id : '')}>
-            <View style={styles.productItem}>
-                {item.rawDiscount ? (
-                    <View style={styles.productSale}>
-                        <FontAwesome5 name="tags" size={40} color="coral" />
-                        <Text style={styles.saleText}>
-                            {'-' + item.rawDiscount + '%'}
-                        </Text>
-                    </View>
-                ) : null}
+export const ProductItem = React.memo(
+    ({
+        item,
+        navigation,
+        addProductHandle,
+        wishlist,
+        addToWishlist
+    }: ProductItemProps) => {
+        const [
+            removeProduct,
+            { called, data, loading, error }
+        ] = useRemoveFromWistlistMutation();
 
-                <TouchableOpacity style={styles.heartIconContainer}>
-                    <AntDesign
-                        name="hearto"
-                        size={20}
-                        color="white"
-                        style={styles.heartIcon}
+        const removeProductHandle = (productId: string) => {
+            removeProduct({ variables: { productId: productId } });
+        };
+
+        const productDetail = (productId: string) => {
+            navigation.navigate("ProductDetail", { productId: productId });
+        };
+
+        return (
+            <TouchableOpacity
+                key={item.id}
+                onPress={() => productDetail(item.id ? item.id : '')}
+            >
+                <View style={styles.productItem}>
+                    {item.rawDiscount ? (
+                        <View style={styles.productSale}>
+                            <FontAwesome5 name="tags" size={40} color="coral" />
+                            <Text style={styles.saleText}>
+                                {'-' + item.rawDiscount + '%'}
+                            </Text>
+                        </View>
+                    ) : null}
+
+                    {wishlist.filter((it: WL) => it.product.id === item.id)
+                        .length === 0 ? (
+                        <TouchableOpacity
+                            style={styles.heartIconContainer}
+                            onPress={() => {
+                                if (item && item.id) {
+                                    addProductHandle(item.id);
+                                }
+                            }}
+                        >
+                            <AntDesign
+                                name="heart"
+                                size={20}
+                                color="white"
+                                style={styles.heartIcon}
+                            />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity
+                            style={styles.heartIconContainerInWL}
+                            onPress={() => {
+                                let revert = wishlist.filter(
+                                    (it: WL) => it.product.id !== item.id
+                                );
+                                addToWishlist(revert);
+                                item && item.id ? removeProductHandle(item.id) : null;
+                                ToastAndroid.show('Đã xóa khỏi mục ưa thích', ToastAndroid.SHORT);
+                            }}
+                        >
+                            <AntDesign
+                                name="heart"
+                                size={20}
+                                color="red"
+                                style={styles.heartIcon}
+                            />
+                        </TouchableOpacity>
+                    )}
+
+                    <Image
+                        resizeMode="cover"
+                        style={styles.productImage}
+                        source={{ uri: item.thumbnail, cache: 'force-cache' }}
                     />
-                </TouchableOpacity>
-                <Image
-                    resizeMode="cover"
-                    style={styles.productImage}
-                    source={{ uri: item.thumbnail, cache: 'force-cache' }}
-                />
-                <View style={styles.nameContainer}>
-                    <Text style={styles.productName}>
-                        {item.name?.slice(0, 30) + '...'}
-                    </Text>
-                </View>
-
-                <View style={styles.priceContainer}>
-                    <View style={styles.priceChildContainer}>
-                        <Text style={styles.productPrice}>
-                            {item.price
-                                ? item.price
-                                      .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
-                                  ' VND'
-                                : null}
-                        </Text>
-                        <Text style={styles.productPriceBeforeDiscount}>
-                            {item.priceBeforeDiscount
-                                ? item.priceBeforeDiscount
-                                      .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
-                                  ' ₫'
-                                : null}
+                    <View style={styles.nameContainer}>
+                        <Text style={styles.productName}>
+                            {item.name?.slice(0, 30) + '...'}
                         </Text>
                     </View>
+
+                    <View style={styles.priceContainer}>
+                        <View style={styles.priceChildContainer}>
+                            <Text style={styles.productPrice}>
+                                {item.price
+                                    ? item.price
+                                          .toString()
+                                          .replace(
+                                              /\B(?=(\d{3})+(?!\d))/g,
+                                              ','
+                                          ) + ' VND'
+                                    : null}
+                            </Text>
+                            <Text style={styles.productPriceBeforeDiscount}>
+                                {item.priceBeforeDiscount
+                                    ? item.priceBeforeDiscount
+                                          .toString()
+                                          .replace(
+                                              /\B(?=(\d{3})+(?!\d))/g,
+                                              ','
+                                          ) + ' ₫'
+                                    : null}
+                            </Text>
+                        </View>
+                        <TouchableOpacity style={styles.cartIconContainer}>
+                            <FontAwesome5
+                                name="cart-plus"
+                                size={18}
+                                color="white"
+                                style={styles.iconCart}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-        </TouchableOpacity>
-    );
-});
+            </TouchableOpacity>
+        );
+    }
+);
+const mapStateToProps = (state: RootState) => {
+    return {
+        user: state.user,
+        wishlist: state.wishlist
+    };
+};
+const mapDispatchToProps = { addToWishlist };
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Grid));

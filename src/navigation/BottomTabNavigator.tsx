@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import TabOneScreen from 'estore/screens/TabOneScreen';
-import TabTwoScreen from 'estore/screens/TabTwoScreen';
+import WishlistScreen from 'estore/screens/WishlistScreen';
 import {
     BottomTabParamList,
     TabOneParamList,
@@ -11,15 +11,19 @@ import {
 } from 'estore/types';
 import SettingStackNavigator from 'estore/navigation/SettingStackNavigation';
 import HomeStack from 'estore/navigation/HomeStack';
-import SettingScreen from 'estore/screens/SettingScreen';
-
+import { RootState } from 'estore/redux/slice/index';
+import { connect } from 'react-redux';
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+type WishlistProps = {
+    wishlist: any
+};
+
+const BottomTabNavigator = ({wishlist}: WishlistProps) => {
     return (
         <BottomTab.Navigator
             initialRouteName="HomeStack"
-            tabBarOptions={{ activeTintColor: '#07ac4f' }}
+            tabBarOptions={{ activeTintColor: 'coral' }}
         >
             <BottomTab.Screen
                 name="HomeStack"
@@ -32,7 +36,7 @@ export default function BottomTabNavigator() {
             />
             <BottomTab.Screen
                 name="Notification"
-                component={TabTwoNavigator}
+                component={TabOneNavigator}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="notifications" color={color} />
@@ -47,7 +51,7 @@ export default function BottomTabNavigator() {
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="heart" color={color} />
                     ),
-                    tabBarBadge: '5'
+                    tabBarBadge: wishlist.length > 0 ? wishlist.length : null
                 }}
             />
             <BottomTab.Screen
@@ -62,6 +66,19 @@ export default function BottomTabNavigator() {
         </BottomTab.Navigator>
     );
 }
+
+const mapStateToProps = (state: RootState) => {
+    return {
+        wishlist: state.wishlist
+    };
+};
+
+const mapDispatchToProps = { };
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(React.memo(BottomTabNavigator));
+
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
@@ -95,8 +112,8 @@ function TabTwoNavigator() {
         <TabTwoStack.Navigator>
             <TabTwoStack.Screen
                 name="TabTwoScreen"
-                component={TabTwoScreen}
-                options={{ headerTitle: 'Tab Two Title' }}
+                component={WishlistScreen}
+                options={{ headerTitle: 'Wishlists' }}
             />
         </TabTwoStack.Navigator>
     );

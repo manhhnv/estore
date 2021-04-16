@@ -2,7 +2,6 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from 'estore/screens/HomeScreen';
 import FilterProductsScreen from 'estore/screens/FilterProductsScreen';
-import ProductDetailScreen from 'estore/screens/ProductDetailScreen';
 import { HomeStackParamList } from 'estore/types';
 
 const Stack = createStackNavigator<HomeStackParamList>();

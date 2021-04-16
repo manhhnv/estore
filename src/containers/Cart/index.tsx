@@ -108,9 +108,9 @@ const OrderItem = ({ item, removeOrderLineHandle, navigation }: OrderItemProps) 
                 <Swipeable renderRightActions={() => <LeftComponent lineId={item.id} removeOrderLineHandle={removeOrderLineHandle} />}>
                     <View style={{ flexDirection: 'row', backgroundColor: 'white', paddingVertical: 10 }}>
                         <Image source={{ uri: item.thumbnail }} style={{ width: 100, height: 115 }} onPress={productDetailRedirect} />
-                        <View style={{ flexDirection: 'column', marginLeft: 15 }}>
+                        <View style={{ flexDirection: 'column', marginLeft: 10, flexWrap: 'wrap', width: "90%" }}>
                             <TouchableOpacity onPress={productDetailRedirect}>
-                                <Text style={{ fontSize: adjust(13) }}>
+                                <Text style={{ fontSize: adjust(11) }}>
                                     {item.name.slice(0, 35).concat("...")}
                                 </Text>
                                 <View style={{ flexDirection: 'row' }}>
