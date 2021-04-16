@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SettingScreen from 'estore/screens/SettingScreen';
 import UserAddressScreen from 'estore/screens/UserAddressScreen';
+import AddAddressScreen from 'estore/screens/AddAddressScreen';
 import { SettingStackParamList } from 'estore/types';
 
 const SettingStack = createStackNavigator<SettingStackParamList>();
@@ -22,6 +23,13 @@ export default function SettingStackNavigator() {
                     headerShown: false
                 }}
                 name="listUserAddress"
+            />
+            <SettingStack.Screen
+                component={AddAddressScreen}
+                options={{
+                    headerShown: false
+                }}
+                name="addUserAddress"
             />
         </SettingStack.Navigator>
     );

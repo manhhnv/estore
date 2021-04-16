@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import FeatureHeader from 'estore/components/FeatureHeader';
+import ListAddress from 'estore/containers/UserAddress/ListAddress';
+import NoRightIconHeader from 'estore/components/NoRightIconHeader';
 
 const UserAddressScreen = () => {
     return (
         <React.Fragment>
-            <FeatureHeader name="Địa chỉ"/>
+            <NoRightIconHeader name="Địa chỉ"/>
+            <ListAddress />
         </React.Fragment>
     )
 }

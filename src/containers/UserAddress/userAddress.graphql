@@ -6,3 +6,18 @@ query getUserAddresses {
         totalItems
     }
 }
+query availableProvinces {
+    availableProvinces {
+        id
+        name
+    }
+}
+query getStatesByProvinceId($provinceId: Int!) {
+    getStatesByProvinceId(provinceId: $provinceId) {
+        items {
+            id
+            name
+        }
+        totalItems
+    }
+}

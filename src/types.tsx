@@ -27,6 +27,7 @@ export type SettingStackParamList = {
     register: undefined;
     login: undefined;
     listUserAddress: undefined;
+    addUserAddress: undefined;
 };
 
 export type HomeStackParamList = {
