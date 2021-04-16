@@ -28,10 +28,12 @@ yarn install
 + You must download emulator (android studio) or download expo go on your phone
 5. Run Ebuy Project
 ```
+npm generate
 npm start
 ```
 or
 ```
+yarn generate
 yarn start
 ```
 + If you using android OS, you should click Run on Android Device / Emulator
