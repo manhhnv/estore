@@ -9,43 +9,42 @@ import { RootStackParamList } from 'estore/types';
 const ListAddress = () => {
     const [
         executeGetAddresses,
-        {
-            called,
-            loading,
-            data,
-            error
-        }
+        { called, loading, data, error }
     ] = useGetUserAddressesLazyQuery();
     const getUserAddresses = useCallback(() => {
-        executeGetAddresses()
-    }, [])
+        executeGetAddresses();
+    }, []);
     const getAddressError = () => {
-        ToastAndroid.show("Có lỗi xảy ra", ToastAndroid.SHORT)
-    }
+        ToastAndroid.show('Có lỗi xảy ra', ToastAndroid.SHORT);
+    };
+    useEffect(() => {}, [loading]);
     useEffect(() => {
-
-    }, [loading])
-    useEffect(() => {
-        executeGetAddresses()
-    }, [])
+        executeGetAddresses();
+    }, []);
     useEffect(() => {
         if (error && error.message) {
-            getAddressError()
+            getAddressError();
         }
-    }, [error])
+    }, [error]);
     useEffect(() => {
         if (data?.getUserAddresses?.items) {
-            console.log(data.getUserAddresses.items)
+            console.log(data.getUserAddresses.items);
         }
-    }, [data])
+    }, [data]);
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     return (
         <React.Fragment>
-            {data && data.getUserAddresses && data.getUserAddresses.items?.length === 0 ? (
+            {data &&
+            data.getUserAddresses &&
+            data.getUserAddresses.items?.length === 0 ? (
                 <View style={styles.container}>
                     <TouchableOpacity
                         style={styles.addButtonContainer}
-                        onPress={() => navigation.navigate("addUserAddress", { getUserAddresses: getUserAddresses })}
+                        onPress={() =>
+                            navigation.navigate('addUserAddress', {
+                                getUserAddresses: getUserAddresses
+                            })
+                        }
                     >
                         <Text style={styles.addAddressText}>Thêm địa chỉ</Text>
                     </TouchableOpacity>
@@ -57,6 +56,6 @@ const ListAddress = () => {
                 </View>
             ) : null}
         </React.Fragment>
-    )
-}
+    );
+};
 export default ListAddress;

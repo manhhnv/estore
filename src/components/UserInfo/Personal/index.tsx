@@ -13,7 +13,10 @@ const Personal = ({ user }: PersonalProps) => {
     return (
         <View style={styles.personalContainer}>
             <Image
-                source={{ uri: user.me?.avatar ? user.me.avatar : undefined, cache: 'force-cache' }}
+                source={{
+                    uri: user.me?.avatar ? user.me.avatar : undefined,
+                    cache: 'force-cache'
+                }}
                 containerStyle={{ width: 80, height: 80, borderRadius: 100 }}
             />
             <View style={{ justifyContent: 'center' }}>

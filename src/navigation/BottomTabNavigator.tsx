@@ -16,10 +16,10 @@ import { connect } from 'react-redux';
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 type WishlistProps = {
-    wishlist: any
+    wishlist: any;
 };
 
-const BottomTabNavigator = ({wishlist}: WishlistProps) => {
+const BottomTabNavigator = ({ wishlist }: WishlistProps) => {
     return (
         <BottomTab.Navigator
             initialRouteName="HomeStack"
@@ -65,7 +65,7 @@ const BottomTabNavigator = ({wishlist}: WishlistProps) => {
             />
         </BottomTab.Navigator>
     );
-}
+};
 
 const mapStateToProps = (state: RootState) => {
     return {
@@ -73,12 +73,11 @@ const mapStateToProps = (state: RootState) => {
     };
 };
 
-const mapDispatchToProps = { };
+const mapDispatchToProps = {};
 export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(React.memo(BottomTabNavigator));
-
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/

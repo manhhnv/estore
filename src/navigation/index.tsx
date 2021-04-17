@@ -41,9 +41,18 @@ function RootNavigator() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
-            <Stack.Screen name="ProductDetail" component={ProductDetailScreen}></Stack.Screen>
-            <Stack.Screen name="ViewCart" component={ViewCartScreen}></Stack.Screen>
-            <Stack.Screen name="listUserAddress" component={UserAddressScreen} />
+            <Stack.Screen
+                name="ProductDetail"
+                component={ProductDetailScreen}
+            ></Stack.Screen>
+            <Stack.Screen
+                name="ViewCart"
+                component={ViewCartScreen}
+            ></Stack.Screen>
+            <Stack.Screen
+                name="listUserAddress"
+                component={UserAddressScreen}
+            />
             <Stack.Screen name="addUserAddress" component={AddAddressScreen} />
             <Stack.Screen
                 name="NotFound"

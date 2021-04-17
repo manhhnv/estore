@@ -7,12 +7,20 @@ const ShopInfo = () => {
     return (
         <View style={styles.shopInfoContainer}>
             <View style={{ flexDirection: 'row' }}>
-                <Image source={require('estore/assets/images/logo.png')} style={styles.shopAvatar} />
+                <Image
+                    source={require('estore/assets/images/logo.png')}
+                    style={styles.shopAvatar}
+                />
                 <View style={{ marginLeft: 20 }}>
                     <Text style={styles.shopName}>Ebuy Shop</Text>
                     <Text style={{ marginTop: 5 }}>Online 11 phút trước</Text>
                     <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                        <Icon type="ionicon" name="location-outline" color="red" size={20}/>
+                        <Icon
+                            type="ionicon"
+                            name="location-outline"
+                            color="red"
+                            size={20}
+                        />
                         <Text> Hà Nội</Text>
                     </View>
                 </View>
@@ -43,6 +51,6 @@ const ShopInfo = () => {
                 </View>
             </View>
         </View>
-    )
-}
-export default React.memo(ShopInfo)
+    );
+};
+export default React.memo(ShopInfo);

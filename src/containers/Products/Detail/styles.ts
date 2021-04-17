@@ -1,16 +1,16 @@
-import { adjust } from "estore/helpers/adjust";
-import { Dimensions, StyleSheet } from "react-native";
+import { adjust } from 'estore/helpers/adjust';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
     addingButtonGroupContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     addingButtonCommon: {
         height: 54,
-        borderRadius: 0,
+        borderRadius: 0
     },
     addingButtonContainer: {
         borderWidth: 0,
@@ -62,7 +62,7 @@ export default StyleSheet.create({
     },
     productDetailContainer: {
         paddingHorizontal: 10,
-        backgroundColor: "white",
+        backgroundColor: 'white',
         paddingBottom: 30
     },
     productName: {
@@ -74,7 +74,7 @@ export default StyleSheet.create({
     },
     configsBottomSheet: {
         height: 50,
-        backgroundColor: 'rgba(0.5, 0.25, 0, 0.2)',
+        backgroundColor: 'rgba(0.5, 0.25, 0, 0.2)'
     },
     bottomSheetBody: {
         flex: 1,
@@ -99,7 +99,7 @@ export default StyleSheet.create({
         left: 150,
         fontSize: adjust(12),
         color: '#ee4d2d',
-        letterSpacing: 1,
+        letterSpacing: 1
     },
     inStock: {
         position: 'absolute',
@@ -123,6 +123,5 @@ export default StyleSheet.create({
     buttonInBottomSheet: {
         width: 0.5 * width,
         borderRadius: 0
-    },
-    
-})
+    }
+});

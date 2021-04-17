@@ -6,9 +6,9 @@ import NoRightIconHeader from 'estore/components/NoRightIconHeader';
 const UserAddressScreen = () => {
     return (
         <React.Fragment>
-            <NoRightIconHeader name="Địa chỉ"/>
+            <NoRightIconHeader name="Địa chỉ" />
             <ListAddress />
         </React.Fragment>
-    )
-}
+    );
+};
 export default React.memo(UserAddressScreen);

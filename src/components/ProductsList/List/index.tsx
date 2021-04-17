@@ -111,7 +111,11 @@ const ProductItem = React.memo(
                 <View style={styles.productItem}>
                     {item.rawDiscount ? (
                         <View style={styles.productSale}>
-                            <FontAwesome5 name="tags" size={40} color="#ee4d2d" />
+                            <FontAwesome5
+                                name="tags"
+                                size={40}
+                                color="#ee4d2d"
+                            />
                             <Text style={styles.saleText}>
                                 {'-' + item.rawDiscount + '%'}
                             </Text>
@@ -186,7 +190,9 @@ const ProductItem = React.memo(
                                     (it: WL) => it.product.id !== item.id
                                 );
                                 addToWishlist(revert);
-                                item && item.id ? removeProductHandle(item.id) : null;
+                                item && item.id
+                                    ? removeProductHandle(item.id)
+                                    : null;
                                 ToastAndroid.show(
                                     'Đã xóa khỏi mục ưa thích',
                                     ToastAndroid.SHORT

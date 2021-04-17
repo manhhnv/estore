@@ -9,6 +9,6 @@ const AddAddressScreen = () => {
             <NoRightIconHeader name="Thêm địa chỉ mới" />
             <AddAddress />
         </React.Fragment>
-    )
-}
+    );
+};
 export default AddAddressScreen;

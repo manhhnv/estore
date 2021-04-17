@@ -1,18 +1,5 @@
-import React, { useState } from 'react';
-import {
-    StyleSheet,
-    Text,
-    Button,
-    TouchableOpacity,
-    Image,
-    ScrollView,
-    Dimensions
-} from 'react-native';
-
-import Swiper from 'react-native-swiper';
-
-const width = Dimensions.get('window').width; //full width
-const height = Dimensions.get('window').height; //full height
+import { StyleSheet, Dimensions } from 'react-native';
+const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
     buttonContainer: {

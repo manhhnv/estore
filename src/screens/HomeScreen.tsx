@@ -12,9 +12,7 @@ const HomeScreen = () => {
         <React.Fragment>
             <HomeHeader />
             <View style={styles.bodyContainer}>
-                <ScrollView
-                    style={{ backgroundColor: '#fff' }}
-                >
+                <ScrollView style={{ backgroundColor: '#fff' }}>
                     <HomeBanner />
                     <Categories />
                     <FeatureProducts />
@@ -32,4 +30,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     }
-})
+});

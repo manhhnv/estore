@@ -5,8 +5,8 @@ import { Image } from 'react-native-elements';
 import styles from './styles';
 
 type BannerProps = {
-    sources: Array<string | undefined>
-}
+    sources: Array<string | undefined>;
+};
 
 const Banners = ({ sources }: BannerProps) => {
     if (sources.length > 0) {
@@ -34,7 +34,6 @@ const Banners = ({ sources }: BannerProps) => {
                 </Swiper>
             </View>
         );
-    }
-    else return <View />
+    } else return <View />;
 };
 export default React.memo(Banners);

@@ -8,7 +8,7 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action: PayloadAction<Partial<Order>>) => {
             if (action.payload) {
-                state = action.payload
+                state = action.payload;
                 return state;
             }
         },
@@ -20,6 +20,6 @@ const cartSlice = createSlice({
             return state;
         }
     }
-})
+});
 export const { addToCart, removeFromCart, setEmptyCart } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useProductDetailQuery } from 'estore/graphql/generated';
-import { ActivityIndicator, View, Text, ScrollView, Dimensions } from 'react-native';
+import {
+    ActivityIndicator,
+    View,
+    Text,
+    ScrollView,
+    Dimensions
+} from 'react-native';
 import Banner from 'estore/components/Banner';
 import { Button, Icon } from 'react-native-elements';
 import Rating from 'estore/components/Rating';
@@ -10,25 +16,26 @@ import ProductConfig from 'estore/containers/ProductConfig';
 import { adjust } from 'estore/helpers/adjust';
 
 type ProductDetailProps = {
-    productId: string
-}
+    productId: string;
+};
 
 const { width } = Dimensions.get('window');
 
 const ProductDetail = ({ productId }: ProductDetailProps) => {
-    const { called, data, loading, error } = useProductDetailQuery({ variables: { productId: productId } })
+    const { called, data, loading, error } = useProductDetailQuery({
+        variables: { productId: productId }
+    });
     const [isVisible, setVisible] = useState(false);
     if (loading) {
-        return <ActivityIndicator color="#ee4d2d" size="large" />
-    }
-    else if (called && data && data.productDetail) {
+        return <ActivityIndicator color="#ee4d2d" size="large" />;
+    } else if (called && data && data.productDetail) {
         let previews: Array<string | undefined> = [];
         if (data.productDetail.previews) {
-            previews = data.productDetail.previews.map(pre => {
+            previews = data.productDetail.previews.map((pre) => {
                 if (pre) {
-                    return pre.url
+                    return pre.url;
                 }
-            })
+            });
         }
         return (
             <React.Fragment>
@@ -36,20 +43,26 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                     <Banner sources={previews} />
                     <View style={styles.productDetailContainer}>
                         <Text style={styles.productName}>
-                            {data.productDetail.name.length > 90 ? data.productDetail.name.slice(0, 90).concat('...') : data.productDetail.name}
+                            {data.productDetail.name.length > 90
+                                ? data.productDetail.name
+                                      .slice(0, 90)
+                                      .concat('...')
+                                : data.productDetail.name}
                         </Text>
                         <Text style={styles.realPrice}>
-                            ₫ {data.productDetail.price
+                            ₫{' '}
+                            {data.productDetail.price
                                 ? data.productDetail.price
-                                    .toString()
-                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                      .toString()
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                 : null}
                         </Text>
                         <Text style={styles.priceBeforeDiscount}>
-                            ₫ {data.productDetail.priceBeforeDiscount
+                            ₫{' '}
+                            {data.productDetail.priceBeforeDiscount
                                 ? data.productDetail.priceBeforeDiscount
-                                    .toString()
-                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                      .toString()
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                                 : null}
                         </Text>
                         {data.productDetail.rating ? (
@@ -62,23 +75,38 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                     <ShopInfo />
                 </ScrollView>
                 <View style={styles.addingButtonGroupContainer}>
-                    <Button key={1}
-                        icon={<Icon type="antdesign" name="heart" color="white" />}
-                        buttonStyle={[styles.addingButtonCommon, { backgroundColor: '#00bfa5', width: 0.3 * width }]}
+                    <Button
+                        key={1}
+                        icon={
+                            <Icon type="antdesign" name="heart" color="white" />
+                        }
+                        buttonStyle={[
+                            styles.addingButtonCommon,
+                            { backgroundColor: '#00bfa5', width: 0.3 * width }
+                        ]}
                         containerStyle={styles.addingButtonContainer}
                     />
                     <Button
                         title="Thêm vào giỏ hàng"
                         key={2}
-                        buttonStyle={[styles.addingButtonCommon, { backgroundColor: '#ee4d2d', width: 0.4 * width }]}
-                        containerStyle={[styles.addingButtonContainer, { borderRightWidth: 0.5, borderRightColor: 'black' }]}
+                        buttonStyle={[
+                            styles.addingButtonCommon,
+                            { backgroundColor: '#ee4d2d', width: 0.4 * width }
+                        ]}
+                        containerStyle={[
+                            styles.addingButtonContainer,
+                            { borderRightWidth: 0.5, borderRightColor: 'black' }
+                        ]}
                         onPress={() => setVisible(!isVisible)}
                         titleStyle={{ fontSize: adjust(12) }}
                     />
                     <Button
                         title="Mua ngay"
                         key={3}
-                        buttonStyle={[styles.addingButtonCommon, { backgroundColor: '#ee4d2d', width: 0.3 * width }]}
+                        buttonStyle={[
+                            styles.addingButtonCommon,
+                            { backgroundColor: '#ee4d2d', width: 0.3 * width }
+                        ]}
                         containerStyle={styles.addingButtonContainer}
                         titleStyle={{ fontSize: adjust(12) }}
                     />
@@ -95,10 +123,10 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                     />
                 ) : null}
             </React.Fragment>
-        )
+        );
     }
-    return <View></View>
-}
+    return <View></View>;
+};
 export default React.memo(ProductDetail, (props, nextProps) => {
     if (props.productId !== nextProps.productId) {
         return true;
