@@ -3,7 +3,7 @@ import { Alert, Text, View, Animated } from 'react-native';
 import { Image, SocialIcon } from 'react-native-elements';
 import {
     useLoginGoogleMutation,
-    useLoginFaceBookMutation,
+    useLoginFaceBookMutation
 } from 'estore/graphql/generated';
 import styles from './styles';
 import { firebaseConfig } from './config';

@@ -22,7 +22,7 @@ const Slide = ({ products }: SlideProps) => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
-            return <ProductItem item={item} navigation={navigation}/>;
+            return <ProductItem item={item} navigation={navigation} />;
         }
         return <Text></Text>;
     };
@@ -49,15 +49,18 @@ export default Slide;
 
 type ProductItemProps = {
     item: Partial<Product>;
-    navigation: NavigationProp<RootStackParamList>
-}
+    navigation: NavigationProp<RootStackParamList>;
+};
 
 const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
     const productDetail = (productId: string) => {
-        navigation.navigate("ProductDetail", { productId: productId })
-    }
+        navigation.navigate('ProductDetail', { productId: productId });
+    };
     return (
-        <TouchableOpacity key={item.id} onPress={() => productDetail(item.id ? item.id : '')}>
+        <TouchableOpacity
+            key={item.id}
+            onPress={() => productDetail(item.id ? item.id : '')}
+        >
             <View style={styles.productItem}>
                 {item.rawDiscount ? (
                     <View style={styles.productSale}>
@@ -100,7 +103,10 @@ const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
                     </View>
                     <TouchableOpacity style={styles.cartIconContainer}>
                         <Text style={{ color: '#ee4d2d' }}>
-                            Đã bán {item.soldQuantity && item.soldQuantity >= 1000 ? Math.round(item.soldQuantity/100) / 10 + 'K' : item.soldQuantity}
+                            Đã bán{' '}
+                            {item.soldQuantity && item.soldQuantity >= 1000
+                                ? Math.round(item.soldQuantity / 100) / 10 + 'K'
+                                : item.soldQuantity}
                         </Text>
                     </TouchableOpacity>
                 </View>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
-// import { Image } from 'react-native-elements';
 import styles from 'estore/components/ProductListLayout/styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

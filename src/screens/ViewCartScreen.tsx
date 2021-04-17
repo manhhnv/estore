@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import FeatureHeader from 'estore/components/FeatureHeader';
 import Cart from 'estore/containers/Cart';
 import { View } from 'react-native';
@@ -6,11 +6,11 @@ import { View } from 'react-native';
 const ViewCartScreen = () => {
     return (
         <React.Fragment>
-            <FeatureHeader name="Giỏ hàng"/>
+            <FeatureHeader name="Giỏ hàng" />
             <View style={{ flex: 1 }}>
-                <Cart/>
+                <Cart />
             </View>
         </React.Fragment>
-    )
-}
-export default ViewCartScreen
+    );
+};
+export default ViewCartScreen;

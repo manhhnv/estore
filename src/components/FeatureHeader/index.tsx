@@ -9,12 +9,17 @@ import { RootState } from 'estore/redux/slice';
 
 type FeatureHeaderProps = {
     name?: string;
-    cart?: Partial<Order>
-}
+    cart?: Partial<Order>;
+};
 const { width } = Dimensions.get('screen');
 
 const FeatureHeader = ({ name, cart }: FeatureHeaderProps) => {
-    const CartIcon = withBadge(cart?.totalQuantity && cart.totalQuantity >= 10 ? '9+' : cart?.totalQuantity, { status: 'error', containerStyle: { marginRight: 30 } })(Icon) as typeof Icon;
+    const CartIcon = withBadge(
+        cart?.totalQuantity && cart.totalQuantity >= 10
+            ? '9+'
+            : cart?.totalQuantity,
+        { status: 'error', containerStyle: { marginRight: 30 } }
+    )(Icon) as typeof Icon;
     const MessageIcon = withBadge(4, { status: 'error' })(Icon) as typeof Icon;
     const navigation = useNavigation();
     return (
@@ -43,7 +48,7 @@ const FeatureHeader = ({ name, cart }: FeatureHeaderProps) => {
             rightComponent={
                 <View style={{ flexDirection: 'row' }}>
                     <Button
-                        onPress={() => navigation.navigate("ViewCart")}
+                        onPress={() => navigation.navigate('ViewCart')}
                         buttonStyle={{ backgroundColor: 'white', padding: 0 }}
                         icon={
                             cart && cart.totalQuantity ? (
@@ -68,11 +73,11 @@ const FeatureHeader = ({ name, cart }: FeatureHeaderProps) => {
             rightContainerStyle={{ marginHorizontal: 0.05 * width }}
             backgroundColor="white"
         />
-    )
-}
+    );
+};
 const mapStateToProps = (state: RootState) => {
     return {
         cart: state.cart
-    }
-}
+    };
+};
 export default connect(mapStateToProps, null)(React.memo(FeatureHeader));

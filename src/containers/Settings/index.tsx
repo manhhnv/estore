@@ -19,12 +19,7 @@ type SettingsProps = {
 const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
     const navigation = useNavigation();
     const [loggingOut, setLoggingOut] = useState(false);
-    const {
-        called,
-        loading,
-        data,
-        error
-    } = useActiveOrderQuery()
+    const { called, loading, data, error } = useActiveOrderQuery();
     useEffect(() => {
         if (loggingOut) {
             let timer = setTimeout(() => {
@@ -40,9 +35,9 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
     useEffect(() => {
         if (data?.activeOrder) {
             const order = data.activeOrder as Partial<Order>;
-            addToCart(order)
+            addToCart(order);
         }
-    }, [data])
+    }, [data]);
     const logoutHandle = () => {
         Alert.alert(
             'Ebuy',
@@ -122,7 +117,10 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem style={{ marginTop: 5 }} onPress={() => navigation.navigate("listUserAddress")}>
+                    <ListItem
+                        style={{ marginTop: 5 }}
+                        onPress={() => navigation.navigate('listUserAddress')}
+                    >
                         <Icon name="local-shipping" color="#107383" />
                         <ListItem.Content>
                             <ListItem.Title>

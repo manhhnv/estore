@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         fontSize: adjust(11),
         fontFamily: 'castoro',
         letterSpacing: 1,
-        fontWeight: "bold"
+        fontWeight: 'bold'
     },
     productPriceBeforeDiscount: {
         fontSize: adjust(10),

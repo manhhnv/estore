@@ -11,7 +11,7 @@ const historySlice = createSlice({
             return state;
         }
     }
-})
+});
 
 export const { addHistorySearchKeyWord } = historySlice.actions;
 export default historySlice.reducer;

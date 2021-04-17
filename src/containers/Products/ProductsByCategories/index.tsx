@@ -15,19 +15,20 @@ type ProductByCategoriesProps = {
 
 const ProductByCategories = ({ route }: ProductByCategoriesProps) => {
     const [grid, setGrid] = useState(true);
-    const [products, setProducts]:
-        [
-            Array<Partial<Product> | null> | undefined,
-            React.Dispatch<SetStateAction<Array<Partial<Product> | null> | undefined>>
-        ] = useState();
+    const [products, setProducts]: [
+        Array<Partial<Product> | null> | undefined,
+        React.Dispatch<
+            SetStateAction<Array<Partial<Product> | null> | undefined>
+        >
+    ] = useState();
     const { data, loading, error, called } = useProductByCategoriesQuery({
         variables: { categoryId: route.params.categoryId }
     });
     useEffect(() => {
         if (data?.products?.items) {
-            setProducts(data.products.items)
+            setProducts(data.products.items);
         }
-    }, [data?.products?.items])
+    }, [data?.products?.items]);
     if (called && loading) {
         return <GridPlaceholder />;
     }

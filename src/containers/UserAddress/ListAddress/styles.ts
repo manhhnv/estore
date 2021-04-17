@@ -1,22 +1,22 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
     container: {
-        marginTop: 0.3*height,
+        marginTop: 0.3 * height,
         flex: 1,
-        alignItems: 'center'    
+        alignItems: 'center'
     },
     addButtonContainer: {
         width: 0.4 * width,
         height: 0.1 * height,
-        backgroundColor: "white",
+        backgroundColor: 'white',
         borderStyle: 'dotted',
         borderRadius: 1,
         borderColor: 'black',
         borderWidth: 2,
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     addAddressText: {
         textAlign: 'center',
@@ -27,4 +27,4 @@ export default StyleSheet.create({
         alignItems: 'center',
         flex: 1
     }
-})
+});

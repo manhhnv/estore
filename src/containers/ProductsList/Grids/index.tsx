@@ -1,29 +1,24 @@
-import React, {useEffect} from 'react';
-import {
-    ToastAndroid
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { ToastAndroid } from 'react-native';
 import { Product } from 'estore/graphql/generated';
-import {
-    useAddToWishlistMutation
-} from 'estore/graphql/generated';
+import { useAddToWishlistMutation } from 'estore/graphql/generated';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice/index';
 import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import Grid  from 'estore/components/ProductsList/Grid';
+import Grid from 'estore/components/ProductsList/Grid';
 type GridProps = {
     products: Array<Partial<Product> | null>;
-    addToWishlist: ActionCreatorWithPayload<any, string>
+    addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 
-
-const Grids = ({ products, addToWishlist}: GridProps) => { 
+const Grids = ({ products, addToWishlist }: GridProps) => {
     const [
         addProducttoWishlist,
         { called, data, loading, error }
     ] = useAddToWishlistMutation();
 
-    const addProductHandle = (productId: string ) => {
+    const addProductHandle = (productId: string) => {
         addProducttoWishlist({ variables: { productId: productId } });
     };
     const addProductSuccess = () => {
@@ -45,9 +40,8 @@ const Grids = ({ products, addToWishlist}: GridProps) => {
             addProductSuccess();
         }
     }, [data]);
-    return <Grid products={products} addProductHandle={ addProductHandle}/>;
+    return <Grid products={products} addProductHandle={addProductHandle} />;
 };
-
 
 const mapStateToProps = (state: RootState) => {
     return {

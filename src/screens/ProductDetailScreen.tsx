@@ -6,11 +6,10 @@ import ProductDetail from 'estore/containers/Products/Detail';
 import FeatureHeader from 'estore/components/FeatureHeader';
 
 type ProductDetailScreenProps = {
-    route: RouteProp<RootStackParamList, "ProductDetail">
-}
+    route: RouteProp<RootStackParamList, 'ProductDetail'>;
+};
 
 const ProductDetailScreen = ({ route }: ProductDetailScreenProps) => {
-
     if (route.params?.productId) {
         return (
             <React.Fragment>
@@ -19,9 +18,8 @@ const ProductDetailScreen = ({ route }: ProductDetailScreenProps) => {
                     <ProductDetail productId={route.params.productId} />
                 </View>
             </React.Fragment>
-        )
-    }
-    else return null;
-}
+        );
+    } else return null;
+};
 
 export default ProductDetailScreen;

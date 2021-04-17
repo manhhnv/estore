@@ -15,7 +15,7 @@ import {
 } from 'estore/graphql/generated';
 import styles from './styles';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
-import { HomeStackParamList } from 'estore/types';
+import { RootStackParamList } from 'estore/types';
 import { UserSliceType } from 'estore/redux/slice/userSlice';
 import { RootState } from 'estore/redux/slice/index';
 import { connect } from 'react-redux';
@@ -29,12 +29,12 @@ import {
 type WishlistProps = {
     user: UserSliceType;
     wishlist: WL[];
-    addToWishlist: ActionCreatorWithPayload<any, string>
+    addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 const { width, height } = Dimensions.get('window');
 
 const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
-    const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const [
         removeProduct,
         { called, data, loading, error }
@@ -77,7 +77,7 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
 
     if (wishlist && wishlist.length) {
         return (
-            <SafeAreaView style={{backgroundColor: "white"}}>
+            <SafeAreaView style={{ backgroundColor: 'white' }}>
                 <FlatList
                     data={wishlist}
                     renderItem={renderItem}
@@ -95,15 +95,16 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
                 flex: 1,
                 backgroundColor: 'white',
                 justifyContent: 'center',
-                alignItems: "center",
-                alignContent: "center"
+                alignItems: 'center',
+                alignContent: 'center'
             }}
         >
             <Image
                 resizeMode="contain"
-                style={{width: "80%", height: "80%"}}
+                style={{ width: '80%', height: '80%' }}
                 source={{
-                    uri: "https://bollyglow.com/wp-content/themes/bollyglow/assets/images/empty_wishlist.png",
+                    uri:
+                        'https://bollyglow.com/wp-content/themes/bollyglow/assets/images/empty_wishlist.png',
                     cache: 'force-cache'
                 }}
             />
@@ -114,7 +115,7 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
 type ProductItemProps = {
     item: WL;
     removeProductHandle: (productId: string) => void;
-    navigation: NavigationProp<HomeStackParamList>;
+    navigation: NavigationProp<RootStackParamList>;
 };
 
 const ProductItem = React.memo(

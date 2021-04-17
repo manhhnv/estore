@@ -1,11 +1,11 @@
-import { adjust } from "estore/helpers/adjust";
-import { Dimensions, StyleSheet } from "react-native";
+import { adjust } from 'estore/helpers/adjust';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
     shopInfoContainer: {
-        backgroundColor: "white",
+        backgroundColor: 'white',
         marginTop: 12,
         paddingBottom: 20
     },
@@ -15,7 +15,7 @@ export default StyleSheet.create({
         borderRadius: 100
     },
     shopName: {
-        fontWeight: "bold",
+        fontWeight: 'bold',
         marginTop: 5,
         letterSpacing: 1
     },
@@ -30,7 +30,7 @@ export default StyleSheet.create({
         justifyContent: 'center'
     },
     overviewField: {
-        width: 0.3*(width-2),
+        width: 0.3 * (width - 2),
         alignItems: 'center'
     },
     driverVertically: {
@@ -46,4 +46,4 @@ export default StyleSheet.create({
     overviewFieldName: {
         fontSize: adjust(13)
     }
-})
+});

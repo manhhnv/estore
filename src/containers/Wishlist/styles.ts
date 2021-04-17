@@ -8,7 +8,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
-        backgroundColor: "white"
+        backgroundColor: 'white'
     },
     productsLayoutContainer: {
         width,
@@ -33,8 +33,8 @@ export default StyleSheet.create({
         alignContent: 'center'
     },
     productImage: {
-        width: "90%",
-        height: "90%",
+        width: '90%',
+        height: '90%',
         borderRadius: 10
     },
     nameContainer: {
@@ -52,7 +52,7 @@ export default StyleSheet.create({
         marginLeft: 5,
         width: 'auto',
         height: 'auto',
-        flexDirection: "row",
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'flex-start',
         alignContent: 'center'
@@ -84,7 +84,7 @@ export default StyleSheet.create({
         fontSize: adjust(12),
         fontFamily: 'castoro',
         letterSpacing: 1,
-        marginRight: 5,
+        marginRight: 5
     },
     productPriceBeforeDiscount: {
         fontSize: adjust(11),

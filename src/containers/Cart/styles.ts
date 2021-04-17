@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     overlayLoadingContainer: {
@@ -11,6 +11,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         zIndex: 1,
         backgroundColor: 'black',
-        opacity: 0.15,
+        opacity: 0.15
     }
-})
+});

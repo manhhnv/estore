@@ -1,16 +1,20 @@
-import { SetStateAction } from "react";
+import { SetStateAction } from 'react';
 
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
-    ProductDetail: {
-        productId: string;
-    } | undefined;
+    ProductDetail:
+        | {
+              productId: string;
+          }
+        | undefined;
     ViewCart: undefined;
     listUserAddress: undefined;
-    addUserAddress: {
-        getUserAddresses: () => void
-    } |undefined;
+    addUserAddress:
+        | {
+              getUserAddresses: () => void;
+          }
+        | undefined;
 };
 
 export type BottomTabParamList = {
@@ -46,5 +50,5 @@ export type HomeStackParamList = {
 
 export type SearchItem = {
     keyWord: string;
-    time: Date
-}
+    time: Date;
+};

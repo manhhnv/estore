@@ -17,23 +17,27 @@ type SettingScreenProps = {
     setEmptyCart: ActionCreatorWithPayload<any, string>;
 };
 
-const SettingScreen = ({ user, login, logout, addToCart, setEmptyCart }: SettingScreenProps) => {
+const SettingScreen = ({
+    user,
+    login,
+    logout,
+    addToCart,
+    setEmptyCart
+}: SettingScreenProps) => {
     if (!user || !user?.token || !user?.me) {
+        return <Login login={login} />;
+    } else
         return (
-            <Login login={login}/>
-        )
-    }
-    else return (
-        <React.Fragment>
-            <HomeHeader />
-            <Settings
-                logout={logout}
-                user={user}
-                addToCart={addToCart}
-                setEmptyCart={setEmptyCart}
-            />
-        </React.Fragment>
-    );
+            <React.Fragment>
+                <HomeHeader />
+                <Settings
+                    logout={logout}
+                    user={user}
+                    addToCart={addToCart}
+                    setEmptyCart={setEmptyCart}
+                />
+            </React.Fragment>
+        );
 };
 const mapStateToProps = (state: RootState) => {
     return {

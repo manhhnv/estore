@@ -1,14 +1,12 @@
 import React from 'react';
 import { Icon, Header, Button } from 'react-native-elements';
-import { Text, Dimensions } from 'react-native';
+import { Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { adjust } from 'estore/helpers/adjust';
 
 type NoRightIconHeaderProps = {
     name?: string;
-}
-const { width } = Dimensions.get('screen');
-
+};
 const NoRightIconHeader = ({ name }: NoRightIconHeaderProps) => {
     const navigation = useNavigation();
     return (
@@ -36,7 +34,7 @@ const NoRightIconHeader = ({ name }: NoRightIconHeaderProps) => {
             }
             backgroundColor="white"
         />
-    )
-}
+    );
+};
 
 export default React.memo(NoRightIconHeader);
