@@ -211,7 +211,7 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
             </ScrollView>
             {loggingOut ? (
                 <View style={styles.overlayLoadingContainer}>
-                    <ActivityIndicator color="coral" size="large" />
+                    <ActivityIndicator color="#ee4d2d" size="large" />
                 </View>
             ) : null}
         </React.Fragment>

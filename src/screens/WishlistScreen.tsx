@@ -31,7 +31,7 @@ const WishlistScreen = ({ user, addToWishlist }: WishlistScreenProps) => {
         return (
             <React.Fragment>
                 <View style={{flex: 1, justifyContent: "center", alignContent: "center"}}>
-                    <ActivityIndicator color="coral" size="large" />
+                    <ActivityIndicator color="#ee4d2d" size="large" />
                 </View>
             </React.Fragment>
         );

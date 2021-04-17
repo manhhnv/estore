@@ -8,7 +8,7 @@ export default StyleSheet.create({
         marginTop: 50,
         marginBottom: 15,
         fontSize: adjust(13),
-        color: 'coral',
+        color: '#ee4d2d',
         textTransform: 'uppercase',
         letterSpacing: 1,
         textDecorationLine: 'underline',

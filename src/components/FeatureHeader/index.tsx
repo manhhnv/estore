@@ -14,7 +14,7 @@ type FeatureHeaderProps = {
 const { width } = Dimensions.get('screen');
 
 const FeatureHeader = ({ name, cart }: FeatureHeaderProps) => {
-    const CartIcon = withBadge(cart?.totalQuantity, { status: 'error', containerStyle: { marginRight: 30 } })(Icon) as typeof Icon;
+    const CartIcon = withBadge(cart?.totalQuantity && cart.totalQuantity >= 10 ? '9+' : cart?.totalQuantity, { status: 'error', containerStyle: { marginRight: 30 } })(Icon) as typeof Icon;
     const MessageIcon = withBadge(4, { status: 'error' })(Icon) as typeof Icon;
     const navigation = useNavigation();
     return (

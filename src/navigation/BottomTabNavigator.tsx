@@ -23,7 +23,7 @@ const BottomTabNavigator = ({wishlist}: WishlistProps) => {
     return (
         <BottomTab.Navigator
             initialRouteName="HomeStack"
-            tabBarOptions={{ activeTintColor: 'coral' }}
+            tabBarOptions={{ activeTintColor: '#ee4d2d' }}
         >
             <BottomTab.Screen
                 name="HomeStack"

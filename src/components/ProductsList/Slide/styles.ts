@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         textDecorationLine: 'line-through'
     },
     cartIconContainer: {
-        // backgroundColor: 'coral',
+        // backgroundColor: '#ee4d2d',
         // flexDirection: 'row',
         // justifyContent: 'center',
         // alignItems: 'center',
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     },
     heartIconContainer: {
         borderRadius: 50,
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         position: 'absolute',
         zIndex: 1,
         width: 'auto',
