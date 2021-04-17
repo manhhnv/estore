@@ -1,22 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { View } from 'react-native';
-import { Input, Overlay, ListItem, Button } from 'react-native-elements';
+import { Input, Overlay, ListItem, Button, Icon } from 'react-native-elements';
 import { otherInfoStyles, customerInfoStyles } from './styles';
+import { OtherInfoType } from './index';
 
-const OtherInfo = () => {
+type OtherInfoProp = {
+    otherInfo: OtherInfoType;
+    setOtherInfo: Dispatch<SetStateAction<OtherInfoType>>
+}
+
+const OtherInfo = ({ otherInfo, setOtherInfo }: OtherInfoProp) => {
 
     const [receivedTimeVisible, setReceivedTimeVisible] = useState(false);
     const toggleOverlay = () => {
         setReceivedTimeVisible(!receivedTimeVisible);
     }
-    const [description, setDescription] = useState('');
-    const [receiveTime, setReceiveTime] = useState('');
+    const [description, setDescription] = useState(otherInfo?.description);
+    const [receiveTime, setReceiveTime] = useState(otherInfo?.receivedTime);
+
+    const descriptionOnchangeHandle = (text: string) => {
+        setDescription(text)
+    }
+    const receivedTimeOnChangeHandle = (text: string) => {
+        setReceiveTime(text)
+    }
 
     return (
         <View  style={customerInfoStyles.container}>
             <Input
                 label="Ghi chú (không bắt buộc)"
                 labelStyle={{ marginTop: 10 }}
+                leftIcon={<Icon type="antdesign" name="bars" />}
             />
             <Input
                 label="Giờ nhận hàng"
@@ -24,6 +38,7 @@ const OtherInfo = () => {
                 showSoftInputOnFocus={false}
                 focusable={false}
                 onTouchStart={toggleOverlay}
+                leftIcon={<Icon type="antdesign" name="clockcircleo" />}
             />
             <Overlay onBackdropPress={toggleOverlay} overlayStyle={otherInfoStyles.overlayContainer} isVisible={receivedTimeVisible}>
                 <ListItem key={1} onPress={toggleOverlay}>

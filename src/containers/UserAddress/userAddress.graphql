@@ -21,3 +21,21 @@ query getStatesByProvinceId($provinceId: Int!) {
         totalItems
     }
 }
+
+mutation createUserAddress(
+    $input: AddressInput!
+) {
+    createUserAddress(
+        input: $input
+    ) {
+        ...UserAddress
+    }
+}
+
+mutation removeUserAddress($id: ID!) {
+    removeUserAddress(id: $id) {
+        message
+        statusCode
+        success
+    }
+}

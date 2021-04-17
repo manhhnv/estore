@@ -1,4 +1,4 @@
-import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useState, Dispatch } from 'react';
 import { View } from 'react-native';
 import {
     useAvailableProvincesQuery,
@@ -8,11 +8,15 @@ import {
 import { Overlay, Input, ListItem, CheckBox, Button, Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { addressInfoStyles, customerInfoStyles } from './styles';
+import { AddressInfoType } from './index';
+
 type AddressInfo = {
-    setStep: React.Dispatch<SetStateAction<number>>;
+    setStep: Dispatch<SetStateAction<number>>;
+    addressInfo: AddressInfoType,
+    setAddressInfo: Dispatch<SetStateAction<AddressInfoType>>
 }
 
-const AddressInfo = ({ setStep }: AddressInfo) => {
+const AddressInfo = ({ setStep, addressInfo, setAddressInfo }: AddressInfo) => {
     const {
         called: provincesCalled,
         loading: provincesLoading,
@@ -36,11 +40,11 @@ const AddressInfo = ({ setStep }: AddressInfo) => {
     const toggleStateOverlay = () => {
         setStateOverlay(!stateOverlay)
     }
-    const [selectedProvince, setSelectedProvince] = useState({ name: '', id: -1 });
-    const [selectedState, setSelectedState] = useState({ name: '', id: -1 });
-    const [ward, setWard] = useState('');
-    const [streetLine1, setStreetLine2] = useState('');
-    const [isDefault, setIsDefault] = useState(false);
+    const [selectedProvince, setSelectedProvince] = useState({ name: addressInfo.city.name, id: addressInfo.city.id });
+    const [selectedState, setSelectedState] = useState({ name: addressInfo.state.name, id: addressInfo.state.id });
+    const [ward, setWard] = useState(addressInfo.ward);
+    const [streetLine1, setStreetLine1] = useState(addressInfo.streetLine1);
+    const [isDefault, setIsDefault] = useState(addressInfo.isDefault);
     const getStatesByProvinceId = useCallback((provinceId: number) => {
         getStates({ variables: { provinceId: provinceId } })
     }, [selectedProvince])
@@ -56,8 +60,24 @@ const AddressInfo = ({ setStep }: AddressInfo) => {
         }
         toggleStateOverlay()
     }
+    const setWardHandle = (name: string) => {
+        setWard(name);
+    }
+    const setStreetLineHandle = (name: string) => {
+        setStreetLine1(name);
+    }
     const toggleChecked = () => {
         setIsDefault(!isDefault);
+    }
+    const dispatchAddressStateToParentComponent = () => {
+        setAddressInfo({
+            city: selectedProvince,
+            state: selectedState,
+            ward: ward,
+            streetLine1: streetLine1,
+            isDefault: isDefault
+        })
+        setStep(3)
     }
     useEffect(() => {
         if (selectedProvince.id !== -1) {
@@ -135,12 +155,16 @@ const AddressInfo = ({ setStep }: AddressInfo) => {
                 labelStyle={{ marginTop: 10 }}
                 errorMessage={(!ward || ward == "") ? "Không được để trống" : undefined}
                 leftIcon={<Icon type="font-awesome" name="wpforms"/>}
+                value={ward}
+                onChangeText={(text: string) => setWardHandle(text)}
             />
             <Input
                 label="Số nhà / Tên đường"
                 labelStyle={{ marginTop: 10 }}
                 errorMessage={(!streetLine1 || streetLine1 == "") ? "Không được để trống" : undefined}
                 leftIcon={<Icon type="font-awesome" name="wpforms"/>}
+                value={streetLine1}
+                onChangeText={(text: string) => setStreetLineHandle(text)}
             />
             <CheckBox
                 title="Đặt làm địa chỉ mặc định"
@@ -154,7 +178,7 @@ const AddressInfo = ({ setStep }: AddressInfo) => {
                 containerStyle={customerInfoStyles.nextStepButton}
                 buttonStyle={{ backgroundColor: '#ee4d2d' }}
                 titleStyle={{ letterSpacing: 1 }}
-                onPress={() => setStep(3)}
+                onPress={dispatchAddressStateToParentComponent}
             />
         </View>
     )

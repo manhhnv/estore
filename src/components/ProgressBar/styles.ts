@@ -55,7 +55,7 @@ export const progressItemStyles =  StyleSheet.create({
         color: "white",
         textTransform: "uppercase",
         fontWeight: "bold",
-        fontSize: adjust(10)
+        fontSize: adjust(9)
     },
     queuingStepText: {
         textAlign: "center",

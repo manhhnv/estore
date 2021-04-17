@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState, Dispatch } from 'react';
 import { ProgressBar, ProgressItem } from 'estore/components/ProgressBar';
 import { ScrollView } from 'react-native-gesture-handler';
 import CustomerInfo from './CustomerInfo';
@@ -15,21 +15,49 @@ export type PersonalInfoType = {
 }
 
 export type AddressInfoType = {
-    city: string;
-    state: string;
+    city: {
+        name: string,
+        id: number
+    }
+    state: {
+        name: string,
+        id: number
+    };
     ward: string;
     streetLine1: string;
+    isDefault: boolean;
+}
+
+export type OtherInfoType = {
+    description?: string;
+    receivedTime?: string;
 }
 
 const AddAddress = () => {
     const [step, setStep] = useState(1);
-    const [personalInfo, setPersonalInfo]: [PersonalInfoType, React.Dispatch<SetStateAction<PersonalInfoType>>]
+    const [personalInfo, setPersonalInfo]: [PersonalInfoType, Dispatch<SetStateAction<PersonalInfoType>>]
         = useState({
             firstName: '',
             lastName: '',
             phoneNumber: '',
             email: ''
         });
+    const [addressInfo, setAddressInfo]: [AddressInfoType, Dispatch<SetStateAction<AddressInfoType>>]
+        = useState({
+            city: {
+                name: '',
+                id: -1
+            },
+            state: {
+                name: '',
+                id: -1
+            },
+            ward: '',
+            streetLine1: '',
+            isDefault: Boolean(false)
+        })
+    const [otherInfo, setOtherInfo]: [OtherInfoType, Dispatch<SetStateAction<OtherInfoType>>]
+        = useState({})
     const route = useRoute<RouteProp<RootStackParamList, "addUserAddress">>();
     const steps = (
         <ProgressBar>
@@ -64,10 +92,10 @@ const AddAddress = () => {
         currentComponent = <CustomerInfo setStep={setStep} personalInfo={personalInfo} setPersonalInfo={setPersonalInfo} />
     }
     else if (step === 2) {
-        currentComponent = <AddressInfo setStep={setStep} />
+        currentComponent = <AddressInfo setStep={setStep} addressInfo={addressInfo} setAddressInfo={setAddressInfo} />
     }
     else if (step === 3) {
-        currentComponent = <OtherInfo />
+        currentComponent = <OtherInfo otherInfo={otherInfo} setOtherInfo={setOtherInfo}/>
     }
     return (
         <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
