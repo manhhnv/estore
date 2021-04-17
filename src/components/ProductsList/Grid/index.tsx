@@ -112,7 +112,7 @@ export const ProductItem = React.memo(
                 <View style={styles.productItem}>
                     {item.rawDiscount ? (
                         <View style={styles.productSale}>
-                            <FontAwesome5 name="tags" size={40} color="coral" />
+                            <FontAwesome5 name="tags" size={40} color="#ee4d2d" />
                             <Text style={styles.saleText}>
                                 {'-' + item.rawDiscount + '%'}
                             </Text>
@@ -191,14 +191,6 @@ export const ProductItem = React.memo(
                                     : null}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.cartIconContainer}>
-                            <FontAwesome5
-                                name="cart-plus"
-                                size={18}
-                                color="white"
-                                style={styles.iconCart}
-                            />
-                        </TouchableOpacity>
                     </View>
                 </View>
             </TouchableOpacity>

@@ -61,7 +61,7 @@ const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
             <View style={styles.productItem}>
                 {item.rawDiscount ? (
                     <View style={styles.productSale}>
-                        <FontAwesome5 name="tags" size={40} color="coral" />
+                        <FontAwesome5 name="tags" size={40} color="#ee4d2d" />
                         <Text style={styles.saleText}>
                             {'-' + item.rawDiscount + '%'}
                         </Text>
@@ -99,7 +99,7 @@ const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
                         </Text>
                     </View>
                     <TouchableOpacity style={styles.cartIconContainer}>
-                        <Text style={{ color: 'coral' }}>
+                        <Text style={{ color: '#ee4d2d' }}>
                             Đã bán {item.soldQuantity && item.soldQuantity >= 1000 ? Math.round(item.soldQuantity/100) / 10 + 'K' : item.soldQuantity}
                         </Text>
                     </TouchableOpacity>

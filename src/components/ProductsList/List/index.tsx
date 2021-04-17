@@ -111,7 +111,7 @@ const ProductItem = React.memo(
                 <View style={styles.productItem}>
                     {item.rawDiscount ? (
                         <View style={styles.productSale}>
-                            <FontAwesome5 name="tags" size={40} color="coral" />
+                            <FontAwesome5 name="tags" size={40} color="#ee4d2d" />
                             <Text style={styles.saleText}>
                                 {'-' + item.rawDiscount + '%'}
                             </Text>

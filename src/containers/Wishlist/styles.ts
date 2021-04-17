@@ -79,7 +79,7 @@ export default StyleSheet.create({
         alignContent: 'center'
     },
     productPrice: {
-        color: 'coral',
+        color: '#ee4d2d',
         textAlign: 'center',
         fontSize: adjust(12),
         fontFamily: 'castoro',
@@ -94,7 +94,7 @@ export default StyleSheet.create({
     },
     cartIconContainer: {
         position: 'absolute',
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -126,7 +126,7 @@ export default StyleSheet.create({
         fontWeight: 'bold'
     },
     heartIconContainer: {
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         position: 'absolute',
         zIndex: 1,
         width: 'auto',

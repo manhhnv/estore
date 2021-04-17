@@ -7,10 +7,24 @@ const customerInfoStyles = StyleSheet.create({
         marginTop: 30
     },
     nextStepButton: {
-        width: 0.6*width,
+        width: 0.6 * width,
         alignSelf: 'center',
         marginTop: 15
     }
 })
 
-export { customerInfoStyles }
+const addressInfoStyles = StyleSheet.create({
+    overlayContainer: {
+        width: 0.9 * width,
+        height: 0.8 * height
+    }
+})
+
+const otherInfoStyles = StyleSheet.create({
+    overlayContainer: {
+        width: 0.9 * width,
+        height: 0.2 * height
+    }
+})
+
+export { customerInfoStyles, addressInfoStyles, otherInfoStyles }

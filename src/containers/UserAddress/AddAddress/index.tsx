@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ProgressBar, ProgressItem } from 'estore/components/ProgressBar';
 import { ScrollView } from 'react-native-gesture-handler';
 import CustomerInfo from './CustomerInfo';
+import AddressInfo from './AddressInfo'
+import OtherInfo from './OtherInfo';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
+import { RootStackParamList } from 'estore/types';
 
 const AddAddress = () => {
     const [step, setStep] = useState(1);
+    const route = useRoute<RouteProp<RootStackParamList, "addUserAddress">>();
     const steps = (
         <ProgressBar>
             <ProgressItem
@@ -36,6 +41,12 @@ const AddAddress = () => {
     let currentComponent = null;
     if (step === 1) {
         currentComponent = <CustomerInfo setStep={setStep}/>
+    }
+    else if (step === 2) {
+        currentComponent = <AddressInfo setStep={setStep}/>
+    }
+    else if (step === 3) {
+        currentComponent = <OtherInfo />
     }
     return (
         <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
