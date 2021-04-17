@@ -62,6 +62,6 @@ export const progressItemStyles =  StyleSheet.create({
         textTransform: "uppercase",
         fontWeight: "bold",
         color: "black",
-        fontSize: adjust(10)
+        fontSize: adjust(9)
     }
 })

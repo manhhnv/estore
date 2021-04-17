@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     saleText: {
         position: 'absolute',
         top: 5,
-        fontSize: adjust(12),
+        fontSize: adjust(9),
         padding: 5,
         color: 'white',
         textAlign: 'center',

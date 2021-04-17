@@ -7,6 +7,6 @@ export default StyleSheet.create({
     },
     ratingValue: {
         marginLeft: 7,
-        fontWeight: "900"
+        fontWeight: "500"
     }
 })

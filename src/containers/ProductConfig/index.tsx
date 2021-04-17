@@ -7,6 +7,7 @@ import { RootState } from 'estore/redux/slice';
 import { addToCart } from 'estore/redux/slice/cartSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { connect } from 'react-redux';
+import { adjust } from 'estore/helpers/adjust';
 
 type ProductConfigProps = {
     configs: Array<Configs | null | undefined> | undefined | null;
@@ -175,7 +176,7 @@ const ProductConfig = ({
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Text>
                     <Text style={styles.inStock}>Kho: {inStock}</Text>
                     <Button
-                        icon={<Icon type="antdesign" name="close" color="#ee4d2d" size={30} />}
+                        icon={<Icon type="antdesign" name="close" color="#ee4d2d" size={25} />}
                         type="outline"
                         buttonStyle={{ borderColor: 'transparent' }}
                         containerStyle={{ position: 'absolute', right: 15 }}
@@ -219,11 +220,13 @@ const ProductConfig = ({
                         }}
                         loading={called && loading ? true : false}
                         loadingProps={{ size: "large" }}
+                        titleStyle={{ fontSize: adjust(13) }}
                     ></Button>
                     <Button
                         title={`${"Mua ngay".toUpperCase()}`}
                         containerStyle={styles.buttonInBottomSheet}
                         buttonStyle={[styles.addingButtonCommon, { backgroundColor: '#ee4d2d' }]}
+                        titleStyle={{ fontSize: adjust(13) }}
                     ></Button>
                 </View>
             </View>

@@ -5,8 +5,7 @@ const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
     configOptionContainer: {
-        marginTop: 30,
-        paddingBottom: 15
+        marginVertical: 10
     },
     configName: {
         fontSize: adjust(13),
@@ -51,28 +50,27 @@ export default StyleSheet.create({
         paddingBottom: 5
     },
     productThumbnail: {
-        width: 125,
-        height: 125,
+        width: 100,
+        height: 100,
         borderRadius: 5,
         margin: 10
     },
     priceInBottomSheet: {
         position: 'absolute',
-        top: 80,
-        left: 150,
-        fontSize: adjust(12),
+        top: 55,
+        left: 125,
+        fontSize: adjust(10),
         color: '#ee4d2d',
         letterSpacing: 1,
     },
     inStock: {
         position: 'absolute',
-        top: 110,
-        left: 150,
+        top: 85,
+        left: 125,
         fontSize: adjust(12)
     },
     orderQuantityContainer: {
-        marginTop: 30,
-        paddingBottom: 15
+        marginTop: 10
     },
     quantityText: {
         fontSize: adjust(13),
