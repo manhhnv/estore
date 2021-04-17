@@ -1,3 +1,5 @@
+import { SetStateAction } from "react";
+
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
@@ -5,6 +7,10 @@ export type RootStackParamList = {
         productId: string;
     } | undefined;
     ViewCart: undefined;
+    listUserAddress: undefined;
+    addUserAddress: {
+        setCount: React.Dispatch<SetStateAction<number>>
+    } |undefined;
 };
 
 export type BottomTabParamList = {

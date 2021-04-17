@@ -5,7 +5,7 @@ import {
     useGetStatesByProvinceIdLazyQuery,
     Province, State
 } from 'estore/graphql/generated';
-import { Overlay, Input, ListItem, CheckBox, Button } from 'react-native-elements';
+import { Overlay, Input, ListItem, CheckBox, Button, Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { addressInfoStyles, customerInfoStyles } from './styles';
 type AddressInfo = {
@@ -74,6 +74,7 @@ const AddressInfo = ({ setStep }: AddressInfo) => {
                 onTouchStart={toggleOverlay}
                 value={selectedProvince.name}
                 errorMessage={selectedProvince.id == -1 ? "Không được để trống" : undefined}
+                leftIcon={<Icon type="font-awesome" name="wpforms"/>}
             />
             <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={addressInfoStyles.overlayContainer}>
                 <ScrollView>
@@ -105,6 +106,7 @@ const AddressInfo = ({ setStep }: AddressInfo) => {
                 onTouchStart={toggleStateOverlay}
                 value={selectedState.name}
                 errorMessage={selectedState.id == -1 ? "Không được để trống" : undefined}
+                leftIcon={<Icon type="font-awesome" name="wpforms"/>}
             />
             <Overlay isVisible={stateOverlay} onBackdropPress={toggleStateOverlay} overlayStyle={addressInfoStyles.overlayContainer}>
                 <ScrollView>
@@ -132,11 +134,13 @@ const AddressInfo = ({ setStep }: AddressInfo) => {
                 label="Xã / Phường"
                 labelStyle={{ marginTop: 10 }}
                 errorMessage={(!ward || ward == "") ? "Không được để trống" : undefined}
+                leftIcon={<Icon type="font-awesome" name="wpforms"/>}
             />
             <Input
                 label="Số nhà / Tên đường"
                 labelStyle={{ marginTop: 10 }}
                 errorMessage={(!streetLine1 || streetLine1 == "") ? "Không được để trống" : undefined}
+                leftIcon={<Icon type="font-awesome" name="wpforms"/>}
             />
             <CheckBox
                 title="Đặt làm địa chỉ mặc định"

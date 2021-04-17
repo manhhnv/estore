@@ -4,9 +4,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import CustomerInfo from './CustomerInfo';
 import AddressInfo from './AddressInfo'
 import OtherInfo from './OtherInfo';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
+import { RootStackParamList } from 'estore/types';
 
 const AddAddress = () => {
     const [step, setStep] = useState(1);
+    const route = useRoute<RouteProp<RootStackParamList, "addUserAddress">>();
     const steps = (
         <ProgressBar>
             <ProgressItem

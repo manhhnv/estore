@@ -20,4 +20,11 @@ const addressInfoStyles = StyleSheet.create({
     }
 })
 
-export { customerInfoStyles, addressInfoStyles }
+const otherInfoStyles = StyleSheet.create({
+    overlayContainer: {
+        width: 0.9 * width,
+        height: 0.2 * height
+    }
+})
+
+export { customerInfoStyles, addressInfoStyles, otherInfoStyles }
