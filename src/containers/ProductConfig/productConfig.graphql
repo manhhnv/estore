@@ -1,0 +1,5 @@
+mutation addToCart($productId: String!, $quantity: Int!, $config: [ProductOption]) {
+    addToCart(productId: $productId, quantity: $quantity, config: $config) {
+        ...OrderFragment
+    }
+}

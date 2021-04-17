@@ -1,21 +1,27 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { HomeStackParamList } from 'estore/types';
+import { View } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from 'estore/types';
 import ProductDetail from 'estore/containers/Products/Detail';
+import FeatureHeader from 'estore/components/FeatureHeader';
 
 type ProductDetailScreenProps = {
-    navigation: NavigationProp<HomeStackParamList>;
-    route: RouteProp<HomeStackParamList, "ProductDetail">
+    route: RouteProp<RootStackParamList, "ProductDetail">
 }
 
-const ProductDetailScreen = ({ navigation, route }: ProductDetailScreenProps) => {
-    console.log(route.params?.productId)
-    return (
-        <ScrollView>
-            <ProductDetail productId={route.params?.productId ? route.params.productId : ''}/>
-        </ScrollView>
-    )
+const ProductDetailScreen = ({ route }: ProductDetailScreenProps) => {
+
+    if (route.params?.productId) {
+        return (
+            <React.Fragment>
+                <FeatureHeader />
+                <View style={{ flex: 1 }}>
+                    <ProductDetail productId={route.params.productId} />
+                </View>
+            </React.Fragment>
+        )
+    }
+    else return null;
 }
 
 export default ProductDetailScreen;

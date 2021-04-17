@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
-import { useProductByCategoriesQuery } from 'estore/graphql/generated';
+import { useProductByCategoriesQuery, Product } from 'estore/graphql/generated';
 import Grids from 'estore/containers/ProductsList/Grids';
 import Lists from 'estore/containers/ProductsList/Lists';
 import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
@@ -15,23 +15,19 @@ type ProductByCategoriesProps = {
 
 const ProductByCategories = ({ route }: ProductByCategoriesProps) => {
     const [grid, setGrid] = useState(true);
+    const [products, setProducts]:
+        [
+            Array<Partial<Product> | null> | undefined,
+            React.Dispatch<SetStateAction<Array<Partial<Product> | null> | undefined>>
+        ] = useState();
     const { data, loading, error, called } = useProductByCategoriesQuery({
         variables: { categoryId: route.params.categoryId }
     });
-    const DATA = [
-        {
-            id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-            title: 'First Item'
-        },
-        {
-            id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-            title: 'Second Item'
-        },
-        {
-            id: '58694a0f-3da1-471f-bd96-145571e29d72',
-            title: 'Third Item'
+    useEffect(() => {
+        if (data?.products?.items) {
+            setProducts(data.products.items)
         }
-    ];
+    }, [data?.products?.items])
     if (called && loading) {
         return <GridPlaceholder />;
     }

@@ -1,6 +1,16 @@
+import { SetStateAction } from "react";
+
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
+    ProductDetail: {
+        productId: string;
+    } | undefined;
+    ViewCart: undefined;
+    listUserAddress: undefined;
+    addUserAddress: {
+        getUserAddresses: () => void
+    } |undefined;
 };
 
 export type BottomTabParamList = {
@@ -22,6 +32,8 @@ export type TabTwoParamList = {
 export type SettingStackParamList = {
     register: undefined;
     login: undefined;
+    listUserAddress: undefined;
+    addUserAddress: undefined;
 };
 
 export type HomeStackParamList = {
@@ -30,9 +42,6 @@ export type HomeStackParamList = {
         categoryId: number;
         name: string;
     };
-    ProductDetail: {
-        productId: string;
-    } | undefined;
 };
 
 export type SearchItem = {

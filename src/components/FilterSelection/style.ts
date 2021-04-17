@@ -16,7 +16,7 @@ const height = Dimensions.get('window').height; //full height
 
 export default StyleSheet.create({
     buttonContainer: {
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         marginBottom: 10,
         width,
         height: 'auto',
@@ -52,7 +52,7 @@ export default StyleSheet.create({
     iconContainerNot: {
         backgroundColor: 'white',
         borderWidth: 1,
-        borderColor: 'coral',
+        borderColor: '#ee4d2d',
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
@@ -64,6 +64,6 @@ export default StyleSheet.create({
     },
     iconNot: {
         padding: 5,
-        color: 'coral'
+        color: '#ee4d2d'
     }
 });

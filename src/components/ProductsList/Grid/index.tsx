@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
     SafeAreaView,
     View,
@@ -12,7 +12,6 @@ import styles from './styles';
 import { Product } from 'estore/graphql/generated';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { HomeStackParamList } from 'estore/types';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice/index';
@@ -22,6 +21,7 @@ import {
     WishList as WL,
     useRemoveFromWistlistMutation
 } from 'estore/graphql/generated';
+import { RootStackParamList } from 'estore/types';
 type GridProps = {
     products: Array<Partial<Product> | null>;
     addProductHandle: (productId: string) => void;
@@ -35,7 +35,7 @@ const Grid = ({
     wishlist,
     addToWishlist
 }: GridProps) => {
-    const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     const renderItem = ({ item }: { item: Partial<Product> | null }) => {
         if (item) {
@@ -77,7 +77,7 @@ const Grid = ({
 
 type ProductItemProps = {
     item: Partial<Product>;
-    navigation: NavigationProp<HomeStackParamList>;
+    navigation: NavigationProp<RootStackParamList>;
     addProductHandle: (productId: string) => void;
     wishlist: WL[];
     addToWishlist: ActionCreatorWithPayload<any, string>;
@@ -101,7 +101,7 @@ export const ProductItem = React.memo(
         };
 
         const productDetail = (productId: string) => {
-            navigation.navigate('ProductDetail', { productId: productId });
+            navigation.navigate("ProductDetail", { productId: productId });
         };
 
         return (
@@ -112,7 +112,7 @@ export const ProductItem = React.memo(
                 <View style={styles.productItem}>
                     {item.rawDiscount ? (
                         <View style={styles.productSale}>
-                            <FontAwesome5 name="tags" size={40} color="coral" />
+                            <FontAwesome5 name="tags" size={40} color="#ee4d2d" />
                             <Text style={styles.saleText}>
                                 {'-' + item.rawDiscount + '%'}
                             </Text>
@@ -124,7 +124,9 @@ export const ProductItem = React.memo(
                         <TouchableOpacity
                             style={styles.heartIconContainer}
                             onPress={() => {
-                                addProductHandle(item.id);
+                                if (item && item.id) {
+                                    addProductHandle(item.id);
+                                }
                             }}
                         >
                             <AntDesign
@@ -142,7 +144,7 @@ export const ProductItem = React.memo(
                                     (it: WL) => it.product.id !== item.id
                                 );
                                 addToWishlist(revert);
-                                removeProductHandle(item.id);
+                                item && item.id ? removeProductHandle(item.id) : null;
                                 ToastAndroid.show('Đã xóa khỏi mục ưa thích', ToastAndroid.SHORT);
                             }}
                         >
@@ -189,14 +191,6 @@ export const ProductItem = React.memo(
                                     : null}
                             </Text>
                         </View>
-                        <TouchableOpacity style={styles.cartIconContainer}>
-                            <FontAwesome5
-                                name="cart-plus"
-                                size={18}
-                                color="white"
-                                style={styles.iconCart}
-                            />
-                        </TouchableOpacity>
                     </View>
                 </View>
             </TouchableOpacity>

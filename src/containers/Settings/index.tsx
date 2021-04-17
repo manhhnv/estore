@@ -7,20 +7,29 @@ import { useNavigation } from '@react-navigation/core';
 import Personal from 'estore/components/UserInfo/Personal';
 import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Order, useActiveOrderQuery } from 'estore/graphql/generated';
 
 type SettingsProps = {
     logout: ActionCreatorWithPayload<UserSliceType, string>;
     user: UserSliceType;
+    addToCart: ActionCreatorWithPayload<Partial<Order>, string>;
+    setEmptyCart: ActionCreatorWithPayload<any, string>;
 };
 
-const Settings = ({ logout, user }: SettingsProps) => {
+const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
     const navigation = useNavigation();
     const [loggingOut, setLoggingOut] = useState(false);
+    const {
+        called,
+        loading,
+        data,
+        error
+    } = useActiveOrderQuery()
     useEffect(() => {
         if (loggingOut) {
             let timer = setTimeout(() => {
                 logout({ token: undefined, me: undefined });
-                // setLoggingOut(false)
+                setEmptyCart(null);
                 navigation.navigate('Home');
             }, 500);
             return () => {
@@ -28,6 +37,12 @@ const Settings = ({ logout, user }: SettingsProps) => {
             };
         }
     }, [loggingOut]);
+    useEffect(() => {
+        if (data?.activeOrder) {
+            const order = data.activeOrder as Partial<Order>;
+            addToCart(order)
+        }
+    }, [data])
     const logoutHandle = () => {
         Alert.alert(
             'Ebuy',
@@ -107,7 +122,7 @@ const Settings = ({ logout, user }: SettingsProps) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem style={{ marginTop: 5 }}>
+                    <ListItem style={{ marginTop: 5 }} onPress={() => navigation.navigate("listUserAddress")}>
                         <Icon name="local-shipping" color="#107383" />
                         <ListItem.Content>
                             <ListItem.Title>
@@ -196,7 +211,7 @@ const Settings = ({ logout, user }: SettingsProps) => {
             </ScrollView>
             {loggingOut ? (
                 <View style={styles.overlayLoadingContainer}>
-                    <ActivityIndicator color="coral" size="large" />
+                    <ActivityIndicator color="#ee4d2d" size="large" />
                 </View>
             ) : null}
         </React.Fragment>

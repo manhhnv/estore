@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './slice';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { mockLoginApi } from './slice/userSlice';
 
 const persistConfig = {
     key: 'root',
@@ -20,5 +19,3 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 export default store;
-
-store.dispatch(mockLoginApi())

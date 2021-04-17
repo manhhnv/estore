@@ -1,63 +1,19 @@
-import React, { useState, useCallback } from 'react';
-import { Header, Icon, withBadge } from 'react-native-elements';
-import { Dimensions, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import HomeBanner from 'estore/containers/HomeBanner';
 import { FeatureProducts } from 'estore/containers/Products';
 import Categories from 'estore/containers/Categories';
 import BestSellingProducts from 'estore/containers/Products/BestSellingProducts';
-
-const { width } = Dimensions.get('screen');
-const wait = (timeout: number) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-};
+import HomeHeader from 'estore/components/HomeHeader';
 
 const HomeScreen = () => {
-    const CartIcon = withBadge(2, { status: 'error' })(Icon) as typeof Icon;
-    const MessageIcon = withBadge(4, { status: 'error' })(Icon) as typeof Icon;
-
-    const [refreshing, setRefreshing] = useState(false);
-    const onRefresh = useCallback(() => {
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
     return (
         <React.Fragment>
-            <Header
-                placement="right"
-                leftComponent={
-                    <Icon name="search" type="font-awesome" color="black" />
-                }
-                leftContainerStyle={{ marginLeft: 0.05 * width }}
-                centerComponent={
-                    <CartIcon
-                        type="font-awesome"
-                        name="shopping-cart"
-                        color="black"
-                    />
-                }
-                rightComponent={
-                    <MessageIcon type="antdesign" name="wechat" color="black" />
-                }
-                rightContainerStyle={{ marginHorizontal: 0.05 * width }}
-                backgroundColor="white"
-            />
-            <View
-                style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}
-            >
+            <HomeHeader />
+            <View style={styles.bodyContainer}>
                 <ScrollView
-                    // showsVerticalScrollIndicator={false}
                     style={{ backgroundColor: '#fff' }}
-                    // refreshControl={
-                    //     <RefreshControl
-                    //         refreshing={refreshing}
-                    //         onRefresh={onRefresh}
-                    //     />
-                    // }
                 >
                     <HomeBanner />
                     <Categories />
@@ -69,3 +25,11 @@ const HomeScreen = () => {
     );
 };
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+    bodyContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})

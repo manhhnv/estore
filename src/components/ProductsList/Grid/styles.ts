@@ -55,11 +55,12 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     productPrice: {
-        color: 'black',
+        color: '#ee4d2d',
         textAlign: 'center',
         fontSize: adjust(11),
         fontFamily: 'castoro',
-        letterSpacing: 1
+        letterSpacing: 1,
+        fontWeight: "bold"
     },
     productPriceBeforeDiscount: {
         fontSize: adjust(10),
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
         textDecorationLine: 'line-through'
     },
     cartIconContainer: {
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -89,24 +90,21 @@ const styles = StyleSheet.create({
         width: 'auto',
         height: 'auto',
         borderRadius: 5,
-        top: 0,
-        left: 10
+        top: 3,
+        left: 6
     },
     saleText: {
         position: 'absolute',
         top: 5,
-        // left: 5,
-        fontSize: 16,
+        fontSize: adjust(12),
         padding: 5,
-        // paddingLeft: 10,
-        // paddingRight: 10,
         color: 'white',
         textAlign: 'center',
         fontWeight: 'bold'
     },
     heartIconContainer: {
         borderRadius: 50,
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         position: 'absolute',
         zIndex: 1,
         width: 'auto',

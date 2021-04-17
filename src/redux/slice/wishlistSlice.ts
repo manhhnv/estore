@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product } from 'estore/graphql/generated';
-
 
 const initialState: any[] = [];
 const wishlistSlice = createSlice({

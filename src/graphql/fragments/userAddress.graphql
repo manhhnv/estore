@@ -1,0 +1,16 @@
+fragment UserAddress on Address {
+    id
+    firstName
+    lastName
+    email
+    phoneNumber
+    country
+    countryCode
+    city
+    state
+    ward
+    streetLine1
+    streetLine2
+    isDefault
+    description
+}

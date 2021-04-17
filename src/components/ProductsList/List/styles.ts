@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     cartIconContainer: {
         position: 'absolute',
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     heartIconContainer: {
-        backgroundColor: 'coral',
+        backgroundColor: '#ee4d2d',
         position: 'absolute',
         zIndex: 1,
         width: 'auto',

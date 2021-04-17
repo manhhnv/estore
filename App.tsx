@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import * as Font from 'expo-font';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from 'estore/hooks/useCachedResources';
 import useColorScheme from 'estore/hooks/useColorScheme';
@@ -15,6 +15,7 @@ import client from 'estore/graphql/config';
 export default function App() {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
+    const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
         (async () =>
@@ -25,7 +26,6 @@ export default function App() {
                 castoro: require('estore/assets/fonts/Castoro-Regular.ttf')
             }))();
     }, []);
-
     if (!isLoadingComplete) {
         return null;
     } else {

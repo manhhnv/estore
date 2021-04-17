@@ -1,0 +1,10 @@
+query activeOrder {
+    activeOrder {
+        ...OrderFragment
+    }
+}
+mutation removeFromCart($lineId: String!) {
+    removeFromCart(lineId: $lineId) {
+        ...OrderFragment
+    }
+}

@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {
     ToastAndroid
 } from 'react-native';
-import styles from './styles';
 import { Product } from 'estore/graphql/generated';
 import {
     useAddToWishlistMutation

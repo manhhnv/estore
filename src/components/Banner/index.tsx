@@ -14,11 +14,8 @@ const Banners = ({ sources }: BannerProps) => {
             <View style={styles.container}>
                 <Swiper
                     style={styles.wrapper}
-                    autoplay
-                    showsPagination={true}
-                    containerStyle={{ maxHeight: 270 }}
+                    containerStyle={{ maxHeight: 400 }}
                     activeDotStyle={{ backgroundColor: 'white' }}
-                    autoplayTimeout={6}
                 >
                     {sources.map((uri, index) => {
                         return (
@@ -29,8 +26,7 @@ const Banners = ({ sources }: BannerProps) => {
                                         uri: uri,
                                         cache: 'force-cache'
                                     }}
-                                    resizeMode="contain"
-                                    containerStyle={{ backgroundColor: 'black' }}
+                                    resizeMode="cover"
                                 />
                             </View>
                         );

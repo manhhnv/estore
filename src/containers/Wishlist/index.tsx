@@ -140,7 +140,7 @@ const ProductItem = React.memo(
                     <View style={styles.productItem}>
                         {/* {item.product.rawDiscount ? (
                     <View style={styles.productSale}>
-                        <FontAwesome5 name="tags" size={40} color="coral" />
+                        <FontAwesome5 name="tags" size={40} color="#ee4d2d" />
                         <Text style={styles.saleText}>
                             {'-' + item.product.rawDiscount + '%'}
                         </Text>
@@ -212,7 +212,7 @@ const LeftComponent = ({
         <TouchableOpacity
             style={{
                 width: '15%',
-                backgroundColor: 'coral',
+                backgroundColor: '#ee4d2d',
                 height: '100%',
                 justifyContent: 'center',
                 alignItems: 'center'

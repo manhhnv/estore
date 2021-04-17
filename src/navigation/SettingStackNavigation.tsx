@@ -7,7 +7,7 @@ const SettingStack = createStackNavigator<SettingStackParamList>();
 
 export default function SettingStackNavigator() {
     return (
-        <SettingStack.Navigator>
+        <SettingStack.Navigator initialRouteName="login">
             <SettingStack.Screen
                 component={SettingScreen}
                 options={{
