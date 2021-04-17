@@ -21,5 +21,10 @@ export default StyleSheet.create({
     addAddressText: {
         textAlign: 'center',
         letterSpacing: 0.8
+    },
+    loadingContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
     }
 })

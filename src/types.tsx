@@ -9,7 +9,7 @@ export type RootStackParamList = {
     ViewCart: undefined;
     listUserAddress: undefined;
     addUserAddress: {
-        setCount: React.Dispatch<SetStateAction<number>>
+        getUserAddresses: () => void
     } |undefined;
 };
 

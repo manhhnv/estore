@@ -4,20 +4,23 @@ import { Input, Button } from 'react-native-elements';
 import AntDesignIcon from '@expo/vector-icons/build/AntDesign';
 import { customerInfoStyles } from './styles';
 import { UserAddressFields } from './types';
+import { PersonalInfoType } from './index';
 
 type CustomerInfoProps = {
     setStep: React.Dispatch<SetStateAction<number>>;
+    personalInfo: PersonalInfoType;
+    setPersonalInfo: React.Dispatch<SetStateAction<PersonalInfoType>>;
 }
 
-const CustomerInfo = ({ setStep }: CustomerInfoProps) => {
+const CustomerInfo = ({ setStep, personalInfo, setPersonalInfo }: CustomerInfoProps) => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const blankErrorMessage = "Bạn phải nhập đầy đủ";
     const formatErrorMessage = "Sai định dạng";
 
-    const [firstName, setFirstName] = useState({ value: '', isValid: false });
-    const [lastName, setLastName] = useState({ value: '', isValid: false });
-    const [phoneNumber, setPhoneNumber] = useState({ value: '', isValid: false });
-    const [email, setEmail] = useState({ value: '', isValid: false });
+    const [firstName, setFirstName] = useState({ value: personalInfo.firstName, isValid: personalInfo.firstName ? true : false });
+    const [lastName, setLastName] = useState({ value: personalInfo.lastName, isValid: personalInfo.lastName ? true : false });
+    const [phoneNumber, setPhoneNumber] = useState({ value: personalInfo.phoneNumber, isValid: personalInfo.phoneNumber ? true : false });
+    const [email, setEmail] = useState({ value: personalInfo.email, isValid: personalInfo.email ? true : false });
 
     const firstNameRef = useRef<typeof Input>() as MutableRefObject<typeof Input>;
     const lastNameRef = useRef<typeof Input>() as MutableRefObject<typeof Input>;
@@ -62,7 +65,15 @@ const CustomerInfo = ({ setStep }: CustomerInfoProps) => {
                 break;
         }
     }
-
+    const dispatchPersonalStateToParentComponent = () => {
+        setPersonalInfo({
+            firstName: firstName.value,
+            lastName: lastName.value,
+            phoneNumber: phoneNumber.value,
+            email: email.value
+        })
+        setStep(2)
+    }
     return (
         <View style={customerInfoStyles.container}>
             <Input
@@ -180,7 +191,7 @@ const CustomerInfo = ({ setStep }: CustomerInfoProps) => {
                 containerStyle={customerInfoStyles.nextStepButton}
                 buttonStyle={{ backgroundColor: '#ee4d2d' }}
                 titleStyle={{ letterSpacing: 1 }}
-                onPress={() => setStep(2)}
+                onPress={dispatchPersonalStateToParentComponent}
             />
         </View>
     )
