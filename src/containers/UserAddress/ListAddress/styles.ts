@@ -3,8 +3,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
-    container: {
-    },
+    container: {},
     addButtonContainer: {
         width: 0.4 * width,
         height: 0.08 * height,
@@ -30,15 +29,15 @@ export const addressItemStyles = StyleSheet.create({
     itemContainer: {
         flex: 1,
         backgroundColor: 'white',
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 12,
+            height: 12
         },
         shadowOpacity: 0.58,
-        shadowRadius: 16.00,
+        shadowRadius: 16.0,
         elevation: 24,
         paddingLeft: 10,
         paddingVertical: 15
     }
-})
+});

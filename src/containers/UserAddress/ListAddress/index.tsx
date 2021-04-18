@@ -20,7 +20,7 @@ const ListAddress = () => {
     const [
         executeGetAddresses,
         { called, loading, data, error }
-    ] = useGetUserAddressesLazyQuery({fetchPolicy: "network-only"});
+    ] = useGetUserAddressesLazyQuery({ fetchPolicy: 'network-only' });
     const getUserAddresses = () => {
         executeGetAddresses();
     };
@@ -74,7 +74,11 @@ const ListAddress = () => {
             data.getUserAddresses &&
             data.getUserAddresses.items &&
             data.getUserAddresses.items.length > 0 ? (
-                <AddressFlatList addresses={data.getUserAddresses.items} getUserAddresses={getUserAddresses} navigation={navigation}/>
+                <AddressFlatList
+                    addresses={data.getUserAddresses.items}
+                    getUserAddresses={getUserAddresses}
+                    navigation={navigation}
+                />
             ) : null}
             {loading ? (
                 <View style={styles.loadingContainer}>

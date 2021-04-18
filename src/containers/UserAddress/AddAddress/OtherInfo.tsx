@@ -1,5 +1,10 @@
 import React, { useState, Dispatch, SetStateAction, useEffect } from 'react';
-import { View, ToastAndroid, ActivityIndicator, Dimensions } from 'react-native';
+import {
+    View,
+    ToastAndroid,
+    ActivityIndicator,
+    Dimensions
+} from 'react-native';
 import { Input, Overlay, ListItem, Button, Icon } from 'react-native-elements';
 import { otherInfoStyles, customerInfoStyles } from './styles';
 import { OtherInfoType, PersonalInfoType, AddressInfoType } from './index';
@@ -15,7 +20,7 @@ type OtherInfoProp = {
     personalInfo: PersonalInfoType;
     addressInfo: AddressInfoType;
     navigation: NavigationProp<RootStackParamList>;
-    route: RouteProp<RootStackParamList, "addUserAddress">
+    route: RouteProp<RootStackParamList, 'addUserAddress'>;
 };
 
 const OtherInfo = ({
@@ -46,11 +51,8 @@ const OtherInfo = ({
         );
     };
     const showSuccessToast = () => {
-        ToastAndroid.show(
-            "Thêm địa chỉ thành công",
-            ToastAndroid.SHORT
-        )
-    }
+        ToastAndroid.show('Thêm địa chỉ thành công', ToastAndroid.SHORT);
+    };
     const descriptionOnchangeHandle = (text: string) => {
         setDescription(text);
     };
@@ -82,19 +84,19 @@ const OtherInfo = ({
     };
     useEffect(() => {
         if (error && error.message) {
-            showErrorToast()
+            showErrorToast();
         }
-    }, [error])
+    }, [error]);
     useEffect(() => {
         if (data && data.createUserAddress) {
-            showSuccessToast()
+            showSuccessToast();
             if (route.params?.getUserAddresses) {
                 const { getUserAddresses } = route.params;
                 getUserAddresses();
                 navigation.goBack();
             }
         }
-    }, [data])
+    }, [data]);
     return (
         <React.Fragment>
             <View style={customerInfoStyles.container}>
@@ -103,7 +105,9 @@ const OtherInfo = ({
                     labelStyle={{ marginTop: 10 }}
                     leftIcon={<Icon type="antdesign" name="bars" />}
                     value={description}
-                    onChangeText={(text: string) => descriptionOnchangeHandle(text)}
+                    onChangeText={(text: string) =>
+                        descriptionOnchangeHandle(text)
+                    }
                 />
                 <Input
                     label="Giờ nhận hàng"
@@ -148,7 +152,7 @@ const OtherInfo = ({
                         <ListItem.Content>
                             <ListItem.Title>
                                 Chỉ trong giờ hành chính
-                        </ListItem.Title>
+                            </ListItem.Title>
                         </ListItem.Content>
                         {receiveTime?.id === 1 ? (
                             <ListItem.Chevron

@@ -28,10 +28,16 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
     const [isVisible, setVisible] = useState(false);
     if (loading) {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            >
                 <ActivityIndicator color="#ee4d2d" size="large" />
             </View>
-        )
+        );
     } else if (called && data && data.productDetail) {
         let previews: Array<string | undefined> = [];
         if (data.productDetail.previews) {

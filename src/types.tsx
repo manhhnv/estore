@@ -10,7 +10,8 @@ export type RootStackParamList = {
         | undefined;
     ViewCart: undefined;
     listUserAddress: undefined;
-    addUserAddress:{
+    addUserAddress:
+        | {
               getUserAddresses: () => void;
           }
         | undefined;
