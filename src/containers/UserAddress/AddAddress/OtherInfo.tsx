@@ -1,16 +1,23 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import { View, ToastAndroid } from 'react-native';
 import { Input, Overlay, ListItem, Button, Icon } from 'react-native-elements';
 import { otherInfoStyles, customerInfoStyles } from './styles';
-import { OtherInfoType } from './index';
+import { OtherInfoType, PersonalInfoType, AddressInfoType } from './index';
 import { useCreateUserAddressMutation } from 'estore/graphql/generated';
 
 type OtherInfoProp = {
     otherInfo: OtherInfoType;
     setOtherInfo: Dispatch<SetStateAction<OtherInfoType>>;
+    personalInfo: PersonalInfoType;
+    addressInfo: AddressInfoType;
 };
 
-const OtherInfo = ({ otherInfo, setOtherInfo }: OtherInfoProp) => {
+const OtherInfo = ({
+    otherInfo,
+    setOtherInfo,
+    personalInfo,
+    addressInfo
+}: OtherInfoProp) => {
     const [receivedTimeVisible, setReceivedTimeVisible] = useState(false);
     const toggleOverlay = () => {
         setReceivedTimeVisible(!receivedTimeVisible);
@@ -38,11 +45,37 @@ const OtherInfo = ({ otherInfo, setOtherInfo }: OtherInfoProp) => {
         toggleOverlay();
     };
     const addNewUserAddress = () => {
-        // executeGQL({ variables: {
-        //     input: {
-        //     }
-        // } })
+        const addressInfoFormatted = {
+            city: addressInfo.city.name,
+            state: addressInfo.state.name,
+            ward: addressInfo.ward,
+            streetLine1: addressInfo.streetLine1,
+            isDefault: addressInfo.isDefault
+        };
+        setOtherInfo({
+            description: description,
+            receivedTime: receiveTime.name
+        });
+        executeGQL({
+            variables: {
+                input: {
+                    ...personalInfo,
+                    ...addressInfoFormatted,
+                    description: description
+                }
+            }
+        });
     };
+    useEffect(() => {
+        if (error && error.message) {
+            showErrorToast()
+        }
+    }, [error])
+    useEffect(() => {
+        if (data && data.createUserAddress) {
+            showErrorToast()
+        }
+    }, [data])
     return (
         <View style={customerInfoStyles.container}>
             <Input
@@ -50,6 +83,7 @@ const OtherInfo = ({ otherInfo, setOtherInfo }: OtherInfoProp) => {
                 labelStyle={{ marginTop: 10 }}
                 leftIcon={<Icon type="antdesign" name="bars" />}
                 value={description}
+                onChangeText={(text: string) => descriptionOnchangeHandle(text)}
             />
             <Input
                 label="Giờ nhận hàng"
@@ -110,6 +144,7 @@ const OtherInfo = ({ otherInfo, setOtherInfo }: OtherInfoProp) => {
                 containerStyle={customerInfoStyles.nextStepButton}
                 buttonStyle={{ backgroundColor: '#ee4d2d' }}
                 titleStyle={{ letterSpacing: 1 }}
+                onPress={addNewUserAddress}
             />
         </View>
     );

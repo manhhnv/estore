@@ -112,7 +112,12 @@ const AddAddress = () => {
         );
     } else if (step === 3) {
         currentComponent = (
-            <OtherInfo otherInfo={otherInfo} setOtherInfo={setOtherInfo} />
+            <OtherInfo
+                otherInfo={otherInfo}
+                setOtherInfo={setOtherInfo}
+                personalInfo={personalInfo}
+                addressInfo={addressInfo}
+            />
         );
     }
     return (

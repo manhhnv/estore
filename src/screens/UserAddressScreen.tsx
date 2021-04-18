@@ -6,7 +6,7 @@ import NoRightIconHeader from 'estore/components/NoRightIconHeader';
 const UserAddressScreen = () => {
     return (
         <React.Fragment>
-            <NoRightIconHeader name="Địa chỉ" />
+            <NoRightIconHeader name="Địa chỉ của tôi" />
             <ListAddress />
         </React.Fragment>
     );

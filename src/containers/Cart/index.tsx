@@ -100,13 +100,18 @@ const Cart = ({ cart, addToCart }: CartProps) => {
             style={{
                 flex: 1,
                 backgroundColor: 'white',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                alignItems: 'center'
             }}
         >
+            <Image
+                source={require('estore/assets/images/emptyCart.png')}
+                style={{ width: 100, height: 100 }}
+            />
             <Text
                 style={{
                     textAlign: 'center',
-                    fontSize: adjust(15),
+                    fontSize: adjust(12),
                     fontFamily: 'serif',
                     letterSpacing: 1,
                     opacity: 0.5
