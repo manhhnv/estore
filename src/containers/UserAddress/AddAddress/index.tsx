@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import CustomerInfo from './CustomerInfo';
 import AddressInfo from './AddressInfo';
 import OtherInfo from './OtherInfo';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
+import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { RootStackParamList } from 'estore/types';
 
 export type PersonalInfoType = {
@@ -32,6 +32,7 @@ export type OtherInfoType = {
     description?: string;
     receivedTime?: string;
 };
+
 
 const AddAddress = () => {
     const [step, setStep] = useState(1);
@@ -65,6 +66,7 @@ const AddAddress = () => {
         Dispatch<SetStateAction<OtherInfoType>>
     ] = useState({});
     const route = useRoute<RouteProp<RootStackParamList, 'addUserAddress'>>();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>()
     const steps = (
         <ProgressBar>
             <ProgressItem
@@ -117,6 +119,8 @@ const AddAddress = () => {
                 setOtherInfo={setOtherInfo}
                 personalInfo={personalInfo}
                 addressInfo={addressInfo}
+                navigation={navigation}
+                route={route}
             />
         );
     }

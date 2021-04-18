@@ -26,7 +26,6 @@ const HomeHeader = ({ cart }: HomeHeaderProps) => {
             placement="center"
             leftComponent={
                 <Button
-                    onPress={() => navigation.goBack()}
                     buttonStyle={{ backgroundColor: 'white', padding: 0 }}
                     icon={
                         <Icon name="search" type="font-awesome" color="black" />
