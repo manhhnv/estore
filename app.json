@@ -32,7 +32,9 @@
             "adaptiveIcon": {
                 "foregroundImage": "./assets/images/logo.png",
                 "backgroundColor": "#FFFFFF"
-            }
+            },
+            "versionCode": 1,
+            "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
         },
         "web": {
             "favicon": "./assets/images/favicon.png"

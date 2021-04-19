@@ -2,7 +2,10 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import {
     Order,
     OrderLine,
-    useRemoveFromCartMutation
+    useRemoveFromCartMutation,
+    useAddToCartMutation,
+    ProductOption,
+    ConfigProduct
 } from 'estore/graphql/generated';
 import { adjust } from 'estore/helpers/adjust';
 import { RootState } from 'estore/redux/slice';
@@ -40,6 +43,28 @@ const Cart = ({ cart, addToCart }: CartProps) => {
     const removeOrderLineHandle = (lineId: string) => {
         removeOrderLine({ variables: { lineId: lineId } });
     };
+    const [
+        executeAddToCartGQL,
+        {
+            called: addToCartCalled,
+            loading: addToCartLoading,
+            data: addToCartData,
+            error: addToCartError
+        }
+    ] = useAddToCartMutation();
+    const addItemToCartHandle = (
+        productId: string,
+        quantity: number,
+        config?: Array<ProductOption>
+    ) => {
+        executeAddToCartGQL({
+            variables: {
+                productId: productId,
+                quantity: quantity,
+                config: config ? config : null
+            }
+        });
+    };
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const removeOrderLineSuccess = () => {
         ToastAndroid.show('Đã xóa mục này khỏi giỏ hàng', ToastAndroid.SHORT);
@@ -53,6 +78,7 @@ const Cart = ({ cart, addToCart }: CartProps) => {
                 item={item}
                 removeOrderLineHandle={removeOrderLineHandle}
                 navigation={navigation}
+                addItemToCartHandle={addItemToCartHandle}
             />
         );
     };
@@ -68,6 +94,17 @@ const Cart = ({ cart, addToCart }: CartProps) => {
             removeOrderLineSuccess();
         }
     }, [data]);
+    useEffect(() => {
+        if (addToCartData && addToCartData.addToCart) {
+            const order = addToCartData.addToCart as Partial<Order>;
+            addToCart(order);
+        }
+    }, [addToCartData]);
+    useEffect(() => {
+        if (addToCartError && addToCartError.message) {
+            removeOrderLineFailed();
+        }
+    }, [addToCartError]);
     if (cart && cart.lines && cart.lines.length > 0) {
         return (
             <>
@@ -77,7 +114,22 @@ const Cart = ({ cart, addToCart }: CartProps) => {
                     maxToRenderPerBatch={10}
                     removeClippedSubviews={true}
                 />
-                {loading ? (
+                <Button
+                    title={`MUA HÀNG ( ${cart?.totalPrice
+                        ?.toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ )`}
+                    titleStyle={{ letterSpacing: 1 }}
+                    buttonStyle={{
+                        backgroundColor: '#ee4d2d',
+                        borderRadius: 0
+                    }}
+                    style={{ borderRadius: 0 }}
+                    containerStyle={{ borderRadius: 0 }}
+                    onPress={() => {
+                        navigation.navigate('checkout');
+                    }}
+                />
+                {loading || addToCartLoading ? (
                     <React.Fragment>
                         <View style={styles.overlayLoadingContainer}></View>
                         <ActivityIndicator
@@ -100,13 +152,18 @@ const Cart = ({ cart, addToCart }: CartProps) => {
             style={{
                 flex: 1,
                 backgroundColor: 'white',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                alignItems: 'center'
             }}
         >
+            <Image
+                source={require('estore/assets/images/emptyCart.png')}
+                style={{ width: 100, height: 100 }}
+            />
             <Text
                 style={{
                     textAlign: 'center',
-                    fontSize: adjust(15),
+                    fontSize: adjust(12),
                     fontFamily: 'serif',
                     letterSpacing: 1,
                     opacity: 0.5
@@ -122,12 +179,18 @@ type OrderItemProps = {
     item: OrderLine;
     removeOrderLineHandle: (lineId: string) => void;
     navigation: NavigationProp<RootStackParamList>;
+    addItemToCartHandle: (
+        productId: string,
+        quantity: number,
+        config?: [ProductOption]
+    ) => void;
 };
 
 const OrderItem = ({
     item,
     removeOrderLineHandle,
-    navigation
+    navigation,
+    addItemToCartHandle
 }: OrderItemProps) => {
     if (item) {
         const productDetailRedirect = () => {
@@ -235,6 +298,34 @@ const OrderItem = ({
                                         borderRadius: 0
                                     }}
                                     titleStyle={{ color: 'gray' }}
+                                    onPress={() => {
+                                        if (
+                                            item &&
+                                            item.configProduct &&
+                                            item.configProduct.length > 0
+                                        ) {
+                                            const configs = [] as Array<ProductOption>;
+                                            item.configProduct.map((config) => {
+                                                if (config) {
+                                                    configs.push({
+                                                        name: config.name,
+                                                        value: config.value
+                                                    });
+                                                }
+                                            });
+                                            configs.length > 0
+                                                ? addItemToCartHandle(
+                                                      item.productId,
+                                                      -1,
+                                                      configs as [ProductOption]
+                                                  )
+                                                : addItemToCartHandle(
+                                                      item.productId,
+                                                      1,
+                                                      undefined
+                                                  );
+                                        }
+                                    }}
                                 />
                                 <Input
                                     value={`${item?.subQuantity}`}
@@ -250,6 +341,34 @@ const OrderItem = ({
                                         borderRadius: 0
                                     }}
                                     titleStyle={{ color: 'gray' }}
+                                    onPress={() => {
+                                        if (
+                                            item &&
+                                            item.configProduct &&
+                                            item.configProduct.length > 0
+                                        ) {
+                                            const configs = [] as Array<ProductOption>;
+                                            item.configProduct.map((config) => {
+                                                if (config) {
+                                                    configs.push({
+                                                        name: config.name,
+                                                        value: config.value
+                                                    });
+                                                }
+                                            });
+                                            configs.length > 0
+                                                ? addItemToCartHandle(
+                                                      item.productId,
+                                                      1,
+                                                      configs as [ProductOption]
+                                                  )
+                                                : addItemToCartHandle(
+                                                      item.productId,
+                                                      1,
+                                                      undefined
+                                                  );
+                                        }
+                                    }}
                                 />
                             </View>
                         </View>
