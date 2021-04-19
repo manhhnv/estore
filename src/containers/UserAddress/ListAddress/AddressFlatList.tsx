@@ -82,35 +82,26 @@ export const AddressFlatList = ({
                 key={'_'}
                 keyExtractor={(item) => '_' + item?.id}
             />
-            <TouchableOpacity
-                style={{
-                    width: width,
-                    height: 0.05 * height,
-                    backgroundColor: 'white',
-                    borderStyle: 'solid',
-                    borderRadius: 1,
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    justifyContent: 'center',
-                    marginBottom: 10
-                }}
+            <Button
+                title="Thêm địa chỉ "
+                icon={
+                    <Icon
+                        type="antdesign"
+                        name="plus"
+                        size={16}
+                        color="white"
+                    />
+                }
+                iconRight
+                buttonStyle={{ backgroundColor: '#ee4d2d', borderRadius: 0 }}
+                style={{ borderRadius: 0 }}
+                containerStyle={{ borderRadius: 0 }}
                 onPress={() =>
                     navigation.navigate('addUserAddress', {
                         getUserAddresses: getUserAddresses
                     })
                 }
-            >
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Text style={styles.addAddressText}>Thêm địa chỉ</Text>
-                    <Icon type="antdesign" name="plus" size={16} />
-                </View>
-            </TouchableOpacity>
+            />
             {loading ? (
                 <React.Fragment>
                     <View

@@ -15,6 +15,7 @@ export type RootStackParamList = {
               getUserAddresses: () => void;
           }
         | undefined;
+    checkout: undefined;
 };
 
 export type BottomTabParamList = {
