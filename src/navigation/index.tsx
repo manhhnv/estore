@@ -60,10 +60,7 @@ function RootNavigator() {
                 component={NotFoundScreen}
                 options={{ title: 'Oops!' }}
             />
-            <Stack.Screen
-                name="checkout"
-                component={CheckoutScreen}
-            />
+            <Stack.Screen name="checkout" component={CheckoutScreen} />
         </Stack.Navigator>
     );
 }

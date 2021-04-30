@@ -8,7 +8,7 @@
         "eject": "expo eject",
         "test": "jest --watchAll",
         "generate": "graphql-codegen --config ./src/codegen.js",
-        "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}",
+        "format": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}",
         "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./"
     },
     "jest": {
@@ -36,6 +36,7 @@
         "@reduxjs/toolkit": "^1.5.0",
         "axios": "^0.21.1",
         "expo": "~40.0.0",
+        "expo-app-loading": "^1.0.3",
         "expo-asset": "~8.2.1",
         "expo-constants": "~9.3.0",
         "expo-facebook": "~9.1.0",

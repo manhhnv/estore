@@ -6,7 +6,7 @@ const CheckoutScreen = () => {
         <React.Fragment>
             <NoRightIconHeader name="Thanh toán" />
         </React.Fragment>
-    )
-}
+    );
+};
 
-export default React.memo(CheckoutScreen)
+export default React.memo(CheckoutScreen);
