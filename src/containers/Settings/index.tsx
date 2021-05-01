@@ -7,19 +7,26 @@ import { useNavigation } from '@react-navigation/core';
 import Personal from 'estore/components/UserInfo/Personal';
 import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Order, useActiveOrderQuery } from 'estore/graphql/generated';
+import { Order, useActiveOrderQuery, useGetDefaultUserAddressQuery, Address } from 'estore/graphql/generated';
 
 type SettingsProps = {
     logout: ActionCreatorWithPayload<UserSliceType, string>;
     user: UserSliceType;
     addToCart: ActionCreatorWithPayload<Partial<Order>, string>;
     setEmptyCart: ActionCreatorWithPayload<any, string>;
+    changeDefaultAddress: ActionCreatorWithPayload<Partial<Address>, string>;
 };
 
-const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
+const Settings = ({ logout, user, addToCart, setEmptyCart, changeDefaultAddress }: SettingsProps) => {
     const navigation = useNavigation();
     const [loggingOut, setLoggingOut] = useState(false);
     const { called, loading, data, error } = useActiveOrderQuery();
+    const {
+        called: defaultAddressCalled,
+        loading: defaultAddressLoading,
+        data: defaultAddressData,
+        error: defaultAddressError
+    } = useGetDefaultUserAddressQuery();
     useEffect(() => {
         if (loggingOut) {
             let timer = setTimeout(() => {
@@ -38,6 +45,11 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
             addToCart(order);
         }
     }, [data]);
+    useEffect(() => {
+        if (defaultAddressData?.getDefaultUserAddress) {
+            changeDefaultAddress(defaultAddressData.getDefaultUserAddress)
+        }
+    }, [defaultAddressData])
     const logoutHandle = () => {
         Alert.alert(
             'Ebuy',

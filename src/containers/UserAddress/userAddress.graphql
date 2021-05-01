@@ -6,6 +6,11 @@ query getUserAddresses {
         totalItems
     }
 }
+query getDefaultUserAddress {
+    getDefaultUserAddress {
+        ...UserAddress
+    }
+}
 query availableProvinces {
     availableProvinces {
         id

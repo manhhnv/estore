@@ -7,11 +7,11 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((req, { headers }) => {
-    const storeToken = store.getState().user.token;
+    const storedToken = store.getState().user.token;
     return {
         headers: {
             ...headers,
-            authorization: storeToken ? `Bearer ${storeToken}` : null
+            authorization: storedToken ? `Bearer ${storedToken}` : null
         }
     };
 });

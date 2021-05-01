@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import * as Font from 'expo-font';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import useCachedResources from 'estore/hooks/useCachedResources';
 import useColorScheme from 'estore/hooks/useColorScheme';
@@ -11,23 +11,16 @@ import store, { persistor } from 'estore/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ApolloProvider } from '@apollo/client';
 import client from 'estore/graphql/config';
+import { ActivityIndicator } from 'react-native';
 
 export default function App() {
     const isLoadingComplete = useCachedResources();
     const colorScheme = useColorScheme();
-    const [isReady, setIsReady] = useState(false);
 
-    useEffect(() => {
-        (async () =>
-            await Font.loadAsync({
-                'nunito-regular': require('estore/assets/fonts/Nunito-Regular.ttf'),
-                'nunito-bold': require('estore/assets/fonts/Nunito-Bold.ttf'),
-                oswald: require('estore/assets/fonts/Oswald-VariableFont_wght.ttf'),
-                castoro: require('estore/assets/fonts/Castoro-Regular.ttf')
-            }))();
-    }, []);
     if (!isLoadingComplete) {
-        return null;
+        return (
+            <ActivityIndicator color="red" size="large" />
+        )
     } else {
         return (
             <SafeAreaProvider>

@@ -10,10 +10,15 @@ const addressSlice = createSlice({
             state,
             action: PayloadAction<Partial<Address>>
         ) => {
-            if (action.payload) {
+            if (
+                action &&
+                action.payload &&
+                action.payload.id &&
+                action.payload?.id !== state?.id
+            ) {
                 state = action.payload;
-                return state;
             }
+            return state;
         },
         resetAddress: (state, action) => {
             state = initialState;

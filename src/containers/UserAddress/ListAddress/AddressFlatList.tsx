@@ -8,12 +8,9 @@ import {
     FlatList,
     ActivityIndicator,
     Dimensions,
-    TouchableOpacity,
-    Text,
     ToastAndroid
 } from 'react-native';
 import { AddressItem } from './AddressItem';
-import styles from './styles';
 import { Icon, Button } from 'react-native-elements';
 import { NavigationProp } from '@react-navigation/core';
 import { RootStackParamList } from 'estore/types';
@@ -23,12 +20,12 @@ type AddressFlatListProps = {
     navigation: NavigationProp<RootStackParamList>;
 };
 
-const { height, width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
-export const AddressFlatList = ({
+export const AddressFlatList = (React.memo(({
     addresses,
     getUserAddresses,
-    navigation
+    navigation,
 }: AddressFlatListProps) => {
     const [
         executeGQL,
@@ -133,4 +130,4 @@ export const AddressFlatList = ({
             ) : null}
         </React.Fragment>
     );
-};
+}));

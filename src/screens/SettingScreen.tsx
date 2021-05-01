@@ -7,7 +7,8 @@ import { login, logout, UserSliceType } from 'estore/redux/slice/userSlice';
 import { addToCart, setEmptyCart } from 'estore/redux/slice/cartSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import HomeHeader from 'estore/components/HomeHeader';
-import { Order } from 'estore/graphql/generated';
+import { Order, Address } from 'estore/graphql/generated';
+import { changeDefaultAddress } from 'estore/redux/slice/addressSlice';
 
 type SettingScreenProps = {
     user: UserSliceType;
@@ -15,6 +16,8 @@ type SettingScreenProps = {
     logout: ActionCreatorWithPayload<any, string>;
     addToCart: ActionCreatorWithPayload<Partial<Order>, string>;
     setEmptyCart: ActionCreatorWithPayload<any, string>;
+    changeDefaultAddress: ActionCreatorWithPayload<Partial<Address>, string>;
+    address: any;
 };
 
 const SettingScreen = ({
@@ -22,7 +25,9 @@ const SettingScreen = ({
     login,
     logout,
     addToCart,
-    setEmptyCart
+    setEmptyCart,
+    changeDefaultAddress,
+    address
 }: SettingScreenProps) => {
     if (!user || !user?.token || !user?.me) {
         return <Login login={login} />;
@@ -35,16 +40,18 @@ const SettingScreen = ({
                     user={user}
                     addToCart={addToCart}
                     setEmptyCart={setEmptyCart}
+                    changeDefaultAddress={changeDefaultAddress}
                 />
             </React.Fragment>
         );
 };
 const mapStateToProps = (state: RootState) => {
     return {
-        user: state.user
+        user: state.user,
+        address: state.address
     };
 };
-const mapDispatchToProps = { login, logout, addToCart, setEmptyCart };
+const mapDispatchToProps = { login, logout, addToCart, setEmptyCart, changeDefaultAddress };
 export default connect(
     mapStateToProps,
     mapDispatchToProps
