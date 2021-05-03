@@ -1,0 +1,8 @@
+mutation calculateShippingFee($input: ShippingInput) {
+    calculateShippingFee(input: $input) {
+        name
+        fee
+        insurance_fee
+        delivery
+    }
+}

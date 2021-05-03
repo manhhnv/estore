@@ -4,31 +4,19 @@ import {
     OrderLine,
     useRemoveFromCartMutation,
     useAddToCartMutation,
-    ProductOption,
-    ConfigProduct
+    ProductOption
 } from 'estore/graphql/generated';
-import { adjust } from 'estore/helpers/adjust';
 import { RootState } from 'estore/redux/slice';
 import React, { useEffect } from 'react';
-import {
-    Text,
-    View,
-    FlatList,
-    ToastAndroid,
-    ActivityIndicator,
-    Dimensions
-} from 'react-native';
-import { Image } from 'react-native-elements';
-import { Icon, Input, Button } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { FlatList, ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
 import { addToCart } from 'estore/redux/slice/cartSlice';
-import styles from './styles';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 import { RootStackParamList } from 'estore/types';
-
-const { height } = Dimensions.get('window');
+import { EmptyCart } from './EmptyCart';
+import OverlayLoading from 'estore/components/OverlayLoading';
+import { CheckoutButton } from './CheckoutButton';
+import { CartItem } from './CartItem';
 
 type CartProps = {
     cart?: Partial<Order>;
@@ -74,7 +62,7 @@ const Cart = ({ cart, addToCart }: CartProps) => {
     };
     const renderItem = ({ item }: { item: OrderLine }) => {
         return (
-            <OrderItem
+            <CartItem
                 item={item}
                 removeOrderLineHandle={removeOrderLineHandle}
                 navigation={navigation}
@@ -107,313 +95,21 @@ const Cart = ({ cart, addToCart }: CartProps) => {
     }, [addToCartError]);
     if (cart && cart.lines && cart.lines.length > 0) {
         return (
-            <>
+            <React.Fragment>
                 <FlatList
                     data={cart.lines}
                     renderItem={renderItem}
                     maxToRenderPerBatch={10}
                     removeClippedSubviews={true}
                 />
-                <Button
-                    title={`MUA HÀNG ( ${cart?.totalPrice
-                        ?.toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ )`}
-                    titleStyle={{ letterSpacing: 1 }}
-                    buttonStyle={{
-                        backgroundColor: '#ee4d2d',
-                        borderRadius: 0
-                    }}
-                    style={{ borderRadius: 0 }}
-                    containerStyle={{ borderRadius: 0 }}
-                    onPress={() => {
-                        navigation.navigate('checkout');
-                    }}
-                />
-                {loading || addToCartLoading ? (
-                    <React.Fragment>
-                        <View style={styles.overlayLoadingContainer}></View>
-                        <ActivityIndicator
-                            color="#ee4d2d"
-                            size="large"
-                            style={{
-                                flex: 1,
-                                position: 'absolute',
-                                bottom: 0.5 * height,
-                                alignSelf: 'center'
-                            }}
-                        />
-                    </React.Fragment>
-                ) : null}
-            </>
-        );
-    }
-    return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: 'white',
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}
-        >
-            <Image
-                source={require('estore/assets/images/emptyCart.png')}
-                style={{ width: 100, height: 100 }}
-            />
-            <Text
-                style={{
-                    textAlign: 'center',
-                    fontSize: adjust(12),
-                    fontFamily: 'serif',
-                    letterSpacing: 1,
-                    opacity: 0.5
-                }}
-            >
-                Giỏ hàng trống
-            </Text>
-        </View>
-    );
-};
-
-type OrderItemProps = {
-    item: OrderLine;
-    removeOrderLineHandle: (lineId: string) => void;
-    navigation: NavigationProp<RootStackParamList>;
-    addItemToCartHandle: (
-        productId: string,
-        quantity: number,
-        config?: [ProductOption]
-    ) => void;
-};
-
-const OrderItem = ({
-    item,
-    removeOrderLineHandle,
-    navigation,
-    addItemToCartHandle
-}: OrderItemProps) => {
-    if (item) {
-        const productDetailRedirect = () => {
-            navigation.navigate('ProductDetail', { productId: item.productId });
-        };
-        let variant = '';
-        if (item.configProduct && item.configProduct.length > 0) {
-            const length = item.configProduct.length;
-            for (let i = 0; i < length; i++) {
-                const value = item.configProduct[i]?.value;
-                if (value) {
-                    i < length - 1
-                        ? (variant = variant.concat(value, ', '))
-                        : (variant = variant.concat(value));
-                }
-            }
-        }
-        return (
-            <React.Fragment>
-                <Swipeable
-                    renderRightActions={() => (
-                        <LeftComponent
-                            lineId={item.id}
-                            removeOrderLineHandle={removeOrderLineHandle}
-                        />
-                    )}
-                >
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            backgroundColor: 'white',
-                            paddingVertical: 10
-                        }}
-                    >
-                        <Image
-                            source={{ uri: item.thumbnail }}
-                            style={{ width: 100, height: 115 }}
-                            onPress={productDetailRedirect}
-                        />
-                        <View
-                            style={{
-                                flexDirection: 'column',
-                                marginLeft: 10,
-                                flexWrap: 'wrap',
-                                width: '90%'
-                            }}
-                        >
-                            <TouchableOpacity onPress={productDetailRedirect}>
-                                <Text style={{ fontSize: adjust(11) }}>
-                                    {item.name.slice(0, 35).concat('...')}
-                                </Text>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text
-                                        style={{
-                                            color: '#ee4d2d',
-                                            fontSize: adjust(12),
-                                            marginTop: 10
-                                        }}
-                                    >
-                                        đ{' '}
-                                        {item?.priceEach
-                                            .toString()
-                                            .replace(
-                                                /\B(?=(\d{3})+(?!\d))/g,
-                                                ','
-                                            )}
-                                    </Text>
-                                    <Text
-                                        style={{
-                                            fontSize: adjust(10),
-                                            color: 'grey',
-                                            fontWeight: 'bold',
-                                            textDecorationLine: 'line-through',
-                                            marginTop: 12,
-                                            marginLeft: 10
-                                        }}
-                                    >
-                                        đ{' '}
-                                        {item?.priceEachBeforeDiscount
-                                            ?.toString()
-                                            .replace(
-                                                /\B(?=(\d{3})+(?!\d))/g,
-                                                ','
-                                            )}
-                                    </Text>
-                                </View>
-                                <View>
-                                    {variant ? (
-                                        <Text style={{ marginTop: 5 }}>
-                                            Phân loại: {variant}
-                                        </Text>
-                                    ) : null}
-                                </View>
-                            </TouchableOpacity>
-                            <View
-                                style={{ flexDirection: 'row', marginTop: 20 }}
-                            >
-                                <Button
-                                    icon={
-                                        <Icon name="minus" type="antdesign" />
-                                    }
-                                    type="outline"
-                                    buttonStyle={{
-                                        borderColor: 'gray',
-                                        borderRadius: 0
-                                    }}
-                                    titleStyle={{ color: 'gray' }}
-                                    onPress={() => {
-                                        if (
-                                            item &&
-                                            item.configProduct &&
-                                            item.configProduct.length > 0
-                                        ) {
-                                            const configs = [] as Array<ProductOption>;
-                                            item.configProduct.map((config) => {
-                                                if (config) {
-                                                    configs.push({
-                                                        name: config.name,
-                                                        value: config.value
-                                                    });
-                                                }
-                                            });
-                                            configs.length > 0
-                                                ? addItemToCartHandle(
-                                                      item.productId,
-                                                      -1,
-                                                      configs as [ProductOption]
-                                                  )
-                                                : addItemToCartHandle(
-                                                      item.productId,
-                                                      1,
-                                                      undefined
-                                                  );
-                                        }
-                                    }}
-                                />
-                                <Input
-                                    value={`${item?.subQuantity}`}
-                                    disabled
-                                    containerStyle={{ width: 50 }}
-                                    style={{ textAlign: 'center' }}
-                                />
-                                <Button
-                                    icon={<Icon name="plus" type="antdesign" />}
-                                    type="outline"
-                                    buttonStyle={{
-                                        borderColor: 'gray',
-                                        borderRadius: 0
-                                    }}
-                                    titleStyle={{ color: 'gray' }}
-                                    onPress={() => {
-                                        if (
-                                            item &&
-                                            item.configProduct &&
-                                            item.configProduct.length > 0
-                                        ) {
-                                            const configs = [] as Array<ProductOption>;
-                                            item.configProduct.map((config) => {
-                                                if (config) {
-                                                    configs.push({
-                                                        name: config.name,
-                                                        value: config.value
-                                                    });
-                                                }
-                                            });
-                                            configs.length > 0
-                                                ? addItemToCartHandle(
-                                                      item.productId,
-                                                      1,
-                                                      configs as [ProductOption]
-                                                  )
-                                                : addItemToCartHandle(
-                                                      item.productId,
-                                                      1,
-                                                      undefined
-                                                  );
-                                        }
-                                    }}
-                                />
-                            </View>
-                        </View>
-                    </View>
-                </Swipeable>
+                <CheckoutButton cart={cart} navigation={navigation} />
+                {loading || addToCartLoading ? <OverlayLoading /> : null}
             </React.Fragment>
         );
-    } else {
-        return <Text></Text>;
     }
+    return <EmptyCart />;
 };
 
-type LeftComponentProps = {
-    lineId: string;
-    removeOrderLineHandle: (lineId: string) => void;
-};
-
-const LeftComponent = ({
-    lineId,
-    removeOrderLineHandle
-}: LeftComponentProps) => {
-    return (
-        <TouchableOpacity
-            style={{
-                width: 80,
-                backgroundColor: '#ee4d2d',
-                height: 182,
-                justifyContent: 'center'
-            }}
-            onPress={() => removeOrderLineHandle(lineId)}
-        >
-            <Text
-                style={{
-                    textAlign: 'center',
-                    color: 'white',
-                    fontSize: adjust(13),
-                    paddingBottom: 5
-                }}
-            >
-                Xóa
-            </Text>
-            <Icon name="delete" type="antdesign" color="white" />
-        </TouchableOpacity>
-    );
-};
 const mapStateToProps = (state: RootState) => {
     return {
         cart: state.cart

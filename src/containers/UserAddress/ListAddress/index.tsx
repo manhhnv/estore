@@ -1,22 +1,32 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useGetUserAddressesLazyQuery } from 'estore/graphql/generated';
-import {
-    View,
-    Text,
-    ActivityIndicator,
-    ToastAndroid,
-    Dimensions
-} from 'react-native';
+import { View, Text, ActivityIndicator, ToastAndroid } from 'react-native';
 import styles from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation, NavigationProp } from '@react-navigation/core';
 import { RootStackParamList } from 'estore/types';
 import { AddressFlatList } from './AddressFlatList';
-import { Icon, Image } from 'react-native-elements';
+import { Image } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { RootState } from 'estore/redux/slice';
+import {
+    changeDefaultAddress,
+    resetAddress
+} from 'estore/redux/slice/addressSlice';
+import { Address } from 'estore/graphql/generated';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
-const { width, height } = Dimensions.get('window');
+type ListAddressProps = {
+    address?: Partial<Address>;
+    changeDefaultAddress?: ActionCreatorWithPayload<Partial<Address>, string>;
+    resetAddress?: ActionCreatorWithPayload<any, string>;
+};
 
-const ListAddress = () => {
+const ListAddress = ({
+    address,
+    changeDefaultAddress,
+    resetAddress
+}: ListAddressProps) => {
     const [
         executeGetAddresses,
         { called, loading, data, error }
@@ -36,6 +46,26 @@ const ListAddress = () => {
         }
     }, [error]);
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    useEffect(() => {
+        if (
+            data &&
+            data.getUserAddresses &&
+            data.getUserAddresses.totalItems == 0
+        ) {
+            resetAddress ? resetAddress(null) : null;
+        } else if (
+            data &&
+            data.getUserAddresses &&
+            data.getUserAddresses.totalItems &&
+            data.getUserAddresses.totalItems > 0
+        ) {
+            data.getUserAddresses.items?.map((item) => {
+                if (item && item.isDefault) {
+                    changeDefaultAddress ? changeDefaultAddress(item) : null;
+                }
+            });
+        }
+    }, [data]);
     return (
         <React.Fragment>
             {data &&
@@ -88,4 +118,16 @@ const ListAddress = () => {
         </React.Fragment>
     );
 };
-export default ListAddress;
+
+const mapStateToProps = (state: RootState) => {
+    return {
+        address: state.address
+    };
+};
+
+const mapDispatchToProps = { changeDefaultAddress, resetAddress };
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(React.memo(ListAddress));

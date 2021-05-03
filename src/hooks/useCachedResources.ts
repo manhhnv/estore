@@ -15,7 +15,11 @@ export default function useCachedResources() {
                 // Load fonts
                 await Font.loadAsync({
                     ...Ionicons.font,
-                    'space-mono': require('estore/assets/fonts/SpaceMono-Regular.ttf')
+                    'space-mono': require('estore/assets/fonts/SpaceMono-Regular.ttf'),
+                    'nunito-regular': require('estore/assets/fonts/Nunito-Regular.ttf'),
+                    'nunito-bold': require('estore/assets/fonts/Nunito-Bold.ttf'),
+                    oswald: require('estore/assets/fonts/Oswald-VariableFont_wght.ttf'),
+                    castoro: require('estore/assets/fonts/Castoro-Regular.ttf')
                 });
             } catch (e) {
                 // We might want to provide this error information to an error reporting service
