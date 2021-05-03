@@ -1,18 +1,17 @@
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'estore/redux/slice';
 import {
     useCalculateShippingFeeMutation,
     ShippingInput,
-    Delivery_Options,
+    Delivery_Options
 } from 'estore/graphql/generated';
 
 type useShippingCalculationProps = {
-    weight: number,
-    transport: string,
-    deliver_option: Delivery_Options,
-    value?: number
-}
+    weight: number;
+    transport: string;
+    deliver_option: Delivery_Options;
+    value?: number;
+};
 
 export default function useShippingCalculation({
     weight,
@@ -30,13 +29,12 @@ export default function useShippingCalculation({
             },
             loading: false,
             called: false
-        }
-    }
-    else {
+        };
+    } else {
         const pickupAddress = {
-            province: "Tỉnh Bắc Giang",
-            district: "Huyện Hiệp Hòa",
-        }
+            province: 'Tỉnh Bắc Giang',
+            district: 'Huyện Hiệp Hòa'
+        };
         const shippingInput: ShippingInput = {
             pick_province: pickupAddress.province,
             pick_district: pickupAddress.district,
@@ -46,15 +44,10 @@ export default function useShippingCalculation({
             value: value,
             transport: transport,
             deliver_option: deliver_option
-        }
+        };
         const [
             executeGQL,
-            {
-                called,
-                loading,
-                data,
-                error
-            }
+            { called, loading, data, error }
         ] = useCalculateShippingFeeMutation();
         executeGQL({ variables: { input: shippingInput } });
         return {
@@ -62,6 +55,6 @@ export default function useShippingCalculation({
             error,
             loading,
             called
-        }
+        };
     }
 }

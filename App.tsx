@@ -18,9 +18,7 @@ export default function App() {
     const colorScheme = useColorScheme();
 
     if (!isLoadingComplete) {
-        return (
-            <ActivityIndicator color="red" size="large" />
-        )
+        return <ActivityIndicator color="red" size="large" />;
     } else {
         return (
             <SafeAreaProvider>

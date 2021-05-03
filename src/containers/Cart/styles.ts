@@ -79,4 +79,4 @@ export const cartItemAdjust = StyleSheet.create({
         borderColor: 'gray',
         borderRadius: 0
     }
-})
+});

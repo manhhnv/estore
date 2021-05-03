@@ -28,7 +28,7 @@ const CartItemAdjust = ({ addItemToCartHandle, item }: CartItemAdjustProps) => {
             configs.length > 0
                 ? addItemToCartHandle(
                       item.productId,
-                      -1,
+                      1,
                       configs as [ProductOption]
                   )
                 : addItemToCartHandle(item.productId, 1, undefined);
@@ -51,7 +51,7 @@ const CartItemAdjust = ({ addItemToCartHandle, item }: CartItemAdjustProps) => {
                       -1,
                       configs as [ProductOption]
                   )
-                : addItemToCartHandle(item.productId, 1, undefined);
+                : addItemToCartHandle(item.productId, -1, undefined);
         }
     };
     return (

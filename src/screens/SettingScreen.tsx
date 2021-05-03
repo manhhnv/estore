@@ -51,7 +51,13 @@ const mapStateToProps = (state: RootState) => {
         address: state.address
     };
 };
-const mapDispatchToProps = { login, logout, addToCart, setEmptyCart, changeDefaultAddress };
+const mapDispatchToProps = {
+    login,
+    logout,
+    addToCart,
+    setEmptyCart,
+    changeDefaultAddress
+};
 export default connect(
     mapStateToProps,
     mapDispatchToProps

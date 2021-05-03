@@ -8,13 +8,13 @@ import {
 } from 'estore/graphql/generated';
 import { RootState } from 'estore/redux/slice';
 import React, { useEffect } from 'react';
-import { FlatList, ToastAndroid,} from 'react-native';
+import { FlatList, ToastAndroid } from 'react-native';
 import { connect } from 'react-redux';
 import { addToCart } from 'estore/redux/slice/cartSlice';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
 import { RootStackParamList } from 'estore/types';
 import { EmptyCart } from './EmptyCart';
-import Spinner from 'estore/components/Spinner';
+import OverlayLoading from 'estore/components/OverlayLoading';
 import { CheckoutButton } from './CheckoutButton';
 import { CartItem } from './CartItem';
 
@@ -102,19 +102,12 @@ const Cart = ({ cart, addToCart }: CartProps) => {
                     maxToRenderPerBatch={10}
                     removeClippedSubviews={true}
                 />
-                <CheckoutButton
-                    cart={cart}
-                    navigation={navigation}
-                />
-                {loading || addToCartLoading ? (
-                    <Spinner />
-                ) : null}
+                <CheckoutButton cart={cart} navigation={navigation} />
+                {loading || addToCartLoading ? <OverlayLoading /> : null}
             </React.Fragment>
         );
     }
-    return (
-        <EmptyCart />
-    );
+    return <EmptyCart />;
 };
 
 const mapStateToProps = (state: RootState) => {
