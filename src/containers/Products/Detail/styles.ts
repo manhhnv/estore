@@ -16,6 +16,26 @@ export default StyleSheet.create({
         borderWidth: 0,
         borderRadius: 0
     },
+    wrapper: {
+        height: width,
+    },
+    paginationView:{
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
+        borderRadius: 10,
+        backgroundColor: "#ee4d2d",    
+        paddingHorizontal: 10,
+    },
+    paginationText: {
+        color: "white",
+        fontSize: adjust(14),
+    },
+    previewImage:{
+        height: "100%",
+        width: "100%",
+        resizeMode: "contain",        
+    },
     realPrice: {
         color: '#ee4d2d',
         fontSize: adjust(14),

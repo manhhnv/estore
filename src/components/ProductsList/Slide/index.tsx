@@ -96,7 +96,7 @@ const ProductItem = React.memo(({ item, navigation }: ProductItemProps) => {
                             {item.price
                                 ? item.price
                                       .toString()
-                                      .replace(/\B(?=(\d{3})+(?!\d))/g, ',') +
+                                      .replace(/\B(?=(\d{3})+(?!\d))/g, '.') +
                                   ' VND'
                                 : null}
                         </Text>

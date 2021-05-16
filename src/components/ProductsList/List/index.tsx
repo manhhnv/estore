@@ -148,7 +148,7 @@ const ProductItem = React.memo(
                                           .toString()
                                           .replace(
                                               /\B(?=(\d{3})+(?!\d))/g,
-                                              ','
+                                              '.'
                                           ) + ' VND'
                                     : null}
                             </Text>
@@ -158,7 +158,7 @@ const ProductItem = React.memo(
                                           .toString()
                                           .replace(
                                               /\B(?=(\d{3})+(?!\d))/g,
-                                              ','
+                                              '.'
                                           ) + ' ₫'
                                     : null}
                             </Text>
