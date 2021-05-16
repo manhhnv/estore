@@ -9,7 +9,7 @@ const Checkout = () => {
     return (
         <View style={{ flex: 1 }}>
             <CartPreview />
-            <Shipping deliverOption={Delivery_Options.Xteam} />
+            <Shipping />
         </View>
     );
 };

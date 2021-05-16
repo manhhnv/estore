@@ -101,12 +101,8 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
         >
             <Image
                 resizeMode="contain"
-                style={{ width: '80%', height: '80%' }}
-                source={{
-                    uri:
-                        'https://bollyglow.com/wp-content/themes/bollyglow/assets/images/empty_wishlist.png',
-                    cache: 'force-cache'
-                }}
+                style={{ width: '50%', height: '50%' }}
+                source={require('estore/assets/images/empty-cart.png')}
             />
         </View>
     );

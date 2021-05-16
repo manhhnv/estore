@@ -1,10 +1,11 @@
 import React from 'react';
 import { Dimensions, View } from 'react-native';
 import { withBadge, Icon, Header, Button } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice';
 import { Order } from 'estore/graphql/generated';
+import { RootStackParamList } from 'estore/types';
 
 const { width } = Dimensions.get('screen');
 
@@ -20,7 +21,7 @@ const HomeHeader = ({ cart }: HomeHeaderProps) => {
         { status: 'error', containerStyle: { marginRight: 25 } }
     )(Icon) as typeof Icon;
     const MessageIcon = withBadge(4, { status: 'error' })(Icon) as typeof Icon;
-    const navigation = useNavigation();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     return (
         <Header
             placement="center"
@@ -30,6 +31,9 @@ const HomeHeader = ({ cart }: HomeHeaderProps) => {
                     icon={
                         <Icon name="search" type="font-awesome" color="black" />
                     }
+                    onPress={() => {
+                        navigation.navigate("searchProduct")
+                    }}
                 />
             }
             leftContainerStyle={{ marginLeft: 0.05 * width }}

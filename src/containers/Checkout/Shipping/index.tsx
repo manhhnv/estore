@@ -16,8 +16,10 @@ const Shipping = () => {
         let totalValue = 0;
         if (cart.lines && cart.lines.length > 0) {
             cart.lines.map((item) => {
-                totalWeight += item.weight;
-                totalValue += item.subTotal;
+                if (item && item.weight) {
+                    totalWeight += item.weight;
+                    totalValue += item.subTotal;
+                }
             });
         }
         const transport = 'road';
@@ -65,7 +67,7 @@ const Shipping = () => {
         }
         return (
             <React.Fragment>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'column' }}>
                     <CheckBox
                         checked={deliverOption === Delivery_Options.None}
                         checkedColor="#ee4d2d"

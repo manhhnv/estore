@@ -49,7 +49,9 @@ const Login = ({ login }: LoginProps) => {
     const signInWithFacebookAsync = async () => {
         try {
             await Facebook.initializeAsync({
-                appId: '554013235570481'
+                appId: '554013235570481',
+                appName: 'ebuy-store'
+                
             });
             const result = await Facebook.logInWithReadPermissionsAsync({
                 permissions: ['public_profile', 'email']

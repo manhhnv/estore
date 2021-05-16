@@ -1,5 +1,3 @@
-import { SetStateAction } from 'react';
-
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
@@ -16,6 +14,7 @@ export type RootStackParamList = {
           }
         | undefined;
     checkout: undefined;
+    searchProduct: undefined;
 };
 
 export type BottomTabParamList = {
@@ -49,7 +48,3 @@ export type HomeStackParamList = {
     };
 };
 
-export type SearchItem = {
-    keyWord: string;
-    time: Date;
-};
