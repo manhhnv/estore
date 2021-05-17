@@ -1,56 +1,103 @@
 import { adjust } from 'estore/helpers/adjust';
-import React from 'react';
-import { Text, View } from 'react-native';
-import { ListItem, Button } from 'react-native-elements';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import styles from './styles';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { RootState } from 'estore/redux/slice';
+import { clearSearchHistory } from 'estore/redux/slice/historySlice';
+import { connect } from 'react-redux';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from 'estore/types';
 
-const list = [
-    {
-        name: 'Amy Farha',
-        avatar_url:
-            'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        // subtitle: 'Vice President'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url:
-            'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        // subtitle: 'Vice Chairman'
-    },
-    {
-        name: 'Chris Jackson',
-        avatar_url:
-            'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        // subtitle: 'Vice Chairman'
-    },
-    {
-        name: 'Amy Farha',
-        avatar_url:
-            'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        subtitle: 'Vice President'
+type HistorySearchProps = {
+    history?: Array<string>;
+    clearSearchHistory?: ActionCreatorWithPayload<any, string>;
+};
+
+const HistorySearch = ({ history, clearSearchHistory }: HistorySearchProps) => {
+    const [showClearHistory, setShowClearHistory] = useState(false);
+    const [lastIndex, setLastIndex] = useState(4);
+    const switchOption = () => {
+        setShowClearHistory(!showClearHistory);
+        setLastIndex(5);
+    };
+    const clearHistoryHandle = () => {
+        if (clearSearchHistory) {
+            clearSearchHistory(null);
+        }
+    };
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const searchByHistoryItem = (name: string) => {
+        navigation.navigate("searchResult", { name: name })
     }
-];
-
-const HistorySearch = () => {
     return (
         <View>
-            {
-                list.map((l, i) => (
-                    <ListItem key={i} bottomDivider containerStyle={{ paddingVertical: 10 }}>
+            {history &&
+                history.slice(0, lastIndex).map((item, index) => (
+                    <ListItem
+                        key={index}
+                        bottomDivider
+                        containerStyle={{ paddingVertical: 12 }}
+                        onPress={() => searchByHistoryItem(item)}
+                    >
                         <ListItem.Content>
-                            <ListItem.Title style={{ fontSize: adjust(12) }}>{l.name}</ListItem.Title>
-                            <ListItem.Subtitle style={{ fontSize: adjust(10) }}>{l.subtitle}</ListItem.Subtitle>
+                            <ListItem.Title style={{ fontSize: adjust(12) }}>
+                                {item}
+                            </ListItem.Title>
                         </ListItem.Content>
                     </ListItem>
-                ))
-            }
-            <ListItem key={100} bottomDivider containerStyle={{ paddingVertical: 10 }}>
-                <ListItem.Content>
-                    <ListItem.Title style={{ fontSize: adjust(11), alignSelf: 'center' }}>Hiển thị nhiều hơn</ListItem.Title>
-                </ListItem.Content>
-            </ListItem>
+                ))}
+            {history && history.length > 0 && showClearHistory === false ? (
+                <ListItem
+                    key={100}
+                    bottomDivider
+                    containerStyle={{ paddingVertical: 10 }}
+                    onPress={switchOption}
+                >
+                    <ListItem.Content>
+                        <ListItem.Title
+                            style={{
+                                fontSize: adjust(11),
+                                alignSelf: 'center'
+                            }}
+                        >
+                            Hiển thị nhiều hơn
+                        </ListItem.Title>
+                    </ListItem.Content>
+                </ListItem>
+            ) : history && history.length > 0 ? (
+                <ListItem
+                    key={101}
+                    bottomDivider
+                    containerStyle={{ paddingVertical: 10 }}
+                    onPress={clearHistoryHandle}
+                >
+                    <ListItem.Content>
+                        <ListItem.Title
+                            style={{
+                                fontSize: adjust(11),
+                                alignSelf: 'center'
+                            }}
+                        >
+                            Xóa lịch sử tìm kiếm
+                        </ListItem.Title>
+                    </ListItem.Content>
+                </ListItem>
+            ) : null}
         </View>
     );
 };
 
-export default React.memo(HistorySearch);
+const mapStateToProps = (state: RootState) => {
+    return {
+        history: state.history
+    };
+};
+
+const mapDispatchToProps = { clearSearchHistory };
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(React.memo(HistorySearch));

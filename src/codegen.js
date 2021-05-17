@@ -1,5 +1,5 @@
 module.exports = {
-    schema: `https://ebuy-ecommerce.herokuapp.com/graphql`,
+    schema: `http://192.168.0.104:5000/graphql`,
     documents: ['./**/**/*.graphql', './**/**/**/*.graphql'],
     overwrite: true,
     generates: {

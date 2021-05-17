@@ -1,0 +1,8 @@
+query searchProducts($name: String!, $filter: Filter, $sort: Sort) {
+    products(name: $name, filter: $filter, sort: $sort) {
+        total
+        items {
+            ...ProductFragment
+        }
+    }
+}

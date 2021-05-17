@@ -17,6 +17,7 @@ import UserAddressScreen from 'estore/screens/UserAddressScreen';
 import AddAddressScreen from 'estore/screens/AddAddressScreen';
 import CheckoutScreen from 'estore/screens/CheckoutScreen';
 import SearchScreen from 'estore/screens/SearchScreen';
+import SearchResult from 'estore/screens/SearchResult';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -63,6 +64,7 @@ function RootNavigator() {
             />
             <Stack.Screen name="checkout" component={CheckoutScreen} />
             <Stack.Screen name="searchProduct" component={SearchScreen} />
+            <Stack.Screen name="searchResult" component={SearchResult} />
         </Stack.Navigator>
     );
 }

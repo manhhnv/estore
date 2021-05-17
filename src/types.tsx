@@ -15,6 +15,9 @@ export type RootStackParamList = {
         | undefined;
     checkout: undefined;
     searchProduct: undefined;
+    searchResult: {
+        name: string
+    } | undefined;
 };
 
 export type BottomTabParamList = {

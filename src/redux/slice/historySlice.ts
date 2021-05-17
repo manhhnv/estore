@@ -8,14 +8,16 @@ const historySlice = createSlice({
     reducers: {
         addSearchHistory: (state, action: PayloadAction<string>) => {
             const formatted = action.payload.trim();
-            if (!state.includes(formatted)) {
-                const cloned = state;
-                const historyLength = cloned.length;
-                if (historyLength >= 5) {
-                    cloned.splice(historyLength - 1, 1);
+            if (formatted) {
+                if (!state.includes(formatted)) {
+                    const cloned = state;
+                    const historyLength = cloned.length;
+                    if (historyLength >= 6) {
+                        cloned.splice(historyLength - 1, 1);
+                    }
+                    cloned.unshift(formatted);
+                    state = cloned;
                 }
-                cloned.push(formatted);
-                state = cloned;
             }
             return state;
         },

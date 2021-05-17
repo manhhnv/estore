@@ -1,23 +1,55 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, TextInput, TextProps, StyleProp, TextStyle } from 'react-native';
 import styles from './styles';
-import { Header, Button, Icon, Input } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
+import { Header, Button, Icon } from 'react-native-elements';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { connect } from 'react-redux';
+import {
+    addSearchHistory,
+} from 'estore/redux/slice/historySlice';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { RootStackParamList } from 'estore/types';
+import { IconObject } from 'react-native-elements/dist/icons/Icon';
 
-type SearchingHeaderProps = {
-    searchProduct?: () => void
+interface HeaderIcon extends IconObject {
+    icon?: string;
+    text?: string;
+    color?: string;
+    style?: StyleProp<TextStyle>;
 }
 
-const SearchingHeader = ({ searchProduct }: SearchingHeaderProps) => {
-    const navigation = useNavigation();
+type SearchingHeaderProps = {
+    addSearchHistory?: ActionCreatorWithPayload<string, string>;
+    currentKeyWord?: string;
+    autoFocus?: boolean;
+    rightComponent?: React.ReactElement<{}> | TextProps | HeaderIcon
+};
+
+const SearchingHeader = ({
+    addSearchHistory,
+    currentKeyWord,
+    autoFocus,
+    rightComponent
+}: SearchingHeaderProps) => {
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const goBack = () => {
         navigation.goBack();
     };
-    const [name, setName] = useState('');
-    
+    const [name, setName] = useState(currentKeyWord ? currentKeyWord : '');
+
     const nameOnChangeHandle = (text: string) => {
-        const formatText = text.trim();
+        const formatText = text;
         setName(formatText);
+    };
+
+    const submitSearch = () => {
+        if (addSearchHistory) {
+            const formattedName = name.trim();
+            if (formattedName) {
+                addSearchHistory(formattedName);
+                navigation.navigate("searchResult", { name: formattedName })
+            }
+        }
     }
 
     return (
@@ -36,15 +68,27 @@ const SearchingHeader = ({ searchProduct }: SearchingHeaderProps) => {
                         style={styles.searchBox}
                         placeholder="Tìm kiếm sản phẩm"
                         autoCorrect
-                        autoFocus
-                        onChangeText={(text: string) => nameOnChangeHandle(text)}
+                        autoFocus={autoFocus}
+                        onChangeText={(text: string) =>
+                            nameOnChangeHandle(text)
+                        }
                         value={name}
+                        onSubmitEditing={submitSearch}
                     />
                 </View>
+            }
+            rightComponent={
+                rightComponent
             }
             backgroundColor="white"
         />
     );
 };
 
-export default React.memo(SearchingHeader);
+
+const mapDispatchToProps = { addSearchHistory };
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(React.memo(SearchingHeader));
