@@ -13,6 +13,8 @@ import SettingStackNavigator from 'estore/navigation/SettingStackNavigation';
 import HomeStack from 'estore/navigation/HomeStack';
 import { RootState } from 'estore/redux/slice/index';
 import { connect } from 'react-redux';
+import NotificationScreen from 'estore/screens/NotificationScreen';
+
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 type WishlistProps = {
@@ -36,7 +38,7 @@ const BottomTabNavigator = ({ wishlist }: WishlistProps) => {
             />
             <BottomTab.Screen
                 name="Notification"
-                component={TabOneNavigator}
+                component={NotificationScreen}
                 options={{
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="notifications" color={color} />

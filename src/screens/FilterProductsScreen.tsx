@@ -13,12 +13,12 @@ type FilterProductsScreenProps = {
 const FilterProductsScreen = ({ route }: FilterProductsScreenProps) => {
     const { name } = route.params;
     return (
-        <SafeAreaView style={{ backgroundColor: 'white', flex: 1 }}>
+        <View style={{ backgroundColor: 'white', flex: 1 }}>
             <FeatureHeader name={name} />
             <View style={{ backgroundColor: '#fff', flex: 1 }}>
                 <ProductByCategories route={route} />
             </View>
-        </SafeAreaView>
+        </View>
     );
 };
 export default FilterProductsScreen;
