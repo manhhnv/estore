@@ -34,7 +34,6 @@ const HomeHeader = ({ cart }: HomeHeaderProps) => {
             rightComponent={
                 <Retail cart={cart} navigation={navigation} />
             }
-            rightContainerStyle={{ marginHorizontal: 0.05 * width }}
             backgroundColor="white"
         />
     );

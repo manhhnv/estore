@@ -34,7 +34,6 @@ const LeftTextHeader = ({ leftText, cart }: LeftTextHeaderProps) => {
             }
             leftContainerStyle={{ marginLeft: 0.05 * width }}
             rightComponent={<Retail cart={cart} navigation={navigation} />}
-            rightContainerStyle={{ marginHorizontal: 0.05 * width }}
             backgroundColor="white"
         />
     );

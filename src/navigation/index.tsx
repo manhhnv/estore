@@ -18,9 +18,8 @@ import AddAddressScreen from 'estore/screens/AddAddressScreen';
 import CheckoutScreen from 'estore/screens/CheckoutScreen';
 import SearchScreen from 'estore/screens/SearchScreen';
 import SearchResult from 'estore/screens/SearchResult';
+import ChatScreen from 'estore/screens/ChatScreen';
 
-// If you are not familiar with React Navigation, we recommend going through the
-// "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 export default function Navigation({
     colorScheme
 }: {
@@ -65,6 +64,7 @@ function RootNavigator() {
             <Stack.Screen name="checkout" component={CheckoutScreen} />
             <Stack.Screen name="searchProduct" component={SearchScreen} />
             <Stack.Screen name="searchResult" component={SearchResult} />
+            <Stack.Screen name="chat" component={ChatScreen} />
         </Stack.Navigator>
     );
 }

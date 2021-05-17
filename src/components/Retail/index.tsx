@@ -40,7 +40,14 @@ const Retail = ({ cart, navigation }: RetailProps) => {
                     )
                 }
             />
-            <MessageIcon type="antdesign" name="wechat" color="black" />
+            <Button
+                onPress={() => navigation.navigate("chat")}
+                buttonStyle={{  padding: 0, marginRight: 20, backgroundColor: "white" }}
+                icon={
+                    <MessageIcon onPress={() => navigation.navigate("chat")} type="antdesign" name="wechat" color="black" />
+                }
+            />
+            {/* <MessageIcon onPress={() => navigation.navigate("chat")} type="antdesign" name="wechat" color="black" /> */}
         </View>
     );
 };

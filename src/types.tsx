@@ -18,6 +18,7 @@ export type RootStackParamList = {
     searchResult: {
         name: string
     } | undefined;
+    chat: undefined;
 };
 
 export type BottomTabParamList = {
