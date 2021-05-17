@@ -26,6 +26,7 @@ export type BottomTabParamList = {
     Notification: undefined;
     Setting: undefined;
     Favorite: undefined;
+    Wishlist: undefined;
 };
 
 export type TabOneParamList = {
