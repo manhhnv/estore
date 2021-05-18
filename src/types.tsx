@@ -1,5 +1,3 @@
-import { SetStateAction } from 'react';
-
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
@@ -16,6 +14,14 @@ export type RootStackParamList = {
           }
         | undefined;
     checkout: undefined;
+    searchProduct: undefined;
+    searchResult: {
+        name: string
+    } | undefined;
+    chat: undefined;
+    privacyPolicy: undefined;
+    helpCenter: undefined;
+    orderStatistics: undefined;
 };
 
 export type BottomTabParamList = {
@@ -24,6 +30,7 @@ export type BottomTabParamList = {
     Notification: undefined;
     Setting: undefined;
     Favorite: undefined;
+    Wishlist: undefined;
 };
 
 export type TabOneParamList = {
@@ -49,7 +56,3 @@ export type HomeStackParamList = {
     };
 };
 
-export type SearchItem = {
-    keyWord: string;
-    time: Date;
-};

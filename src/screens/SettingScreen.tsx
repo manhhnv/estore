@@ -6,7 +6,7 @@ import Settings from 'estore/containers/Settings';
 import { login, logout, UserSliceType } from 'estore/redux/slice/userSlice';
 import { addToCart, setEmptyCart } from 'estore/redux/slice/cartSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
-import HomeHeader from 'estore/components/HomeHeader';
+import LeftTextHeader from 'estore/components/LeftTextHeader';
 import { Order, Address } from 'estore/graphql/generated';
 import { changeDefaultAddress } from 'estore/redux/slice/addressSlice';
 
@@ -34,7 +34,7 @@ const SettingScreen = ({
     } else
         return (
             <React.Fragment>
-                <HomeHeader />
+                <LeftTextHeader leftText="Cài đặt"/>
                 <Settings
                     logout={logout}
                     user={user}

@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 import store from 'estore/redux/store';
 
 const httpLink = createHttpLink({
-    uri: 'https://ebuy-ecommerce.herokuapp.com/graphql'
+    uri: 'http://192.168.0.104:5000/graphql'
 });
 
 const authLink = setContext((req, { headers }) => {

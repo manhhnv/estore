@@ -1,0 +1,52 @@
+[
+    {
+        "avatar": "https://png.pngtree.com/element_our/20190530/ourlarge/pngtree-520-couple-avatar-boy-avatar-little-dinosaur-cartoon-cute-image_1263411.jpg",
+        "username": "manhcute",
+        "rating": 5.0,
+        "content": "Sản phẩm chất lượng tốt, shop tư vấn nhiệt tình",
+        "dateTime": {
+            "time": "20:08:00",
+            "date": "18-05-21"
+        }
+    },
+    {
+        "avatar": "https://secure.gravatar.com/avatar/0486e6de248302a31bb01d8c3bf8542a?s=150&r=g&d=https://dangkiem.com/wp-content/plugins/userswp/assets/images/no_profile.png",
+        "username": "huynguyen@gmail.com",
+        "rating": 5.0,
+        "content": "Sản phẩm chất lượng tốt, shop tư vấn nhiệt tình",
+        "dateTime": {
+            "time": "20:08:00",
+            "date": "18-05-21"
+        }
+    },
+    {
+        "avatar": "https://png.pngtree.com/element_our/20190530/ourlarge/pngtree-520-couple-avatar-boy-avatar-little-dinosaur-cartoon-cute-image_1263411.jpg",
+        "username": "nguyenmanh117",
+        "rating": 4.8,
+        "content": "Sản phẩm tạm ổn, ủng hộ shop lần sau.",
+        "dateTime": {
+            "time": "20:00:00",
+            "date": "18-05-21"
+        }
+    },
+    {
+        "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2d2N-vVcJ701VrgkDJUDqp9LNaZFoqn0TNW__g4lvmFHbGak300Qd1uStUs5VJrP5XFk&usqp=CAU",
+        "username": "mark_zuckerberg",
+        "rating": 5.0,
+        "content": "I from USA, I bought your product, it's very good.",
+        "dateTime": {
+            "time": "19:28:00",
+            "date": "17-05-21"
+        }
+    },
+    {
+        "avatar": "https://i.pinimg.com/474x/8f/33/30/8f3330d6163782b88b506d396f5d156f.jpg",
+        "username": "xeokuakua",
+        "rating": 5.0,
+        "content": "I from China, very good.",
+        "dateTime": {
+            "time": "00:05:30",
+            "date": "16-05-21"
+        }
+    }
+]

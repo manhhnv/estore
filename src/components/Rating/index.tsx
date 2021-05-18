@@ -1,18 +1,24 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ViewProps } from 'react-native';
 import { Rating as RNRating } from 'react-native-elements';
 import styles from './styles';
 
-type RatingProps = {
+interface RatingProps extends ViewProps {
     rating: number;
     soldQuantity?: number | null;
+    size: number
+    showText?: boolean;
 };
 
-const Rating = ({ rating, soldQuantity }: RatingProps) => {
+const Rating = ({ rating, soldQuantity, size, showText }: RatingProps) => {
     return (
         <View style={styles.ratingContainer}>
-            <RNRating readonly startingValue={rating} imageSize={18} />
-            <Text style={styles.ratingValue}>{rating.toFixed(1)}</Text>
+            <RNRating readonly startingValue={rating} imageSize={size} />
+            {
+                showText ? (
+                    <Text style={styles.ratingValue}>{rating.toFixed(1)}</Text>
+                ) : null
+            }
             {soldQuantity ? (
                 <React.Fragment>
                     <View

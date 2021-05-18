@@ -51,7 +51,7 @@ const Grid = ({
         }
         return <Text></Text>;
     };
-    if (products.length > 0) {
+    if (products?.length > 0) {
         return (
             <SafeAreaView>
                 <FlatList

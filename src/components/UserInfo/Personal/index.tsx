@@ -1,5 +1,5 @@
 import { UserSliceType } from 'estore/redux/slice/userSlice';
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Image, Icon, Avatar } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -10,12 +10,19 @@ type PersonalProps = {
 };
 
 const Personal = ({ user }: PersonalProps) => {
+    const [avatar, setAvatar] = useState(user.me?.avatar)
+    const setDefaultAvatar = () => {
+        setAvatar('https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png')
+    }
     return (
         <View style={styles.personalContainer}>
             <Image
                 source={{
-                    uri: user.me?.avatar ? user.me.avatar : undefined,
+                    uri: avatar ? avatar : 'https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png',
                     cache: 'force-cache'
+                }}
+                onError={() => {
+                    setDefaultAvatar()
                 }}
                 containerStyle={{ width: 80, height: 80, borderRadius: 100 }}
             />

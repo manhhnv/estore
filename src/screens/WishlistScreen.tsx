@@ -7,6 +7,8 @@ import { UserSliceType } from 'estore/redux/slice/userSlice';
 import { useActiveWishlistQuery } from 'estore/graphql/generated';
 import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import LeftTextHeader from 'estore/components/LeftTextHeader';
+
 type WishlistScreenProps = {
     user: UserSliceType;
     addToWishlist: ActionCreatorWithPayload<any, string>;
@@ -39,6 +41,7 @@ const WishlistScreen = ({ user, addToWishlist }: WishlistScreenProps) => {
     }
     return (
         <View style={{ flex: 1 }}>
+            <LeftTextHeader leftText="Yêu thích"/>
             <Wishlist />
         </View>
     );
