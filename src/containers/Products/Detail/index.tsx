@@ -8,12 +8,13 @@ import {
     Dimensions
 } from 'react-native';
 import Banner from 'estore/components/Banner';
-import { Button, Icon } from 'react-native-elements';
+import { Button, Icon, ListItem, Avatar } from 'react-native-elements';
 import Rating from 'estore/components/Rating';
 import ShopInfo from 'estore/components/ShopInfo';
 import styles from './styles';
 import ProductConfig from 'estore/containers/ProductConfig';
 import { adjust } from 'estore/helpers/adjust';
+import Review from 'estore/containers/Review';
 
 type ProductDetailProps = {
     productId: string;
@@ -79,10 +80,17 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                             <Rating
                                 rating={data.productDetail.rating}
                                 soldQuantity={data.productDetail.soldQuantity}
+                                size={15}
+                                showText={true}
                             />
                         ) : null}
                     </View>
                     <ShopInfo />
+                    <View style={{ flex: 1, backgroundColor: "white", marginTop: 12 }}>
+                        <Text style={[styles.productName, { textAlign: "center", color: "#ee4d2d" }]}>Mô tả sản phẩm</Text>
+                        <Text style={{ fontSize: adjust(12), paddingHorizontal: 10, lineHeight: 30 }}>{data.productDetail?.description}</Text>
+                    </View>
+                    <Review />
                 </ScrollView>
                 <View style={styles.addingButtonGroupContainer}>
                     <Button

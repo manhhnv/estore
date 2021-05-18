@@ -7,7 +7,7 @@ const HelpCenterScreen = () => {
     return (
         <React.Fragment>
             <UtilHeader leftText="Trung tâm trợ giúp"/>
-            <WebView source={{uri: "https://magiamgiashopee.vn/tong-dai-shopee/#toc-4-chat-truc-tuyen-voi-shopee"}}/>
+            <WebView source={{uri: "https://magiamgiashopee.vn/tong-dai-shopee/"}}/>
         </React.Fragment>
     )
 };

@@ -67,7 +67,7 @@ const Shipping = () => {
         }
         return (
             <React.Fragment>
-                <View style={{ flexDirection: 'column' }}>
+                <View style={{ flexDirection: 'column', backgroundColor: "white" }}>
                     <CheckBox
                         checked={deliverOption === Delivery_Options.None}
                         checkedColor="#ee4d2d"

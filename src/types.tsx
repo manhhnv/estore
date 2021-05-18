@@ -21,6 +21,7 @@ export type RootStackParamList = {
     chat: undefined;
     privacyPolicy: undefined;
     helpCenter: undefined;
+    orderStatistics: undefined;
 };
 
 export type BottomTabParamList = {

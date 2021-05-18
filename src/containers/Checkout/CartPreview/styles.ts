@@ -5,7 +5,8 @@ export const cartItemStyles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: 'white',
-        paddingVertical: 10
+        paddingVertical: 10,
+        paddingHorizontal: 10
     },
     cartItemThumbnail: {
         width: 100,
