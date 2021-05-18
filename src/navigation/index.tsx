@@ -20,6 +20,7 @@ import SearchResult from 'estore/screens/SearchResult';
 import ChatScreen from 'estore/screens/ChatScreen';
 import PrivacyPolicyScreen from 'estore/screens/PrivacyPolicyScreen';
 import HelpCenterScreen from 'estore/screens/HelpCenterScreen';
+import OrderStatisticScreen from 'estore/screens/OrderStatisticsScreen';
 
 export default function Navigation({
     colorScheme
@@ -68,6 +69,7 @@ function RootNavigator() {
             <Stack.Screen name="chat" component={ChatScreen} />
             <Stack.Screen name="privacyPolicy" component={PrivacyPolicyScreen} />
             <Stack.Screen name="helpCenter" component={HelpCenterScreen} />
+            <Stack.Screen name="orderStatistics" component={OrderStatisticScreen}/>
         </Stack.Navigator>
     );
 }

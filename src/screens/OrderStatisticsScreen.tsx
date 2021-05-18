@@ -1,9 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
+import FeatureHeader from 'estore/components/FeatureHeader';
 
 const OrderStatisticsScreen = () => {
     return (
-        <View></View>
+        <React.Fragment>
+            <FeatureHeader name="Đơn mua" />
+        </React.Fragment>
     )
 }
 

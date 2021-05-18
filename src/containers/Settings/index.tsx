@@ -120,7 +120,7 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("orderStatistics")}>
                         <Icon
                             name="list-alt"
                             type="font-awesome"
