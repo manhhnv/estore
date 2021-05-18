@@ -1,13 +1,13 @@
 import React from 'react';
 import { PrivacyPolicy } from 'estore/components/static';
-import LeftTextHeader from 'estore/components/LeftTextHeader';
 import UtilHeader from 'estore/components/UtilHeader';
+import { WebView } from 'react-native-webview';
 
 const PrivacyPolicyScreen = () => {
     return (
         <React.Fragment>
             <UtilHeader leftText="Chính sách bảo mật"/>
-            <PrivacyPolicy />
+            <WebView source={{uri: "https://shopee.vn/docs/3603"}}/>
         </React.Fragment>
     )
 };
