@@ -100,7 +100,7 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Wishlist")}>
                         <Icon
                             name="heart"
                             type="font-awesome"
@@ -161,7 +161,7 @@ const Settings = ({
                     </ListItem>
                 </View>
                 <View style={{ backgroundColor: 'white', marginTop: 20 }}>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("privacyPolicy")}>
                         <Icon name="policy" />
                         <ListItem.Content>
                             <ListItem.Title>
@@ -177,7 +177,7 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("helpCenter")}>
                         <Icon
                             name="question-circle"
                             type="font-awesome"
@@ -197,7 +197,7 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("chat")}>
                         <Icon name="wechat" type="antdesign" color="#2adbcf" />
                         <ListItem.Content>
                             <ListItem.Title>
