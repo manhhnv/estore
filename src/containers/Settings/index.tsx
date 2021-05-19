@@ -11,7 +11,8 @@ import {
     Order,
     useActiveOrderQuery,
     useGetDefaultUserAddressQuery,
-    Address
+    Address,
+    useMeQuery
 } from 'estore/graphql/generated';
 
 type SettingsProps = {
@@ -40,6 +41,11 @@ const Settings = ({
         data: defaultAddressData,
         error: defaultAddressError
     } = useGetDefaultUserAddressQuery();
+    const {
+        data: meData,
+        loading: meLoading,
+        error: meError
+    } = useMeQuery();
     useEffect(() => {
         if (loggingOut) {
             let timer = setTimeout(() => {
@@ -59,6 +65,11 @@ const Settings = ({
             addToCart(order);
         }
     }, [data]);
+    useEffect(() => {
+        if (meError) {
+            setLoggingOut(true)
+        }
+    }, [meError])
     useEffect(() => {
         if (defaultAddressData?.getDefaultUserAddress) {
             changeDefaultAddress(defaultAddressData.getDefaultUserAddress);
