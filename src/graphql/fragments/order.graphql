@@ -4,7 +4,10 @@ fragment OrderFragment on Order {
     totalQuantity
     state
     active
+    shippingFee
     lines {
         ...LineFragment
     }
+    createdAt
+    updatedAt
 }

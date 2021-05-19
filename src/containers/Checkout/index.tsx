@@ -5,17 +5,20 @@ import { Text, View, ToastAndroid } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice';
-import { Address } from 'estore/graphql/generated';
+import { Address, Order } from 'estore/graphql/generated';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
 type CheckoutProps = {
     address?: Partial<Address>;
+    setEmptyCart?: ActionCreatorWithPayload<any, string>;
+    cart?: Partial<Order>
 };
 
-const Checkout = ({ address }: CheckoutProps) => {
+const Checkout = ({ address, setEmptyCart, cart }: CheckoutProps) => {
     const showToast = () => {
         ToastAndroid.showWithGravity(
             'Bạn cần chỉ định địa chỉ mặc định trong mục cài đặt',
-            ToastAndroid.SHORT,
+            ToastAndroid.LONG,
             ToastAndroid.CENTER
         );
     };
@@ -28,7 +31,7 @@ const Checkout = ({ address }: CheckoutProps) => {
         <View style={{ flex: 1 }}>
             <ScrollView>
                 <CartPreview />
-                {address ? (
+                {address && Object.keys(address).length > 0 && cart && Object.keys(cart).length > 0 ? (
                     <View
                         style={{
                             backgroundColor: 'white',
@@ -75,14 +78,15 @@ const Checkout = ({ address }: CheckoutProps) => {
                     </View>
                 ) : null}
             </ScrollView>
-            {address && <Shipping />}
+            {address  &&  Object.keys(address).length > 0 && <Shipping/>}
         </View>
     );
 };
 
 const mapStateToProps = (state: RootState) => {
     return {
-        address: state.address
+        address: state.address,
+        cart: state.cart
     };
 };
 

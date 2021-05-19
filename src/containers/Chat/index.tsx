@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { View, useWindowDimensions, Text, FlatList } from 'react-native';
+import { useWindowDimensions, Text, FlatList } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import data from './data.json';
-import { ScrollView } from 'react-native-gesture-handler';
-import { ListItem, Avatar, Badge } from 'react-native-elements';
+import { ListItem, Avatar } from 'react-native-elements';
 
 const allMessages = data;
 const unreadMessages = data.filter((m) => m.isRead == false);

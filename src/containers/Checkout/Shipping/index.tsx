@@ -1,17 +1,63 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { View, ToastAndroid } from 'react-native';
 import styles from './styles';
 import useShippingCalculation from 'estore/hooks/useShippingCalculation';
-import { useSelector } from 'react-redux';
 import { RootState } from 'estore/redux/slice';
-import { Delivery_Options } from 'estore/graphql/generated';
+import { Address, Delivery_Options, Order } from 'estore/graphql/generated';
 import { CheckBox, Button } from 'react-native-elements';
 import OverlayLoading from 'estore/components/OverlayLoading';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useTransitionOrderToStateMutation, Order_State, useCalculateShippingFeeMutation } from 'estore/graphql/generated';
+import { connect  } from 'react-redux';
+import { setEmptyCart } from 'estore/redux/slice/cartSlice';
+import { RootStackParamList } from 'estore/types';
 
-const Shipping = () => {
-    const [deliverOption, setDeliverOption] = useState(Delivery_Options.None);
-    const cart = useSelector((state: RootState) => state.cart);
-    if (Object.keys(cart).length !== 0) {
+
+type ShippingProps = {
+    setEmptyCart?: ActionCreatorWithPayload<any, string>;
+    cart?: Partial<Order>;
+    address?: Partial<Address>
+}
+
+const Shipping = ({ setEmptyCart, cart, address }: ShippingProps) => {
+
+
+    if (cart && Object.keys(cart).length !== 0) {
+        const [deliverOption, setDeliverOption] = useState(Delivery_Options.None);
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const showErrorToast = () => {
+        ToastAndroid.show("Có lỗi xảy ra, thử lại sau.", ToastAndroid.SHORT);
+    }
+
+    const [
+        executeGQL,
+        {
+            data,
+            loading,
+            error
+        }
+    ] = useTransitionOrderToStateMutation();
+
+    const transitionHandle = (fee: number) => {
+        executeGQL({ variables: { state: Order_State.Waiting, orderId: String(cart?.id), fee: fee } })
+    }
+
+    useEffect(() => {
+        if (data?.transitionOrderToState?.id) {
+            navigation.navigate("orderStatistics", { success: true })
+            setEmptyCart ? setEmptyCart(null) :  null
+        }
+    }, [data]);
+    useEffect(() => {
+        if (error) {
+            showErrorToast()
+        }
+    }, [error])
+
+    useEffect(() => {
+
+    })
         let totalWeight = 0;
         let totalValue = 0;
         if (cart.lines && cart.lines.length > 0) {
@@ -61,6 +107,11 @@ const Shipping = () => {
                         style={{ borderRadius: 0 }}
                         containerStyle={{ borderRadius: 0 }}
                         disabled={result.error ? true : false}
+                        onPress={() => {
+                            if (result.data?.calculateShippingFee?.fee) {
+                                transitionHandle(Number(result.data?.calculateShippingFee?.fee))
+                            }
+                        }}
                     />
                 </View>
             );
@@ -88,11 +139,20 @@ const Shipping = () => {
                     />
                 </View>
                 {bottomButtons}
-                {result.loading ? <OverlayLoading /> : null}
+                {result.loading || loading ? <OverlayLoading /> : null}
             </React.Fragment>
         );
     }
     return <View></View>;
 };
 
-export default React.memo(Shipping);
+const mapStateToProps = (state: RootState) => {
+    return {
+        cart: state.cart,
+        address: state.address
+    }
+}
+
+const mapDispatchToProps = { setEmptyCart }
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Shipping));

@@ -5,6 +5,7 @@ import {
     ShippingInput,
     Delivery_Options
 } from 'estore/graphql/generated';
+import { useEffect } from 'react';
 
 type useShippingCalculationProps = {
     weight: number;
@@ -49,7 +50,9 @@ export default function useShippingCalculation({
             executeGQL,
             { called, loading, data, error }
         ] = useCalculateShippingFeeMutation();
-        executeGQL({ variables: { input: shippingInput } });
+        useEffect(() => {
+            executeGQL({ variables: { input: shippingInput } });
+        }, [deliver_option])
         return {
             data,
             error,

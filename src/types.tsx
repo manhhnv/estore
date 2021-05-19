@@ -1,3 +1,5 @@
+import { Order } from "./graphql/generated";
+
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
@@ -21,7 +23,14 @@ export type RootStackParamList = {
     chat: undefined;
     privacyPolicy: undefined;
     helpCenter: undefined;
-    orderStatistics: undefined;
+    orderStatistics: {
+        success: boolean
+    } | undefined;
+    orderDetail: {
+        order: Partial<Order>,
+        executeGQLWrapper: () => void,
+        executeCanceledGQLWrapper?: () => void
+    } | undefined;
 };
 
 export type BottomTabParamList = {

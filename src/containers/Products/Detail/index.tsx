@@ -86,7 +86,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                         ) : null}
                     </View>
                     <ShopInfo />
-                    <View style={{ flex: 1, backgroundColor: "white", marginTop: 12 }}>
+                    <View style={{ flex: 1, backgroundColor: "white", paddingVertical: 12, marginTop: 12 }}>
                         <Text style={[styles.productName, { textAlign: "center", color: "#ee4d2d" }]}>Mô tả sản phẩm</Text>
                         <Text style={{ fontSize: adjust(12), paddingHorizontal: 10, lineHeight: 30 }}>{data.productDetail?.description}</Text>
                     </View>

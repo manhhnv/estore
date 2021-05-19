@@ -31,7 +31,7 @@ const Settings = ({
 }: SettingsProps) => {
     const navigation = useNavigation();
     const [loggingOut, setLoggingOut] = useState(false);
-    const { called, loading, data, error } = useActiveOrderQuery();
+    const { called, loading, data, error } = useActiveOrderQuery({fetchPolicy: "network-only"});
     const {
         called: defaultAddressCalled,
         loading: defaultAddressLoading,
@@ -120,7 +120,7 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("orderStatistics")}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("orderStatistics", { success: false })}>
                         <Icon
                             name="list-alt"
                             type="font-awesome"
