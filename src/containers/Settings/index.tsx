@@ -20,6 +20,7 @@ type SettingsProps = {
     addToCart: ActionCreatorWithPayload<Partial<Order>, string>;
     setEmptyCart: ActionCreatorWithPayload<any, string>;
     changeDefaultAddress: ActionCreatorWithPayload<Partial<Address>, string>;
+    resetAddress: ActionCreatorWithPayload<any, string>;
 };
 
 const Settings = ({
@@ -27,7 +28,8 @@ const Settings = ({
     user,
     addToCart,
     setEmptyCart,
-    changeDefaultAddress
+    changeDefaultAddress,
+    resetAddress
 }: SettingsProps) => {
     const navigation = useNavigation();
     const [loggingOut, setLoggingOut] = useState(false);
@@ -43,6 +45,7 @@ const Settings = ({
             let timer = setTimeout(() => {
                 logout({ token: undefined, me: undefined });
                 setEmptyCart(null);
+                resetAddress(null);
                 navigation.navigate('Home');
             }, 500);
             return () => {
