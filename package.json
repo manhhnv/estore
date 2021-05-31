@@ -14,11 +14,6 @@
     "jest": {
         "preset": "jest-expo"
     },
-    "workspaces": {
-        "packages": [
-            "./*"
-        ]
-    },
     "husky": {
         "hooks": {
             "pre-commit": "pretty-quick --staged && npm run lint"
@@ -98,6 +93,5 @@
         "jest-expo": "~40.0.0",
         "prettier": "2.2.1",
         "typescript": "~4.0.0"
-    },
-    "private": true
+    }
 }
