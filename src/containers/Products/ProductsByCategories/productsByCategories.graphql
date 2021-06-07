@@ -1,5 +1,5 @@
-query productByCategories($categoryId: Int) {
-  products(filter: {categoryId: $categoryId}) {
+query productByCategories($filter: Filter, $sort: Sort) {
+  products(filter: $filter, sort: $sort) {
     total
     items {
       name
