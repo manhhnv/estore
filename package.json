@@ -14,16 +14,17 @@
     "jest": {
         "preset": "jest-expo"
     },
-    "workspaces": {
-        "packages": [
-            "./*"
-        ]
-    },
     "husky": {
         "hooks": {
             "pre-commit": "pretty-quick --staged && npm run lint"
         }
     },
+    "workspaces":{
+        "packages": [
+            "./*"
+        ]
+    },
+    "private": true,
     "dependencies": {
         "@apollo/client": "^3.3.11",
         "@expo/metro-config": "^0.1.56",
@@ -98,6 +99,5 @@
         "jest-expo": "~40.0.0",
         "prettier": "2.2.1",
         "typescript": "~4.0.0"
-    },
-    "private": true
+    }
 }

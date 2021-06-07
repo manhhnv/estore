@@ -7,11 +7,6 @@ query activeWishlist {
     }
   }
 }
-query me {
-  me {
-    id
-  }
-}
 
 mutation removeFromWistlist ($productId: String!){
   removeFromWistlist (productId: $productId){
