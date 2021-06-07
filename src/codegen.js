@@ -1,6 +1,6 @@
 module.exports = {
     schema: `https://ebuy-ecommerce.herokuapp.com/graphql`,
-    documents: ['./**/**/*.graphql', './**/**/**/*.graphql'],
+    documents: ['./src/**/*.graphql', './src/**/**/*.graphql'],
     overwrite: true,
     generates: {
         './src/graphql/generated/index.tsx': {

@@ -19,6 +19,12 @@
             "pre-commit": "pretty-quick --staged && npm run lint"
         }
     },
+    "workspaces":{
+        "packages": [
+            "./*"
+        ]
+    },
+    "private": true,
     "dependencies": {
         "@apollo/client": "^3.3.11",
         "@expo/metro-config": "^0.1.56",
