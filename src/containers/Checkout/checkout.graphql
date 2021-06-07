@@ -7,8 +7,8 @@ mutation calculateShippingFee($input: ShippingInput) {
     }
 }
 
-mutation transitionOrderToState($state: ORDER_STATE!, $orderId: String!) {
-    transitionOrderToState(state: $state, orderId: $orderId) {
+mutation transitionOrderToState($state: ORDER_STATE!, $orderId: String!, $fee: Float) {
+    transitionOrderToState(state: $state, orderId: $orderId, fee: $fee) {
         ...OrderFragment
     }
 }

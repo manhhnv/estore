@@ -24,11 +24,6 @@ const SearchingResult = ({ name }: SearchingResultProps) => {
             setProducts(data.products.items);
         }
     }, [data]);
-    useEffect(() => {
-        if (loading) {
-            console.log('loading');
-        }
-    }, [loading]);
     return (
         <React.Fragment>
             <View>

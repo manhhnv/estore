@@ -11,7 +11,8 @@ import {
     Order,
     useActiveOrderQuery,
     useGetDefaultUserAddressQuery,
-    Address
+    Address,
+    useMeQuery
 } from 'estore/graphql/generated';
 
 type SettingsProps = {
@@ -20,6 +21,7 @@ type SettingsProps = {
     addToCart: ActionCreatorWithPayload<Partial<Order>, string>;
     setEmptyCart: ActionCreatorWithPayload<any, string>;
     changeDefaultAddress: ActionCreatorWithPayload<Partial<Address>, string>;
+    resetAddress: ActionCreatorWithPayload<any, string>;
 };
 
 const Settings = ({
@@ -27,22 +29,29 @@ const Settings = ({
     user,
     addToCart,
     setEmptyCart,
-    changeDefaultAddress
+    changeDefaultAddress,
+    resetAddress
 }: SettingsProps) => {
     const navigation = useNavigation();
     const [loggingOut, setLoggingOut] = useState(false);
-    const { called, loading, data, error } = useActiveOrderQuery();
+    const { called, loading, data, error } = useActiveOrderQuery({fetchPolicy: "network-only"});
     const {
         called: defaultAddressCalled,
         loading: defaultAddressLoading,
         data: defaultAddressData,
         error: defaultAddressError
     } = useGetDefaultUserAddressQuery();
+    const {
+        data: meData,
+        loading: meLoading,
+        error: meError
+    } = useMeQuery();
     useEffect(() => {
         if (loggingOut) {
             let timer = setTimeout(() => {
                 logout({ token: undefined, me: undefined });
                 setEmptyCart(null);
+                resetAddress(null);
                 navigation.navigate('Home');
             }, 500);
             return () => {
@@ -56,6 +65,11 @@ const Settings = ({
             addToCart(order);
         }
     }, [data]);
+    useEffect(() => {
+        if (meError) {
+            setLoggingOut(true)
+        }
+    }, [meError])
     useEffect(() => {
         if (defaultAddressData?.getDefaultUserAddress) {
             changeDefaultAddress(defaultAddressData.getDefaultUserAddress);
@@ -120,7 +134,7 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("orderStatistics")}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("orderStatistics", { success: false })}>
                         <Icon
                             name="list-alt"
                             type="font-awesome"
