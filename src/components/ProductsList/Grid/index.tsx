@@ -23,7 +23,7 @@ import {
 } from 'estore/graphql/generated';
 import { RootStackParamList } from 'estore/types';
 type GridProps = {
-    products: Array<Partial<Product> | null>;
+    products: Array<Partial<Product> | null> | undefined;
     addProductHandle: (productId: string) => void;
     wishlist: WL[];
     addToWishlist: ActionCreatorWithPayload<any, string>;
@@ -51,7 +51,7 @@ const Grid = ({
         }
         return <Text></Text>;
     };
-    if (products?.length > 0) {
+    if (products && products?.length > 0) {
         return (
             <SafeAreaView>
                 <FlatList

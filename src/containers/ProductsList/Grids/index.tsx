@@ -8,7 +8,7 @@ import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import Grid from 'estore/components/ProductsList/Grid';
 type GridProps = {
-    products: Array<Partial<Product> | null>;
+    products: Array<Partial<Product> | null> | undefined;
     addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 
