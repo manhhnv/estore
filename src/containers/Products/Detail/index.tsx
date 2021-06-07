@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useProductDetailQuery } from 'estore/graphql/generated';
 import {
     ActivityIndicator,
     View,
     Text,
     ScrollView,
-    Dimensions
+    Dimensions,
+    Image
 } from 'react-native';
 import Banner from 'estore/components/Banner';
 import { Button, Icon, ListItem, Avatar } from 'react-native-elements';
@@ -15,17 +16,90 @@ import styles from './styles';
 import ProductConfig from 'estore/containers/ProductConfig';
 import { adjust } from 'estore/helpers/adjust';
 import Review from 'estore/containers/Review';
+import { ToastAndroid } from 'react-native';
+import {
+    addToWishlist,
+    removeFromWishlist
+} from 'estore/redux/slice/wishlistSlice';
+import {
+    WishList as WL,
+    useRemoveFromWistlistMutation,
+    useAddToWishlistMutation
+} from 'estore/graphql/generated';
+import { connect } from 'react-redux';
+import { RootState } from 'estore/redux/slice/index';
 
 type ProductDetailProps = {
     productId: string;
+    wishlist: WL[];
+    addToWishlist: ActionCreatorWithPayload<any, string>;
 };
+
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
 const { width } = Dimensions.get('window');
 
-const ProductDetail = ({ productId }: ProductDetailProps) => {
+const ProductDetail = ({
+    productId,
+    wishlist,
+    addToWishlist
+}: ProductDetailProps) => {
     const { called, data, loading, error } = useProductDetailQuery({
         variables: { productId: productId }
     });
+
+    const [
+        addProducttoWishlist,
+        { called: c, data: d, loading: l, error: e }
+    ] = useAddToWishlistMutation();
+
+    const [
+        removeProduct,
+        { called: cc, data: dd, loading: ll, error: ee }
+    ] = useRemoveFromWistlistMutation();
+
+    const addProductSuccess = () => {
+        ToastAndroid.show('Đã thêm vào mục ưa thích', ToastAndroid.SHORT);
+    };
+
+    const addProductFailed = () => {
+        ToastAndroid.show('Có lỗi xảy ra', ToastAndroid.SHORT);
+    };
+
+    const removeProductSuccess = () => {
+        ToastAndroid.show('Đã xóa khỏi mục ưa thích', ToastAndroid.SHORT);
+    };
+    const removeProductFailed = () => {
+        ToastAndroid.show('Có lỗi xảy ra', ToastAndroid.SHORT);
+    };
+
+    useEffect(() => {
+        if (d && d.addToWishlist) {
+            const wishlist = d.addToWishlist;
+            addToWishlist(wishlist);
+            addProductSuccess();
+        }
+    }, [d]);
+
+    useEffect(() => {
+        if (e && e.message) {
+            addProductFailed();
+        }
+    }, [e]);
+
+    useEffect(() => {
+        if (ee && ee.message) {
+            removeProductFailed();
+        }
+    }, [ee]);
+    useEffect(() => {
+        if (dd && dd.removeFromWistlist) {
+            const wishlist = dd.removeFromWistlist;
+            addToWishlist(wishlist);
+            removeProductSuccess();
+        }
+    }, [dd]);
+
     const [isVisible, setVisible] = useState(false);
     if (loading) {
         return (
@@ -86,24 +160,92 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                         ) : null}
                     </View>
                     <ShopInfo />
-                    <View style={{ flex: 1, backgroundColor: "white", paddingVertical: 12, marginTop: 12 }}>
-                        <Text style={[styles.productName, { textAlign: "center", color: "#ee4d2d" }]}>Mô tả sản phẩm</Text>
-                        <Text style={{ fontSize: adjust(12), paddingHorizontal: 10, lineHeight: 30 }}>{data.productDetail?.description}</Text>
+                    <View
+                        style={{
+                            flex: 1,
+                            backgroundColor: 'white',
+                            paddingVertical: 12,
+                            marginTop: 12
+                        }}
+                    >
+                        <Text
+                            style={[
+                                styles.productName,
+                                { textAlign: 'center', color: '#ee4d2d' }
+                            ]}
+                        >
+                            Mô tả sản phẩm
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: adjust(12),
+                                paddingHorizontal: 10,
+                                lineHeight: 30
+                            }}
+                        >
+                            {data.productDetail?.description}
+                        </Text>
                     </View>
                     <Review />
                 </ScrollView>
                 <View style={styles.addingButtonGroupContainer}>
-                    <Button
-                        key={1}
-                        icon={
-                            <Icon type="antdesign" name="heart" color="white" />
-                        }
-                        buttonStyle={[
-                            styles.addingButtonCommon,
-                            { backgroundColor: '#00bfa5', width: 0.3 * width }
-                        ]}
-                        containerStyle={styles.addingButtonContainer}
-                    />
+                    {wishlist.filter(
+                        (it: WL) => it.product.id === data.productDetail?.id
+                    ).length === 0 ? (
+                        <Button
+                            key={1}
+                            icon={
+                                <Icon
+                                    type="antdesign"
+                                    name="heart"
+                                    color="white"
+                                />
+                            }
+                            buttonStyle={[
+                                styles.addingButtonCommon,
+                                {
+                                    backgroundColor: '#00bfa5',
+                                    width: 0.2 * width
+                                }
+                            ]}
+                            containerStyle={styles.addingButtonContainer}
+                            onPress={
+                                () =>
+                                    addProducttoWishlist({
+                                        variables: {
+                                            productId: data.productDetail?.id
+                                        }
+                                    })
+                                // setAtwl(!atwl)
+                            }
+                        />
+                    ) : (
+                        <Button
+                            key={1}
+                            icon={
+                                <Icon
+                                    type="antdesign"
+                                    name="heart"
+                                    color="#ee4d2d"
+                                />
+                            }
+                            buttonStyle={[
+                                styles.addingButtonCommon,
+                                {
+                                    backgroundColor: '#00bfa5',
+                                    width: 0.2 * width
+                                }
+                            ]}
+                            containerStyle={styles.addingButtonContainer}
+                            onPress={() => {
+                                removeProduct({
+                                    variables: {
+                                        productId: data.productDetail?.id
+                                    }
+                                });
+                            }}
+                        />
+                    )}
                     <Button
                         title="Thêm vào giỏ hàng"
                         key={2}
@@ -123,7 +265,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                         key={3}
                         buttonStyle={[
                             styles.addingButtonCommon,
-                            { backgroundColor: '#ee4d2d', width: 0.3 * width }
+                            { backgroundColor: '#00bfa5', width: 0.4 * width }
                         ]}
                         containerStyle={styles.addingButtonContainer}
                         titleStyle={{ fontSize: adjust(12) }}
@@ -145,9 +287,21 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
     }
     return <View></View>;
 };
-export default React.memo(ProductDetail, (props, nextProps) => {
-    if (props.productId !== nextProps.productId) {
-        return true;
-    }
-    return false;
-});
+const mapStateToProps = (state: RootState) => {
+    return {
+        user: state.user,
+        wishlist: state.wishlist
+    };
+};
+const mapDispatchToProps = { addToWishlist, removeFromWishlist };
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(
+    React.memo(ProductDetail, (props, nextProps) => {
+        if (props.productId !== nextProps.productId) {
+            return true;
+        }
+        return false;
+    })
+);

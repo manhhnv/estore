@@ -12,6 +12,7 @@ type GridProps = {
     addToWishlist: ActionCreatorWithPayload<any, string>;
 };
 
+
 const Grids = ({ products, addToWishlist }: GridProps) => {
     const [
         addProducttoWishlist,
@@ -28,6 +29,7 @@ const Grids = ({ products, addToWishlist }: GridProps) => {
         ToastAndroid.show('Có lỗi xảy ra', ToastAndroid.SHORT);
     };
 
+    
     useEffect(() => {
         if (error && error.message) {
             addProductFailed();

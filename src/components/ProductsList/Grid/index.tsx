@@ -91,15 +91,6 @@ export const ProductItem = React.memo(
         wishlist,
         addToWishlist
     }: ProductItemProps) => {
-        const [
-            removeProduct,
-            { called, data, loading, error }
-        ] = useRemoveFromWistlistMutation();
-
-        const removeProductHandle = (productId: string) => {
-            removeProduct({ variables: { productId: productId } });
-        };
-
         const productDetail = (productId: string) => {
             navigation.navigate('ProductDetail', { productId: productId });
         };
@@ -144,15 +135,8 @@ export const ProductItem = React.memo(
                         <TouchableOpacity
                             style={styles.heartIconContainerInWL}
                             onPress={() => {
-                                let revert = wishlist.filter(
-                                    (it: WL) => it.product.id !== item.id
-                                );
-                                addToWishlist(revert);
-                                item && item.id
-                                    ? removeProductHandle(item.id)
-                                    : null;
                                 ToastAndroid.show(
-                                    'Đã xóa khỏi mục ưa thích',
+                                    'Sản phẩm đã có trong mục ưa thích',
                                     ToastAndroid.SHORT
                                 );
                             }}
