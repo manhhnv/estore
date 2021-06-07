@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         fontSize: adjust(11),
         fontFamily: 'castoro',
         letterSpacing: 1,
-        fontWeight: "bold"
+        fontWeight: 'bold'
     },
     productPriceBeforeDiscount: {
         fontSize: adjust(10),
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     saleText: {
         position: 'absolute',
         top: 5,
-        fontSize: adjust(12),
+        fontSize: adjust(9),
         padding: 5,
         color: 'white',
         textAlign: 'center',

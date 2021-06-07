@@ -1,1 +1,4 @@
-export {ProgressBar, ProgressItem} from 'estore/components/ProgressBar/ProgressBar';
+export {
+    ProgressBar,
+    ProgressItem
+} from 'estore/components/ProgressBar/ProgressBar';

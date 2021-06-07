@@ -6,6 +6,11 @@ query getUserAddresses {
         totalItems
     }
 }
+query getDefaultUserAddress {
+    getDefaultUserAddress {
+        ...UserAddress
+    }
+}
 query availableProvinces {
     availableProvinces {
         id
@@ -19,5 +24,23 @@ query getStatesByProvinceId($provinceId: Int!) {
             name
         }
         totalItems
+    }
+}
+
+mutation createUserAddress(
+    $input: AddressInput!
+) {
+    createUserAddress(
+        input: $input
+    ) {
+        ...UserAddress
+    }
+}
+
+mutation removeUserAddress($id: ID!) {
+    removeUserAddress(id: $id) {
+        message
+        statusCode
+        success
     }
 }

@@ -1,0 +1,38 @@
+mutation calculateShippingFee($input: ShippingInput) {
+    calculateShippingFee(input: $input) {
+        name
+        fee
+        insurance_fee
+        delivery
+    }
+}
+
+mutation transitionOrderToState($state: ORDER_STATE!, $orderId: String!, $fee: Float) {
+    transitionOrderToState(state: $state, orderId: $orderId, fee: $fee) {
+        ...OrderFragment
+    }
+}
+
+query waitingOrders {
+    waitingOrders {
+        ...OrderFragment
+    }
+}
+
+query canceledOrders {
+    canceledOrders {
+        ...OrderFragment
+    }
+}
+
+query shippingOrders {
+    shippingOrders {
+        ...OrderFragment
+    }
+}
+
+query completedOrders {
+    completedOrders {
+        ...OrderFragment
+    }
+}

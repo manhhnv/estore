@@ -7,29 +7,51 @@ import { useNavigation } from '@react-navigation/core';
 import Personal from 'estore/components/UserInfo/Personal';
 import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Order, useActiveOrderQuery } from 'estore/graphql/generated';
+import {
+    Order,
+    useActiveOrderQuery,
+    useGetDefaultUserAddressQuery,
+    Address,
+    useMeQuery
+} from 'estore/graphql/generated';
 
 type SettingsProps = {
     logout: ActionCreatorWithPayload<UserSliceType, string>;
     user: UserSliceType;
     addToCart: ActionCreatorWithPayload<Partial<Order>, string>;
     setEmptyCart: ActionCreatorWithPayload<any, string>;
+    changeDefaultAddress: ActionCreatorWithPayload<Partial<Address>, string>;
+    resetAddress: ActionCreatorWithPayload<any, string>;
 };
 
-const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
+const Settings = ({
+    logout,
+    user,
+    addToCart,
+    setEmptyCart,
+    changeDefaultAddress,
+    resetAddress
+}: SettingsProps) => {
     const navigation = useNavigation();
     const [loggingOut, setLoggingOut] = useState(false);
+    const { called, loading, data, error } = useActiveOrderQuery({fetchPolicy: "network-only"});
     const {
-        called,
-        loading,
-        data,
-        error
-    } = useActiveOrderQuery()
+        called: defaultAddressCalled,
+        loading: defaultAddressLoading,
+        data: defaultAddressData,
+        error: defaultAddressError
+    } = useGetDefaultUserAddressQuery();
+    const {
+        data: meData,
+        loading: meLoading,
+        error: meError
+    } = useMeQuery();
     useEffect(() => {
         if (loggingOut) {
             let timer = setTimeout(() => {
                 logout({ token: undefined, me: undefined });
                 setEmptyCart(null);
+                resetAddress(null);
                 navigation.navigate('Home');
             }, 500);
             return () => {
@@ -40,9 +62,19 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
     useEffect(() => {
         if (data?.activeOrder) {
             const order = data.activeOrder as Partial<Order>;
-            addToCart(order)
+            addToCart(order);
         }
-    }, [data])
+    }, [data]);
+    useEffect(() => {
+        if (meError) {
+            setLoggingOut(true)
+        }
+    }, [meError])
+    useEffect(() => {
+        if (defaultAddressData?.getDefaultUserAddress) {
+            changeDefaultAddress(defaultAddressData.getDefaultUserAddress);
+        }
+    }, [defaultAddressData]);
     const logoutHandle = () => {
         Alert.alert(
             'Ebuy',
@@ -82,7 +114,7 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Wishlist")}>
                         <Icon
                             name="heart"
                             type="font-awesome"
@@ -102,7 +134,7 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("orderStatistics", { success: false })}>
                         <Icon
                             name="list-alt"
                             type="font-awesome"
@@ -122,7 +154,10 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem style={{ marginTop: 5 }} onPress={() => navigation.navigate("listUserAddress")}>
+                    <ListItem
+                        style={{ marginTop: 5 }}
+                        onPress={() => navigation.navigate('listUserAddress')}
+                    >
                         <Icon name="local-shipping" color="#107383" />
                         <ListItem.Content>
                             <ListItem.Title>
@@ -140,7 +175,7 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
                     </ListItem>
                 </View>
                 <View style={{ backgroundColor: 'white', marginTop: 20 }}>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("privacyPolicy")}>
                         <Icon name="policy" />
                         <ListItem.Content>
                             <ListItem.Title>
@@ -156,7 +191,7 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("helpCenter")}>
                         <Icon
                             name="question-circle"
                             type="font-awesome"
@@ -176,7 +211,7 @@ const Settings = ({ logout, user, addToCart, setEmptyCart }: SettingsProps) => {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }}>
+                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("chat")}>
                         <Icon name="wechat" type="antdesign" color="#2adbcf" />
                         <ListItem.Content>
                             <ListItem.Title>

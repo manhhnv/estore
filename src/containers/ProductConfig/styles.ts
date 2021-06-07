@@ -1,12 +1,11 @@
-import { Dimensions, StyleSheet } from "react-native";
-import { adjust } from "estore/helpers/adjust";
+import { Dimensions, StyleSheet } from 'react-native';
+import { adjust } from 'estore/helpers/adjust';
 
 const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
     configOptionContainer: {
-        marginTop: 30,
-        paddingBottom: 15
+        marginVertical: 10
     },
     configName: {
         fontSize: adjust(13),
@@ -37,42 +36,41 @@ export default StyleSheet.create({
     },
     configsBottomSheet: {
         height: 50,
-        backgroundColor: 'rgba(0.5, 0.25, 0, 0.2)',
+        backgroundColor: 'rgba(0.5, 0.25, 0, 0.2)'
     },
     bottomSheetBody: {
         flex: 1,
         backgroundColor: 'white',
         height: 'auto',
         borderTopRightRadius: 8,
-        borderTopLeftRadius: 8,
+        borderTopLeftRadius: 8
     },
     productInfoInBottomSheet: {
         flexDirection: 'row',
         paddingBottom: 5
     },
     productThumbnail: {
-        width: 125,
-        height: 125,
+        width: 100,
+        height: 100,
         borderRadius: 5,
         margin: 10
     },
     priceInBottomSheet: {
         position: 'absolute',
-        top: 80,
-        left: 150,
-        fontSize: adjust(12),
+        top: 55,
+        left: 125,
+        fontSize: adjust(10),
         color: '#ee4d2d',
-        letterSpacing: 1,
+        letterSpacing: 1
     },
     inStock: {
         position: 'absolute',
-        top: 110,
-        left: 150,
+        top: 85,
+        left: 125,
         fontSize: adjust(12)
     },
     orderQuantityContainer: {
-        marginTop: 30,
-        paddingBottom: 15
+        marginTop: 10
     },
     quantityText: {
         fontSize: adjust(13),
@@ -89,6 +87,6 @@ export default StyleSheet.create({
     },
     addingButtonCommon: {
         height: 54,
-        borderRadius: 0,
-    },
-})
+        borderRadius: 0
+    }
+});

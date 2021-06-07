@@ -1,16 +1,36 @@
-import { SetStateAction } from "react";
+import { Order } from "./graphql/generated";
 
 export type RootStackParamList = {
     Root: undefined;
     NotFound: undefined;
-    ProductDetail: {
-        productId: string;
-    } | undefined;
+    ProductDetail:
+        | {
+              productId: string;
+          }
+        | undefined;
     ViewCart: undefined;
     listUserAddress: undefined;
-    addUserAddress: {
-        getUserAddresses: () => void
-    } |undefined;
+    addUserAddress:
+        | {
+              getUserAddresses: () => void;
+          }
+        | undefined;
+    checkout: undefined;
+    searchProduct: undefined;
+    searchResult: {
+        name: string
+    } | undefined;
+    chat: undefined;
+    privacyPolicy: undefined;
+    helpCenter: undefined;
+    orderStatistics: {
+        success: boolean
+    } | undefined;
+    orderDetail: {
+        order: Partial<Order>,
+        executeGQLWrapper: () => void,
+        executeCanceledGQLWrapper?: () => void
+    } | undefined;
 };
 
 export type BottomTabParamList = {
@@ -19,6 +39,7 @@ export type BottomTabParamList = {
     Notification: undefined;
     Setting: undefined;
     Favorite: undefined;
+    Wishlist: undefined;
 };
 
 export type TabOneParamList = {
@@ -44,7 +65,3 @@ export type HomeStackParamList = {
     };
 };
 
-export type SearchItem = {
-    keyWord: string;
-    time: Date
-}

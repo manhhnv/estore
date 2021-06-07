@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     ratingContainer: {
@@ -7,6 +7,6 @@ export default StyleSheet.create({
     },
     ratingValue: {
         marginLeft: 7,
-        fontWeight: "900"
+        fontWeight: '500'
     }
-})
+});

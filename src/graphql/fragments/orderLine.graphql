@@ -9,6 +9,7 @@ fragment LineFragment on OrderLine {
         value
     }
     name
+    weight
     productId
     thumbnail
 }

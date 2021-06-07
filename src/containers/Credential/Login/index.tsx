@@ -3,7 +3,7 @@ import { Alert, Text, View, Animated } from 'react-native';
 import { Image, SocialIcon } from 'react-native-elements';
 import {
     useLoginGoogleMutation,
-    useLoginFaceBookMutation,
+    useLoginFaceBookMutation
 } from 'estore/graphql/generated';
 import styles from './styles';
 import { firebaseConfig } from './config';
@@ -49,7 +49,9 @@ const Login = ({ login }: LoginProps) => {
     const signInWithFacebookAsync = async () => {
         try {
             await Facebook.initializeAsync({
-                appId: '554013235570481'
+                appId: '554013235570481',
+                appName: 'ebuy-store'
+                
             });
             const result = await Facebook.logInWithReadPermissionsAsync({
                 permissions: ['public_profile', 'email']

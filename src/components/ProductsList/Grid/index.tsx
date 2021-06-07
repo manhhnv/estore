@@ -51,7 +51,7 @@ const Grid = ({
         }
         return <Text></Text>;
     };
-    if (products.length > 0) {
+    if (products?.length > 0) {
         return (
             <SafeAreaView>
                 <FlatList
@@ -101,7 +101,7 @@ export const ProductItem = React.memo(
         };
 
         const productDetail = (productId: string) => {
-            navigation.navigate("ProductDetail", { productId: productId });
+            navigation.navigate('ProductDetail', { productId: productId });
         };
 
         return (
@@ -112,7 +112,11 @@ export const ProductItem = React.memo(
                 <View style={styles.productItem}>
                     {item.rawDiscount ? (
                         <View style={styles.productSale}>
-                            <FontAwesome5 name="tags" size={40} color="#ee4d2d" />
+                            <FontAwesome5
+                                name="tags"
+                                size={40}
+                                color="#ee4d2d"
+                            />
                             <Text style={styles.saleText}>
                                 {'-' + item.rawDiscount + '%'}
                             </Text>
@@ -144,8 +148,13 @@ export const ProductItem = React.memo(
                                     (it: WL) => it.product.id !== item.id
                                 );
                                 addToWishlist(revert);
-                                item && item.id ? removeProductHandle(item.id) : null;
-                                ToastAndroid.show('Đã xóa khỏi mục ưa thích', ToastAndroid.SHORT);
+                                item && item.id
+                                    ? removeProductHandle(item.id)
+                                    : null;
+                                ToastAndroid.show(
+                                    'Đã xóa khỏi mục ưa thích',
+                                    ToastAndroid.SHORT
+                                );
                             }}
                         >
                             <AntDesign
