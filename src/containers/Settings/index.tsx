@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/core';
 import Personal from 'estore/components/UserInfo/Personal';
 import styles from './styles';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useActiveWishlistQuery } from 'estore/graphql/generated';
 import {
     Order,
     useActiveOrderQuery,
@@ -14,6 +15,8 @@ import {
     Address,
     useMeQuery
 } from 'estore/graphql/generated';
+
+import { addToWishlist } from 'estore/redux/slice/wishlistSlice';
 
 type SettingsProps = {
     logout: ActionCreatorWithPayload<UserSliceType, string>;
@@ -34,18 +37,16 @@ const Settings = ({
 }: SettingsProps) => {
     const navigation = useNavigation();
     const [loggingOut, setLoggingOut] = useState(false);
-    const { called, loading, data, error } = useActiveOrderQuery({fetchPolicy: "network-only"});
+    const { called, loading, data, error } = useActiveOrderQuery({
+        fetchPolicy: 'network-only'
+    });
     const {
         called: defaultAddressCalled,
         loading: defaultAddressLoading,
         data: defaultAddressData,
         error: defaultAddressError
     } = useGetDefaultUserAddressQuery();
-    const {
-        data: meData,
-        loading: meLoading,
-        error: meError
-    } = useMeQuery();
+    const { data: meData, loading: meLoading, error: meError } = useMeQuery();
     useEffect(() => {
         if (loggingOut) {
             let timer = setTimeout(() => {
@@ -59,6 +60,21 @@ const Settings = ({
             };
         }
     }, [loggingOut]);
+
+    const {
+        called: c,
+        data: d,
+        loading: l,
+        error: e
+    } = useActiveWishlistQuery();
+
+    useEffect(() => {
+        if (d?.activeWishlist) {
+            const wishlist = d.activeWishlist;
+            addToWishlist(wishlist);
+        }
+    }, [data]);
+
     useEffect(() => {
         if (data?.activeOrder) {
             const order = data.activeOrder as Partial<Order>;
@@ -67,9 +83,9 @@ const Settings = ({
     }, [data]);
     useEffect(() => {
         if (meError) {
-            setLoggingOut(true)
+            setLoggingOut(true);
         }
-    }, [meError])
+    }, [meError]);
     useEffect(() => {
         if (defaultAddressData?.getDefaultUserAddress) {
             changeDefaultAddress(defaultAddressData.getDefaultUserAddress);
@@ -114,7 +130,11 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Wishlist")}>
+                    <ListItem
+                        bottomDivider
+                        style={{ marginVertical: 5 }}
+                        onPress={() => navigation.navigate('Wishlist')}
+                    >
                         <Icon
                             name="heart"
                             type="font-awesome"
@@ -134,7 +154,15 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("orderStatistics", { success: false })}>
+                    <ListItem
+                        bottomDivider
+                        style={{ marginVertical: 5 }}
+                        onPress={() =>
+                            navigation.navigate('orderStatistics', {
+                                success: false
+                            })
+                        }
+                    >
                         <Icon
                             name="list-alt"
                             type="font-awesome"
@@ -175,7 +203,11 @@ const Settings = ({
                     </ListItem>
                 </View>
                 <View style={{ backgroundColor: 'white', marginTop: 20 }}>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("privacyPolicy")}>
+                    <ListItem
+                        bottomDivider
+                        style={{ marginVertical: 5 }}
+                        onPress={() => navigation.navigate('privacyPolicy')}
+                    >
                         <Icon name="policy" />
                         <ListItem.Content>
                             <ListItem.Title>
@@ -191,7 +223,11 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("helpCenter")}>
+                    <ListItem
+                        bottomDivider
+                        style={{ marginVertical: 5 }}
+                        onPress={() => navigation.navigate('helpCenter')}
+                    >
                         <Icon
                             name="question-circle"
                             type="font-awesome"
@@ -211,7 +247,11 @@ const Settings = ({
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider style={{ marginVertical: 5 }} onPress={() => navigation.navigate("chat")}>
+                    <ListItem
+                        bottomDivider
+                        style={{ marginVertical: 5 }}
+                        onPress={() => navigation.navigate('chat')}
+                    >
                         <Icon name="wechat" type="antdesign" color="#2adbcf" />
                         <ListItem.Content>
                             <ListItem.Title>
