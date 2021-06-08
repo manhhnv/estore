@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { adjust } from 'estore/helpers/adjust';
+
+const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
     listProductName: {
@@ -13,5 +15,15 @@ export default StyleSheet.create({
         letterSpacing: 1,
         textDecorationLine: 'underline',
         textAlign: 'center'
-    }
+    },
+    subHeaderContainer: {
+        backgroundColor: '#ee4d2d',
+        marginBottom: 10,
+        width,
+        height: 'auto',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
 });
