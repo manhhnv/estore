@@ -123,5 +123,17 @@ export default StyleSheet.create({
     buttonInBottomSheet: {
         width: 0.5 * width,
         borderRadius: 0
-    }
+    },
+    overlay: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+    },
+    overlayHeart: {
+        tintColor: '#fff',
+    },
 });

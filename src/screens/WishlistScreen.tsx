@@ -41,7 +41,7 @@ const WishlistScreen = ({ user, addToWishlist }: WishlistScreenProps) => {
     }
     return (
         <View style={{ flex: 1 }}>
-            <LeftTextHeader leftText="Yêu thích"/>
+            <LeftTextHeader leftText="Yêu thích" />
             <Wishlist />
         </View>
     );

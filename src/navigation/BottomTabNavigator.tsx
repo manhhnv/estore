@@ -2,22 +2,22 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import WishlistScreen from 'estore/screens/WishlistScreen';
-import {
-    BottomTabParamList,
-} from 'estore/types';
+import { BottomTabParamList } from 'estore/types';
 import SettingStackNavigator from 'estore/navigation/SettingStackNavigation';
 import HomeStack from 'estore/navigation/HomeStack';
 import { RootState } from 'estore/redux/slice/index';
 import { connect } from 'react-redux';
 import NotificationScreen from 'estore/screens/NotificationScreen';
-
+import { UserSliceType } from 'estore/redux/slice/userSlice';
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 type WishlistProps = {
     wishlist: any;
+    user: UserSliceType;
 };
 
-const BottomTabNavigator = ({ wishlist }: WishlistProps) => {
+const BottomTabNavigator = ({ wishlist, user }: WishlistProps) => {
+    // console.log(user);
     return (
         <BottomTab.Navigator
             initialRouteName="HomeStack"
@@ -49,7 +49,10 @@ const BottomTabNavigator = ({ wishlist }: WishlistProps) => {
                     tabBarIcon: ({ color }) => (
                         <TabBarIcon name="heart" color={color} />
                     ),
-                    tabBarBadge: wishlist.length > 0 ? wishlist.length : null
+                    tabBarBadge:
+                        wishlist.length > 0 && user.token
+                            ? wishlist.length
+                            : null
                 }}
             />
             <BottomTab.Screen
@@ -67,7 +70,8 @@ const BottomTabNavigator = ({ wishlist }: WishlistProps) => {
 
 const mapStateToProps = (state: RootState) => {
     return {
-        wishlist: state.wishlist
+        wishlist: state.wishlist,
+        user: state.user
     };
 };
 

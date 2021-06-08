@@ -22,18 +22,21 @@ import {
     useRemoveFromWistlistMutation
 } from 'estore/graphql/generated';
 import { RootStackParamList } from 'estore/types';
+import userSlice, { UserSliceType } from 'estore/redux/slice/userSlice';
 type GridProps = {
     products: Array<Partial<Product> | null> | undefined;
     addProductHandle: (productId: string) => void;
     wishlist: WL[];
     addToWishlist: ActionCreatorWithPayload<any, string>;
+    user: UserSliceType;
 };
 
 const Grid = ({
     products,
     addProductHandle,
     wishlist,
-    addToWishlist
+    addToWishlist,
+    user
 }: GridProps) => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -46,6 +49,7 @@ const Grid = ({
                     addProductHandle={addProductHandle}
                     wishlist={wishlist}
                     addToWishlist={addToWishlist}
+                    user={user}
                 />
             );
         }
@@ -81,6 +85,7 @@ type ProductItemProps = {
     addProductHandle: (productId: string) => void;
     wishlist: WL[];
     addToWishlist: ActionCreatorWithPayload<any, string>;
+    user: UserSliceType;
 };
 
 export const ProductItem = React.memo(
@@ -89,17 +94,9 @@ export const ProductItem = React.memo(
         navigation,
         addProductHandle,
         wishlist,
-        addToWishlist
+        addToWishlist,
+        user
     }: ProductItemProps) => {
-        const [
-            removeProduct,
-            { called, data, loading, error }
-        ] = useRemoveFromWistlistMutation();
-
-        const removeProductHandle = (productId: string) => {
-            removeProduct({ variables: { productId: productId } });
-        };
-
         const productDetail = (productId: string) => {
             navigation.navigate('ProductDetail', { productId: productId });
         };
@@ -123,8 +120,10 @@ export const ProductItem = React.memo(
                         </View>
                     ) : null}
 
-                    {wishlist.filter((it: WL) => it.product.id === item.id)
-                        .length === 0 ? (
+                    {!(
+                        wishlist.filter((it: WL) => it.product.id === item.id)
+                            .length > 0 && user.token
+                    ) ? (
                         <TouchableOpacity
                             style={styles.heartIconContainer}
                             onPress={() => {
@@ -144,15 +143,8 @@ export const ProductItem = React.memo(
                         <TouchableOpacity
                             style={styles.heartIconContainerInWL}
                             onPress={() => {
-                                let revert = wishlist.filter(
-                                    (it: WL) => it.product.id !== item.id
-                                );
-                                addToWishlist(revert);
-                                item && item.id
-                                    ? removeProductHandle(item.id)
-                                    : null;
                                 ToastAndroid.show(
-                                    'Đã xóa khỏi mục ưa thích',
+                                    'Sản phẩm đã có trong mục ưa thích',
                                     ToastAndroid.SHORT
                                 );
                             }}

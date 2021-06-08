@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { useCategoriesQuery } from 'estore/graphql/generated';
-import GridPlaceholder from 'estore/components/templates/GridPlaceholder';
+import CategoriesPlaceholder from 'estore/components/templates/CategoriesPlayerHolder';
 import styles from './styles';
 import categoriesImages from './categoriesImages';
 import { NavigationProp, useNavigation } from '@react-navigation/core';
@@ -11,7 +11,7 @@ const Categories = () => {
     const { data, loading, error } = useCategoriesQuery();
     const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
     if (loading) {
-        return <GridPlaceholder />;
+        return <CategoriesPlaceholder />;
     }
     if (data?.categories) {
         return (
