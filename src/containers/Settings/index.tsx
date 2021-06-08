@@ -73,7 +73,7 @@ const Settings = ({
             const wishlist = d.activeWishlist;
             addToWishlist(wishlist);
         }
-    }, [data]);
+    }, [d]);
 
     useEffect(() => {
         if (data?.activeOrder) {

@@ -22,18 +22,21 @@ import {
     useRemoveFromWistlistMutation
 } from 'estore/graphql/generated';
 import { RootStackParamList } from 'estore/types';
+import userSlice, { UserSliceType } from 'estore/redux/slice/userSlice';
 type GridProps = {
     products: Array<Partial<Product> | null>;
     addProductHandle: (productId: string) => void;
     wishlist: WL[];
     addToWishlist: ActionCreatorWithPayload<any, string>;
+    user: UserSliceType;
 };
 
 const Grid = ({
     products,
     addProductHandle,
     wishlist,
-    addToWishlist
+    addToWishlist,
+    user
 }: GridProps) => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -46,6 +49,7 @@ const Grid = ({
                     addProductHandle={addProductHandle}
                     wishlist={wishlist}
                     addToWishlist={addToWishlist}
+                    user={user}
                 />
             );
         }
@@ -81,6 +85,7 @@ type ProductItemProps = {
     addProductHandle: (productId: string) => void;
     wishlist: WL[];
     addToWishlist: ActionCreatorWithPayload<any, string>;
+    user: UserSliceType;
 };
 
 export const ProductItem = React.memo(
@@ -89,7 +94,8 @@ export const ProductItem = React.memo(
         navigation,
         addProductHandle,
         wishlist,
-        addToWishlist
+        addToWishlist,
+        user
     }: ProductItemProps) => {
         const productDetail = (productId: string) => {
             navigation.navigate('ProductDetail', { productId: productId });
@@ -114,8 +120,10 @@ export const ProductItem = React.memo(
                         </View>
                     ) : null}
 
-                    {wishlist.filter((it: WL) => it.product.id === item.id)
-                        .length === 0 ? (
+                    {!(
+                        wishlist.filter((it: WL) => it.product.id === item.id)
+                            .length > 0 && user.token
+                    ) ? (
                         <TouchableOpacity
                             style={styles.heartIconContainer}
                             onPress={() => {

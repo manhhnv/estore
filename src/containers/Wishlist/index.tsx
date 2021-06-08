@@ -75,7 +75,7 @@ const Wishlist = ({ user, wishlist, addToWishlist }: WishlistProps) => {
         return <Text></Text>;
     };
 
-    if (wishlist && wishlist.length) {
+    if (wishlist && wishlist.length && user.token) {
         return (
             <SafeAreaView style={{ backgroundColor: 'white' }}>
                 <FlatList

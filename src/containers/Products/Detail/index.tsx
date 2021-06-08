@@ -28,11 +28,13 @@ import {
 } from 'estore/graphql/generated';
 import { connect } from 'react-redux';
 import { RootState } from 'estore/redux/slice/index';
+import { UserSliceType } from 'estore/redux/slice/userSlice';
 
 type ProductDetailProps = {
     productId: string;
     wishlist: WL[];
     addToWishlist: ActionCreatorWithPayload<any, string>;
+    user: UserSliceType;
 };
 
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
@@ -42,7 +44,8 @@ const { width } = Dimensions.get('window');
 const ProductDetail = ({
     productId,
     wishlist,
-    addToWishlist
+    addToWishlist,
+    user
 }: ProductDetailProps) => {
     const { called, data, loading, error } = useProductDetailQuery({
         variables: { productId: productId }
@@ -189,9 +192,11 @@ const ProductDetail = ({
                     <Review />
                 </ScrollView>
                 <View style={styles.addingButtonGroupContainer}>
-                    {wishlist.filter(
-                        (it: WL) => it.product.id === data.productDetail?.id
-                    ).length === 0 ? (
+                    {!(
+                        wishlist.filter(
+                            (it: WL) => it.product.id === data.productDetail?.id
+                        ).length > 0 && user.token
+                    ) ? (
                         <Button
                             key={1}
                             icon={
